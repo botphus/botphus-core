@@ -1,0 +1,70 @@
+{
+  "name": "botphus-core",
+  "version": "0.1.0",
+  "description": "Core testing lib for botphus",
+  "main": "dist/source/index.js",
+  "types": "src/source/index.d.ts",
+  "directories": {
+    "test": "dist/test/"
+  },
+  "scripts": {
+    "build": "npm run lint && tsc",
+    "build:declaration": "tsc --declaration src/source/index.ts && git clean -f src/source/*.js && git clean -f src/source/*/*.d.ts",
+    "commit": "npm run test",
+    "test": "npm run build && npm run test:cover",
+    "test:unit": "mocha ./dist/test/",
+    "test:cover": "nyc --reporter=lcov npm run test:unit",
+    "test:benchmark": "node ./dist/test/benchmark/",
+    "lint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "pre-commit": [
+    "commit"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/botphus/botphus-core.git"
+  },
+  "keywords": [
+    "botphus",
+    "test",
+    "QTP",
+    "puppeteer"
+  ],
+  "author": "bakajinsei <cqggff@live.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/botphus/botphus-core/issues"
+  },
+  "homepage": "http://www.botphus.org/",
+  "engines": {
+    "node": ">=6.4.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.0.4",
+    "@types/handlebars": "^4.0.39",
+    "@types/ioredis": "^4.0.1",
+    "@types/mocha": "^5.2.5",
+    "@types/mysql": "^2.15.5",
+    "@types/node": "^10.9.4",
+    "@types/power-assert": "^1.5.0",
+    "@types/puppeteer": "^1.6.2",
+    "@types/recursive-readdir": "^2.2.0",
+    "benchmark": "^2.1.4",
+    "chalk": "^2.4.1",
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
+    "power-assert": "^1.6.0",
+    "pre-commit": "^1.2.2",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "fs-extra": "^7.0.0",
+    "handlebars": "^4.0.11",
+    "ioredis": "^4.0.0",
+    "mysql": "^2.16.0",
+    "puppeteer": "^1.7.0",
+    "recursive-readdir": "^2.2.2"
+  }
+}
