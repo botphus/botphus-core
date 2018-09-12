@@ -14,7 +14,7 @@ exports.COOKIE_DOMAIN = 'github.com';
 // Task cache
 exports.CACHE_PATH = path.join(__dirname, '../../../cache/botphus/');
 // Normal page
-exports.NORMAL_PAGE_PATH = path.join(__dirname, '../../../test/src/normal_test_page.html');
+exports.NORMAL_PAGE_PATH = 'file://' + path.join(__dirname, '../../../test/src/normal_test_page.html');
 exports.NORMAL_PAGE_SEARCH_SELECTOR = 'form:nth-child(3) > div:nth-child(1) > #search';
 exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR = 'form:nth-child(3) > div:nth-child(1)';
 exports.NORMAL_PAGE_FILE_SELECTOR = 'form:nth-child(3) > div:nth-child(2) > #file';

@@ -15,7 +15,7 @@ export const COOKIE_DOMAIN = 'github.com';
 export const CACHE_PATH = path.join(__dirname, '../../../cache/botphus/');
 
 // Normal page
-export const NORMAL_PAGE_PATH = path.join(__dirname, '../../../test/src/normal_test_page.html');
+export const NORMAL_PAGE_PATH = 'file://' + path.join(__dirname, '../../../test/src/normal_test_page.html');
 export const NORMAL_PAGE_SEARCH_SELECTOR = 'form:nth-child(3) > div:nth-child(1) > #search';
 export const NORMAL_PAGE_PARENT_SEARCH_SELECTOR = 'form:nth-child(3) > div:nth-child(1)';
 export const NORMAL_PAGE_FILE_SELECTOR = 'form:nth-child(3) > div:nth-child(2) > #file';
