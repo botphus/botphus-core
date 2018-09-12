@@ -65,8 +65,7 @@ export default function() {
                         });
                 });
         });
-        it('Event#request & response', function(done) {
-            this.timeout(5000);
+        it('Event#request & response', (done) => {
             puppeteer.launch(CONST.PUPPETEER_LAUNCH_OPTION)
                 .then((browser) => {
                     return browser.newPage()

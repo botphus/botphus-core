@@ -6,7 +6,8 @@ const event_1 = require("./event");
 const page_1 = require("./page");
 const time_1 = require("./time");
 function default_1() {
-    describe('Unit', () => {
+    describe('Unit', function () {
+        this.timeout(10000);
         dom_1.default();
         event_1.default();
         time_1.default();

@@ -5,7 +5,8 @@ import page from './page';
 import time from './time';
 
 export default function() {
-    describe('Unit', () => {
+    describe('Unit', function() {
+        this.timeout(10000);
         dom();
         event();
         time();
