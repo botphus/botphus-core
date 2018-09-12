@@ -22,7 +22,7 @@ function registerPartials(dir) {
     return recursive(dir)
         .then((files) => {
         files.forEach((filePath) => {
-            handlebars_1.registerPartial(filePath.replace(/^\S+\\([^\/\\]+).js$/, '$1'), fs.readFileSync(filePath, 'utf8'));
+            handlebars_1.registerPartial(path.basename(filePath, '.js'), fs.readFileSync(filePath, 'utf8'));
         });
     });
 }

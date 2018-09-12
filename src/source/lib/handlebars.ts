@@ -23,7 +23,7 @@ function registerPartials(dir: string): Promise<void> {
     return recursive(dir)
         .then((files) => {
             files.forEach((filePath) => {
-                registerPartial(filePath.replace(/^\S+\\([^\/\\]+).js$/, '$1'), fs.readFileSync(filePath, 'utf8'));
+                registerPartial(path.basename(filePath, '.js'), fs.readFileSync(filePath, 'utf8'));
             });
         });
 }
