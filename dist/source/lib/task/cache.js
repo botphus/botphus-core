@@ -44,7 +44,10 @@ exports.checkCache = checkCache;
  * @return {Promise<string>}               Promise, if success, return taskNo;
  */
 function createCache(cacheFilePath, taskNo, taskRules) {
-    return fse.outputFile(cacheFilePath, handlebars_1.template(taskRules))
+    return handlebars_1.template()
+        .then((templateFunc) => {
+        return fse.outputFile(cacheFilePath, templateFunc(taskRules));
+    })
         .then(() => taskNo)
         .catch((err) => {
         const error = {

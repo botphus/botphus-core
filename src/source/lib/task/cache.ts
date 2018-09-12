@@ -47,7 +47,10 @@ export function checkCache(cacheFilePath: string, taskNo: string, mtime: number)
  * @return {Promise<string>}               Promise, if success, return taskNo;
  */
 export function createCache(cacheFilePath: string, taskNo: string, taskRules: RuleTypeItem[]): Promise<string> {
-    return fse.outputFile(cacheFilePath, template(taskRules))
+    return template()
+        .then((templateFunc) => {
+            return fse.outputFile(cacheFilePath, templateFunc(taskRules));
+        })
         .then(() => taskNo)
         .catch((err) => {
             const error: IMessage = {
