@@ -35,8 +35,8 @@ exports.REQUEST_PATH = 'https://api.github.com/users/baka397';
 exports.MYSQL_CONFIG = {
     database: 'botphus_test',
     host: '127.0.0.1',
-    password: '123456',
-    user: 'root'
+    password: '',
+    user: 'travis'
 };
 exports.MYSQL_TABLE_NAME = 'bp_user';
 exports.MYSQL_FIELD_NAME = 'user_name';

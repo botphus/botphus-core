@@ -40,8 +40,8 @@ export const REQUEST_PATH = 'https://api.github.com/users/baka397';
 export const MYSQL_CONFIG = {
     database: 'botphus_test',
     host: '127.0.0.1',
-    password: '123456',
-    user: 'root'
+    password: '',
+    user: 'travis'
 };
 export const MYSQL_TABLE_NAME = 'bp_user';
 export const MYSQL_FIELD_NAME = 'user_name';
