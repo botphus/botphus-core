@@ -1,6 +1,9 @@
 sudo: false
 language: node_js
 
+## Set ubuntu trusty
+dist: trusty
+
 ## Set nodejs version
 node_js:
   - 6
