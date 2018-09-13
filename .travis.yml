@@ -1,6 +1,11 @@
 sudo: false
 language: node_js
 
+## Cache node_modules 
+cache:
+  directories:
+    - "node_modules"
+
 ## Set ubuntu trusty
 dist: trusty
 
@@ -9,6 +14,7 @@ node_js:
   - 6
   - 8
   - stable
+
 ## Set mysql & redis
 services:
   - mysql
