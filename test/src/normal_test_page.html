@@ -27,7 +27,7 @@
             console.log('botphus console');
         }
         document.getElementById('request').onclick=function(e) {
-            const ajax = fetch('https://api.github.com/users/baka397', {
+            const ajax = fetch('https://api.github.com/', {
                 mode: 'cors'
             })
             .then(response => response.json())

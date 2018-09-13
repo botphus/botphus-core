@@ -33,7 +33,9 @@ export const RESOURCE_FILE_NAME_REG = /^\S+[\\/]([^\\/]+\.[^\\/]+)$/;
 export const PUPPETEER_LAUNCH_OPTION = {args: ['--no-sandbox']};
 
 // Request
-export const REQUEST_PATH = 'https://api.github.com/users/baka397';
+export const REQUEST_PATH = 'https://api.github.com/';
+export const REQUEST_FIELD = 'user_url';
+export const REQUEST_FIELD_VALUE = 'https://api.github.com/users/{user}';
 
 // Data
 /// mysql

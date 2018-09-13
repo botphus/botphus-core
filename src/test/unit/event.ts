@@ -87,8 +87,7 @@ export default function() {
                                             return response.json();
                                         })
                                         .then((resData) => {
-                                            assert(resData.url === CONST.REQUEST_PATH);
-                                            assert(resData.type === 'User');
+                                            assert(resData[CONST.REQUEST_FIELD] === CONST.REQUEST_FIELD_VALUE);
                                             // Sleep for code run end
                                             return botphusUnit.time.sleep(CONST.SLEEP_TIME);
                                         });

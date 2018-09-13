@@ -29,7 +29,9 @@ exports.RESOURCE_FILE_NAME_REG = /^\S+[\\/]([^\\/]+\.[^\\/]+)$/;
 // puppeteer
 exports.PUPPETEER_LAUNCH_OPTION = { args: ['--no-sandbox'] };
 // Request
-exports.REQUEST_PATH = 'https://api.github.com/users/baka397';
+exports.REQUEST_PATH = 'https://api.github.com/';
+exports.REQUEST_FIELD = 'user_url';
+exports.REQUEST_FIELD_VALUE = 'https://api.github.com/users/{user}';
 // Data
 /// mysql
 exports.MYSQL_CONFIG = {
