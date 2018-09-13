@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const os_1 = require("os");
 const path = require("path");
 // value
 exports.SEARCH_SELECTOR_VALUE = 'Botphus value';
@@ -12,7 +13,7 @@ exports.COOKIE_VALUE = 'botphus cookie value';
 exports.COOKIE_URL = 'https://github.com/';
 exports.COOKIE_DOMAIN = 'github.com';
 // Task cache
-exports.CACHE_PATH = path.join(__dirname, '../../../cache/botphus/');
+exports.CACHE_PATH = path.join(os_1.tmpdir(), '/botphus/');
 // Normal page
 exports.NORMAL_PAGE_PATH = 'file://' + path.join(__dirname, '../../../test/src/normal_test_page.html');
 exports.NORMAL_PAGE_SEARCH_SELECTOR = 'form:nth-child(3) > div:nth-child(1) > #search';

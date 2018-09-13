@@ -6,7 +6,7 @@ import * as recursive from 'recursive-readdir';
 import * as CONST from '../common/const';
 
 import {getTaskNoByTaskName} from '../../source/lib/common';
-import {Type, TypeDataSubType} from '../../source/types/task';
+import {Type, TypeDomSubType, TypeEventSubType} from '../../source/types/task';
 
 import BotphusCore from '../../source/';
 const botphusCore = new BotphusCore({
@@ -19,9 +19,10 @@ export default function() {
             const taskName = 'test task';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    assert: [`data.type === '测试'`, `data.name === '完成'`],
-                    subType: TypeDataSubType.SUB_TYPE_MYSQL,
-                    type: Type.TYPE_DATA
+                    argments: ['div', '1'],
+                    assert: ['data.type === `123`', 'data.name === \'123\''],
+                    subType: TypeDomSubType.SUB_TYPE_KEYBOARD,
+                    type: Type.TYPE_DOM
                 }
             ])
                 .then(() => {
@@ -34,9 +35,15 @@ export default function() {
             const taskName = 'test task2';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    assert: [`data.type === '测试'`, `data.name === '完成'`],
-                    subType: TypeDataSubType.SUB_TYPE_MYSQL,
-                    type: Type.TYPE_DATA
+                    children: [
+                        {
+                            argments: ['div'],
+                            subType: TypeDomSubType.SUB_TYPE_CLICK,
+                            type: Type.TYPE_DOM,
+                        }
+                    ],
+                    subType: TypeEventSubType.SUB_TYPE_CONSOLE,
+                    type: Type.TYPE_EVENT,
                 }
             ])
                 .then(() => {

@@ -15,7 +15,6 @@ class BotphusCore {
         // Update basic config
         this.config = {
             cachePath: join(tmpdir(), '/botphus/'),
-            locale: 'default',
             ...customConfig
         };
     }

@@ -9,7 +9,7 @@ const task_1 = require("./lib/task");
 class BotphusCore {
     constructor(customConfig) {
         // Update basic config
-        this.config = Object.assign({ cachePath: path_1.join(os_1.tmpdir(), '/botphus/'), locale: 'default' }, customConfig);
+        this.config = Object.assign({ cachePath: path_1.join(os_1.tmpdir(), '/botphus/') }, customConfig);
     }
     /**
      * Create Task & return task no

@@ -35,10 +35,9 @@ export function getTaskNoByTaskName(taskName: string): string {
  * @return {IErrorMessage}       Return Error message
  */
 export function createErrorMessage(error: Error, type: MessageType): IErrorMessage {
-    return {
-        type,
-        ...error
-    };
+    const errorMessage: IErrorMessage = error;
+    errorMessage.type = type;
+    return errorMessage;
 }
 
 /**

@@ -32,7 +32,9 @@ exports.getTaskNoByTaskName = getTaskNoByTaskName;
  * @return {IErrorMessage}       Return Error message
  */
 function createErrorMessage(error, type) {
-    return Object.assign({ type }, error);
+    const errorMessage = error;
+    errorMessage.type = type;
+    return errorMessage;
 }
 exports.createErrorMessage = createErrorMessage;
 /**

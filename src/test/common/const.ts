@@ -1,3 +1,4 @@
+import {tmpdir} from 'os';
 import * as path from 'path';
 
 // value
@@ -12,7 +13,7 @@ export const COOKIE_URL = 'https://github.com/';
 export const COOKIE_DOMAIN = 'github.com';
 
 // Task cache
-export const CACHE_PATH = path.join(__dirname, '../../../cache/botphus/');
+export const CACHE_PATH = path.join(tmpdir(), '/botphus/');
 
 // Normal page
 export const NORMAL_PAGE_PATH = 'file://' + path.join(__dirname, '../../../test/src/normal_test_page.html');

@@ -1,5 +1,6 @@
 import * as fs from 'fs';
-import {compile, registerPartial} from 'handlebars';
+import * as handlebars from 'handlebars';
+import * as helpers from 'handlebars-helpers';
 import * as path from 'path';
 import * as recursive from 'recursive-readdir';
 
@@ -9,6 +10,11 @@ const partialDirPath = path.join(tmplDirPath, 'partials'); // partial dir path
 const entryFilePath = path.join(tmplDirPath, 'index.js'); // entry file path
 
 let templateCache: Handlebars.TemplateDelegate;
+
+// Register helpers
+helpers({
+    handlebars
+});
 
 /**
  * Register Partials from dir path
@@ -23,7 +29,7 @@ function registerPartials(dir: string): Promise<void> {
     return recursive(dir)
         .then((files) => {
             files.forEach((filePath) => {
-                registerPartial(path.basename(filePath, '.js'), fs.readFileSync(filePath, 'utf8'));
+                handlebars.registerPartial(path.basename(filePath, '.js'), fs.readFileSync(filePath, 'utf8'));
             });
         });
 }
@@ -40,7 +46,7 @@ export function template(): Promise<Handlebars.TemplateDelegate> {
     // else compile template;
     return registerPartials(partialDirPath)
         .then(() => {
-            templateCache = compile(fs.readFileSync(entryFilePath, 'utf8'));
+            templateCache = handlebars.compile(fs.readFileSync(entryFilePath, 'utf8'));
             return Promise.resolve(templateCache);
         });
 }

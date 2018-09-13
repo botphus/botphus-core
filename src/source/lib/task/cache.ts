@@ -5,8 +5,9 @@ import {MessageType} from '../../types/common';
 import {RuleTypeItem} from '../../types/task';
 
 import {createErrorMessage} from '../common';
-
 import {template} from '../handlebars';
+
+import {BOTPHUS_LIB_PATH} from '../../const';
 
 /**
  * check if cache file exist
@@ -50,7 +51,10 @@ export function checkCache(cacheFilePath: string, taskNo: string, mtime: number)
 export function createCache(cacheFilePath: string, taskNo: string, taskRules: RuleTypeItem[]): Promise<string> {
     return template()
         .then((templateFunc) => {
-            return fse.outputFile(cacheFilePath, templateFunc(taskRules));
+            return fse.outputFile(cacheFilePath, templateFunc({
+                libPath: BOTPHUS_LIB_PATH.replace(/\\/g, '\\\\'),
+                taskRules
+            }));
         })
         .then(() => taskNo)
         .catch((err) => {

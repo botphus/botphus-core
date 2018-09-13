@@ -5,6 +5,7 @@ const fse = require("fs-extra");
 const common_1 = require("../../types/common");
 const common_2 = require("../common");
 const handlebars_1 = require("../handlebars");
+const const_1 = require("../../const");
 /**
  * check if cache file exist
  * @param  {string}          cacheFilePath Cache File Path
@@ -47,7 +48,10 @@ exports.checkCache = checkCache;
 function createCache(cacheFilePath, taskNo, taskRules) {
     return handlebars_1.template()
         .then((templateFunc) => {
-        return fse.outputFile(cacheFilePath, templateFunc(taskRules));
+        return fse.outputFile(cacheFilePath, templateFunc({
+            libPath: const_1.BOTPHUS_LIB_PATH.replace(/\\/g, '\\\\'),
+            taskRules
+        }));
     })
         .then(() => taskNo)
         .catch((err) => {

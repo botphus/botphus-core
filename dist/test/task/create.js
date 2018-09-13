@@ -17,9 +17,10 @@ function default_1() {
             const taskName = 'test task';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    assert: [`data.type === '测试'`, `data.name === '完成'`],
-                    subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-                    type: task_1.Type.TYPE_DATA
+                    argments: ['div', '1'],
+                    assert: ['data.type === `123`', 'data.name === \'123\''],
+                    subType: task_1.TypeDomSubType.SUB_TYPE_KEYBOARD,
+                    type: task_1.Type.TYPE_DOM
                 }
             ])
                 .then(() => {
@@ -32,9 +33,15 @@ function default_1() {
             const taskName = 'test task2';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    assert: [`data.type === '测试'`, `data.name === '完成'`],
-                    subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-                    type: task_1.Type.TYPE_DATA
+                    children: [
+                        {
+                            argments: ['div'],
+                            subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
+                            type: task_1.Type.TYPE_DOM,
+                        }
+                    ],
+                    subType: task_1.TypeEventSubType.SUB_TYPE_CONSOLE,
+                    type: task_1.Type.TYPE_EVENT,
                 }
             ])
                 .then(() => {
