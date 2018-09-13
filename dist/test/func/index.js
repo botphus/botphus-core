@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const assert = require("power-assert");
 const common_1 = require("../../source/lib/common");
 function default_1() {
-    describe('Function test', () => {
+    describe('Function', () => {
         it('Function#getTaskNoByTaskName', () => {
             const tokenNo = common_1.getTaskNoByTaskName('test name');
             assert(tokenNo);

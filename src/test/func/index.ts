@@ -3,7 +3,7 @@ import * as assert from 'power-assert';
 import {getTaskNoByTaskName} from '../../source/lib/common';
 
 export default function() {
-    describe('Function test', () => {
+    describe('Function', () => {
         it('Function#getTaskNoByTaskName', () => {
             const tokenNo = getTaskNoByTaskName('test name');
             assert(tokenNo);
