@@ -1,11 +1,11 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
 
-import {IBotphusConfig, IMessage} from '../../interfaces/common';
+import {IBotphusConfig} from '../../interfaces/common';
 import {MessageType} from '../../types/common';
 import {RuleTypeItem} from '../../types/task';
 
-import {getTaskNoByTaskName} from '../common';
+import {ErrorMessage, getTaskNoByTaskName} from '../common';
 import {checkCache, createCache} from './cache';
 
 /**
@@ -19,12 +19,7 @@ import {checkCache, createCache} from './cache';
 export function createTask(taskName: string, mtime: number, taskRules: RuleTypeItem[], config: IBotphusConfig): Promise<string> {
     // Check if task rule is right
     if (taskRules.length === 0) {
-        const error: IMessage = {
-            message: '',
-            parmas: [],
-            type: MessageType.TASK_RULES_EMPTY
-        };
-        return Promise.reject(error);
+        return Promise.reject(new ErrorMessage('Task rules is empty', MessageType.TASK_RULES_RENDER_ERROR));
     }
     const taskNo: string = getTaskNoByTaskName(taskName);
     // Cache file path for rules

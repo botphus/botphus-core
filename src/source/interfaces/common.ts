@@ -9,17 +9,8 @@ export interface IBotphusConfig {
 }
 
 /**
- * i18n package list
- */
-export interface Ii18nMessage {
-    [propName: string]: string;
-}
-
-/**
  * Error message type
  */
-export interface IMessage {
+export interface IErrorMessage extends Error {
     type: MessageType;
-    message: string;
-    parmas: any[];
 }

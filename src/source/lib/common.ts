@@ -1,6 +1,7 @@
 import * as crypto from 'crypto';
 
-import {Ii18nMessage} from '../interfaces/common';
+import {IErrorMessage} from '../interfaces/common';
+import {MessageType} from '../types/common';
 
 /**
  * Create hash
@@ -24,19 +25,35 @@ export function getTaskNoByTaskName(taskName: string): string {
 }
 
 /**
- * Get i18n language package
- * @param  {string} locale Locale name
- * @return {object}        Package info
+ * Botphus message
  */
-export function getI18nPackage(locale: string): Ii18nMessage {
-    switch (locale) {
-        case 'default': // If default return package default language
-            return require('../lang/default');
-        default: // or require npm package by name rule: @botphus-lang/xxx
-            try {
-                return require(`@botphus-lang/${locale}`);
-            } catch (e) {
-                throw new Error(`Find i18n package "@botphus-lang/${locale}" Error: ${e.message}`);
-            }
+
+/**
+ * Create a botphus error message
+ * @param  {Error}         error Error message
+ * @param  {MessageType}   type  Error type
+ * @return {IErrorMessage}       Return Error message
+ */
+export function createErrorMessage(error: Error, type: MessageType): IErrorMessage {
+    return {
+        type,
+        ...error
+    };
+}
+
+/**
+ * Botphus error message
+ */
+export class ErrorMessage extends Error {
+    public type: MessageType;
+    /**
+     * Create a error message
+     * @param {string}      message Error info
+     * @param {MessageType} type    Error type
+     */
+    constructor(message: string, type: MessageType) {
+        super(message);
+        this.type = type;
+        return this;
     }
 }

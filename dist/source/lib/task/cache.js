@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const fse = require("fs-extra");
 const common_1 = require("../../types/common");
+const common_2 = require("../common");
 const handlebars_1 = require("../handlebars");
 /**
  * check if cache file exist
@@ -50,12 +51,7 @@ function createCache(cacheFilePath, taskNo, taskRules) {
     })
         .then(() => taskNo)
         .catch((err) => {
-        const error = {
-            message: '',
-            parmas: [err],
-            type: common_1.MessageType.TASK_RULES_RENDER_ERROR
-        };
-        return Promise.reject(error);
+        return Promise.reject(common_2.createErrorMessage(err, common_1.MessageType.TASK_RULES_RENDER_ERROR));
     });
 }
 exports.createCache = createCache;

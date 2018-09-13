@@ -1,10 +1,9 @@
 import {tmpdir} from 'os';
 import {join} from 'path';
 
-import {IBotphusConfig, Ii18nMessage, IMessage} from './interfaces/common';
+import {IBotphusConfig} from './interfaces/common';
 import {RuleTypeItem} from './types/task';
 
-import {getI18nPackage} from './lib/common';
 import {clearTask, createTask, removeTask} from './lib/task';
 
 /**
@@ -12,7 +11,6 @@ import {clearTask, createTask, removeTask} from './lib/task';
  */
 class BotphusCore {
     private config: IBotphusConfig; // Basic Config
-    private i18nPackage: Ii18nMessage; // i18n
     constructor(customConfig?: IBotphusConfig) {
         // Update basic config
         this.config = {
@@ -20,7 +18,6 @@ class BotphusCore {
             locale: 'default',
             ...customConfig
         };
-        this.getI18nPackage();
     }
     /**
      * Create Task & return task no
@@ -30,8 +27,7 @@ class BotphusCore {
      * @return {Promise<string>}           Promise with Task Number
      */
     public createTask(taskName: string, mtime: number, taskRules: RuleTypeItem[]): Promise<string> {
-        return createTask(taskName, mtime, taskRules, this.config)
-            .catch((err) => this.getErrorMessage(err));
+        return createTask(taskName, mtime, taskRules, this.config);
     }
     /**
      * Remove task with taskNo
@@ -51,22 +47,6 @@ class BotphusCore {
     // todo, 开始任务,返回任务执行子进程
     public startTask(): any {
         return '';
-    }
-    /**
-     * get i18n package by current config locale
-     */
-    private getI18nPackage() {
-        this.i18nPackage = getI18nPackage(this.config.locale);
-    }
-    /**
-     * Get error message with err code with promise proxy
-     * @param  {IMessage}        err err info
-     * @return {Promise<string>}     Promise proxy
-     */
-    private getErrorMessage(err: IMessage): Promise<string> {
-        const curMsgType: string = err.type;
-        err.message = this.i18nPackage[curMsgType];
-        return Promise.reject(err);
     }
 }
 

@@ -16,12 +16,7 @@ const cache_1 = require("./cache");
 function createTask(taskName, mtime, taskRules, config) {
     // Check if task rule is right
     if (taskRules.length === 0) {
-        const error = {
-            message: '',
-            parmas: [],
-            type: common_1.MessageType.TASK_RULES_EMPTY
-        };
-        return Promise.reject(error);
+        return Promise.reject(new common_2.ErrorMessage('Task rules is empty', common_1.MessageType.TASK_RULES_RENDER_ERROR));
     }
     const taskNo = common_2.getTaskNoByTaskName(taskName);
     // Cache file path for rules

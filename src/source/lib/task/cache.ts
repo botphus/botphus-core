@@ -1,9 +1,10 @@
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
 
-import {IMessage} from '../../interfaces/common';
 import {MessageType} from '../../types/common';
 import {RuleTypeItem} from '../../types/task';
+
+import {createErrorMessage} from '../common';
 
 import {template} from '../handlebars';
 
@@ -53,11 +54,6 @@ export function createCache(cacheFilePath: string, taskNo: string, taskRules: Ru
         })
         .then(() => taskNo)
         .catch((err) => {
-            const error: IMessage = {
-                message: '',
-                parmas: [err],
-                type: MessageType.TASK_RULES_RENDER_ERROR
-            };
-            return Promise.reject(error);
+            return Promise.reject(createErrorMessage(err, MessageType.TASK_RULES_RENDER_ERROR));
         });
 }

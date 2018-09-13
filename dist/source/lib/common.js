@@ -23,21 +23,31 @@ function getTaskNoByTaskName(taskName) {
 }
 exports.getTaskNoByTaskName = getTaskNoByTaskName;
 /**
- * Get i18n language package
- * @param  {string} locale Locale name
- * @return {object}        Package info
+ * Botphus message
  */
-function getI18nPackage(locale) {
-    switch (locale) {
-        case 'default': // If default return package default language
-            return require('../lang/default');
-        default: // or require npm package by name rule: @botphus-lang/xxx
-            try {
-                return require(`@botphus-lang/${locale}`);
-            }
-            catch (e) {
-                throw new Error(`Find i18n package "@botphus-lang/${locale}" Error: ${e.message}`);
-            }
+/**
+ * Create a botphus error message
+ * @param  {Error}         error Error message
+ * @param  {MessageType}   type  Error type
+ * @return {IErrorMessage}       Return Error message
+ */
+function createErrorMessage(error, type) {
+    return Object.assign({ type }, error);
+}
+exports.createErrorMessage = createErrorMessage;
+/**
+ * Botphus error message
+ */
+class ErrorMessage extends Error {
+    /**
+     * Create a error message
+     * @param {string}      message Error info
+     * @param {MessageType} type    Error type
+     */
+    constructor(message, type) {
+        super(message);
+        this.type = type;
+        return this;
     }
 }
-exports.getI18nPackage = getI18nPackage;
+exports.ErrorMessage = ErrorMessage;
