@@ -87,7 +87,7 @@ export default function() {
                                             return response.json();
                                         })
                                         .then((resData) => {
-                                            assert(resData[CONST.REQUEST_FIELD] === CONST.REQUEST_FIELD_VALUE);
+                                            assert(resData);
                                             // Sleep for code run end
                                             return botphusUnit.time.sleep(CONST.SLEEP_TIME);
                                         });

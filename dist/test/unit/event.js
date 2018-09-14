@@ -86,7 +86,7 @@ function default_1() {
                             return response.json();
                         })
                             .then((resData) => {
-                            assert(resData[CONST.REQUEST_FIELD] === CONST.REQUEST_FIELD_VALUE);
+                            assert(resData);
                             // Sleep for code run end
                             return unit_1.default.time.sleep(CONST.SLEEP_TIME);
                         });
