@@ -29,7 +29,9 @@ var TypeDomSubType;
     TypeDomSubType[TypeDomSubType["SUB_TYPE_SET_ATTR"] = 201] = "SUB_TYPE_SET_ATTR";
     TypeDomSubType[TypeDomSubType["SUB_TYPE_GET_ATTR"] = 202] = "SUB_TYPE_GET_ATTR";
     TypeDomSubType[TypeDomSubType["SUB_TYPE_GET_HTML"] = 203] = "SUB_TYPE_GET_HTML";
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_CLICK"] = 204] = "SUB_TYPE_CLICK";
+    TypeDomSubType[TypeDomSubType["SUB_TYPE_GET_TEXT"] = 204] = "SUB_TYPE_GET_TEXT";
+    TypeDomSubType[TypeDomSubType["SUB_TYPE_CLICK"] = 205] = "SUB_TYPE_CLICK";
+    TypeDomSubType[TypeDomSubType["SUB_TYPE_SET_INPUT_FILES"] = 206] = "SUB_TYPE_SET_INPUT_FILES";
 })(TypeDomSubType = exports.TypeDomSubType || (exports.TypeDomSubType = {}));
 /**
  * Sub type: Event
@@ -46,7 +48,7 @@ var TypeEventSubType;
  */
 var TypeTimeSubType;
 (function (TypeTimeSubType) {
-    TypeTimeSubType[TypeTimeSubType["SUB_TYPE_SET_TIMEOUT"] = 400] = "SUB_TYPE_SET_TIMEOUT";
+    TypeTimeSubType[TypeTimeSubType["SUB_TYPE_SET_SLEEP"] = 400] = "SUB_TYPE_SET_SLEEP";
 })(TypeTimeSubType = exports.TypeTimeSubType || (exports.TypeTimeSubType = {}));
 /**
  * Sub type: Page

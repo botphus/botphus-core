@@ -4,7 +4,7 @@ const os_1 = require("os");
 const path = require("path");
 // value
 exports.SEARCH_SELECTOR_VALUE = 'Botphus value';
-exports.EVENT_TIMEOUT = 1500;
+exports.EVENT_TIMEOUT = 3000;
 exports.SLEEP_TIME = 100;
 exports.DIALOG_VALUE = 'botphus dialog';
 exports.CONSOLE_VALUE = 'botphus console';

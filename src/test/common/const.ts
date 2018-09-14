@@ -3,7 +3,7 @@ import * as path from 'path';
 
 // value
 export const SEARCH_SELECTOR_VALUE = 'Botphus value';
-export const EVENT_TIMEOUT = 1500;
+export const EVENT_TIMEOUT = 3000;
 export const SLEEP_TIME = 100;
 export const DIALOG_VALUE = 'botphus dialog';
 export const CONSOLE_VALUE = 'botphus console';

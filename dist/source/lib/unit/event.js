@@ -67,8 +67,7 @@ function eventListener(page, eventName, timeout, childFunc, checkFunc) {
         let timer = setTimeout(() => {
             reject(new Error(`Event "${eventName}" listener timeout`));
             timer = null;
-            // Remove listener
-            page.removeListener(eventName, curEventListener);
+            removeTimer();
         }, timeout);
         // Register a listener
         page.on(eventName, curEventListener);
@@ -81,14 +80,23 @@ function eventListener(page, eventName, timeout, childFunc, checkFunc) {
             if (checkFunc && !checkFunc(info)) {
                 return;
             }
-            // Clear timer
-            clearTimeout(timer);
-            timer = null;
-            // Remove listener
-            page.removeListener(eventName, curEventListener);
+            removeTimer();
             resolve(info);
         }
+        function removeTimer() {
+            if (timer) {
+                // Clear timer
+                clearTimeout(timer);
+                timer = null;
+            }
+            // Remove listener
+            page.removeListener(eventName, curEventListener);
+        }
         // Run & trigger listener
-        childFunc();
+        childFunc()
+            .catch((err) => {
+            removeTimer();
+            reject(err);
+        });
     });
 }

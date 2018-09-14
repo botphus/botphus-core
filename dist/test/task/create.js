@@ -19,7 +19,7 @@ function default_1() {
                 {
                     argments: ['div', '1'],
                     assert: ['data.type === `123`', 'data.name === \'123\''],
-                    subType: task_1.TypeDomSubType.SUB_TYPE_KEYBOARD,
+                    subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
                     type: task_1.Type.TYPE_DOM
                 }
             ])
@@ -33,6 +33,7 @@ function default_1() {
             const taskName = 'test task2';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
+                    argments: [100],
                     children: [
                         {
                             argments: ['div'],
