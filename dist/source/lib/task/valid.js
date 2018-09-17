@@ -27,7 +27,7 @@ exports.validTaskRules = validTaskRules;
  */
 function loopRules(taskRules, parentIndex) {
     let err;
-    taskRules.some((taskRule, index) => {
+    taskRules.every((taskRule, index) => {
         err = assignTaskRule(taskRule);
         // Set rule index
         taskRule.index = parentIndex ? `${parentIndex}-${index}` : `${index}`;

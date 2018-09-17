@@ -15,6 +15,7 @@ const redisLib = require(path.join('{{libPath}}', '/dist/source/lib/connection/r
 const puppeteerLaunchOption = process.env.puppeteerLaunchOption;
 const mysqlOption = process.env.mysqlOption;
 const redisOption = process.env.redisOption;
+const excludeOption = process.env.excludeOption;
 
 // Init mysql & redis
 let mysqlConnectionNo = '';
@@ -59,11 +60,11 @@ puppeteer.launch(puppeteerLaunchOption)
                 endProcess(browser);
             })
             .catch(function(err) {
-                sendProcessMessage(commonLib.createErrorMessage(err, MessageType.UNIT_RULE_EXEC_ERROR));
+                sendProcessMessage([commonLib.createErrorMessage(err, MessageType.UNIT_RULE_EXEC_ERROR)]);
                 endProcess(browser);
             });
     })
     .catch(function(err) {
-        sendProcessMessage(commonLib.createErrorMessage(err, MessageType.PUPPTER_INIT_ERROR));
+        sendProcessMessage([commonLib.createErrorMessage(err, MessageType.PUPPTER_INIT_ERROR)]);
         endProcess();
     });

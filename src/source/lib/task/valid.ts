@@ -29,7 +29,7 @@ export function validTaskRules(taskRules: RuleTypeItem[]): Promise<void> {
  */
 function loopRules(taskRules: RuleTypeItem[], parentIndex?: string): Error {
     let err: Error;
-    taskRules.some((taskRule: RuleTypeItem, index: number) => {
+    taskRules.every((taskRule: RuleTypeItem, index: number) => {
         err = assignTaskRule(taskRule);
         // Set rule index
         taskRule.index = parentIndex ? `${parentIndex}-${index}` : `${index}`;

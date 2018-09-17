@@ -19,4 +19,4 @@ return eventFunc(page, {{rule.argments.[0]}}, function() {
         {{#each rule.children}}
         {{> entry rule=this}}
         {{/each}}
-}, {{{rule.argments.[1]}}});
+}, {{{rule.argments.[1]}}})

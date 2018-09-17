@@ -13,20 +13,14 @@ function default_1() {
                 connectionNo = mysql_1.createMysqlConnection(CONST.MYSQL_CONFIG);
             });
             it('Create Table', (done) => {
-                unit_1.default.data.execSql(connectionNo, `
-                    CREATE TABLE ${CONST.MYSQL_TABLE_NAME} (
-                        id int(11) auto_increment NOT NULL,
-                        ${CONST.MYSQL_FIELD_NAME} varchar(128) NOT NULL,
-                        PRIMARY KEY (id)
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-                `)
+                unit_1.default.data.execSql(connectionNo, CONST.MYSQL_CREATE_TABLE)
                     .then(() => done())
                     .catch(done);
             });
             it('Inset Data', (done) => {
-                unit_1.default.data.execSql(connectionNo, `INSERT INTO ${CONST.MYSQL_TABLE_NAME} (${CONST.MYSQL_FIELD_NAME}) VALUES ("${CONST.MYSQL_FIELD_VALUE}")`)
+                unit_1.default.data.execSql(connectionNo, CONST.MYSQL_INSERT_DATA)
                     .then(() => {
-                    return unit_1.default.data.execSql(connectionNo, `SELECT * FROM ${CONST.MYSQL_TABLE_NAME} WHERE ${CONST.MYSQL_FIELD_NAME} = "${CONST.MYSQL_FIELD_VALUE}"`);
+                    return unit_1.default.data.execSql(connectionNo, CONST.MYSQL_SELECT_DATA);
                 })
                     .then((data) => {
                     assert(data.length === 1);
@@ -37,7 +31,7 @@ function default_1() {
                     .catch(done);
             });
             it('Drop Table', (done) => {
-                unit_1.default.data.execSql(connectionNo, `DROP TABLE IF EXISTS ${CONST.MYSQL_TABLE_NAME}`)
+                unit_1.default.data.execSql(connectionNo, CONST.MYSQL_DROP_TABLE)
                     .then(() => {
                     return unit_1.default.data.execSql(connectionNo, `SHOW TABLES LIKE "${CONST.MYSQL_TABLE_NAME}"`);
                 })

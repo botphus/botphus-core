@@ -1,6 +1,8 @@
 import {tmpdir} from 'os';
 import * as path from 'path';
 
+import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType} from '../../source/types/task';
+
 // value
 export const SEARCH_SELECTOR_VALUE = 'Botphus value';
 export const EVENT_TIMEOUT = 3000;
@@ -24,6 +26,10 @@ export const NORMAL_PAGE_FILE_MULTI_SELECTOR = 'form:nth-child(3) > div:nth-chil
 export const NORMAL_PAGE_DIALOG_SELECTOR = 'div:nth-child(2) > #dialog';
 export const NORMAL_PAGE_CONSOLE_SELECTOR = 'div:nth-child(2) > #console';
 export const NORMAL_PAGE_REQUEST_SELECTOR = 'div:nth-child(2) > #request';
+export const NORMAL_PAGE_SEARCH_SELECTOR_FIELD = 'value';
+export const NORMAL_PAGE_FILE_SELECTOR_FIELD = 'files';
+export const NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML = '<label for="search">搜索名称</label><input type="text" name="search" id="search">';
+export const NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT = '搜索名称';
 
 // Resource
 export const RESOURCE_IMAGE_PATH = path.join(__dirname, '../../../test/src/test-image.png');
@@ -47,6 +53,16 @@ export const MYSQL_CONFIG = {
 export const MYSQL_TABLE_NAME = 'bp_user';
 export const MYSQL_FIELD_NAME = 'user_name';
 export const MYSQL_FIELD_VALUE = 'Hans Zimmer';
+export const MYSQL_CREATE_TABLE = `
+    CREATE TABLE ${MYSQL_TABLE_NAME} (
+        id int(11) auto_increment NOT NULL,
+        ${MYSQL_FIELD_NAME} varchar(128) NOT NULL,
+        PRIMARY KEY (id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+`;
+export const MYSQL_INSERT_DATA = `INSERT INTO ${MYSQL_TABLE_NAME} (${MYSQL_FIELD_NAME}) VALUES ("${MYSQL_FIELD_VALUE}")`;
+export const MYSQL_SELECT_DATA = `SELECT * FROM ${MYSQL_TABLE_NAME} WHERE ${MYSQL_FIELD_NAME} = "${MYSQL_FIELD_VALUE}"`;
+export const MYSQL_DROP_TABLE = `DROP TABLE IF EXISTS ${MYSQL_TABLE_NAME}`;
 
 /// redis
 export const REDIS_CONFIG = {
@@ -55,3 +71,111 @@ export const REDIS_CONFIG = {
 };
 export const REDIS_KEY_NAME = 'botphus:test';
 export const REDIS_KEY_VALUE = 'Morgan Freeman';
+
+// Task
+export const TASK_FULL_NAME = 'Full task';
+export const TASK_FULL_LIST: RuleTypeItem[] = [
+    /**
+     * Data
+     */
+    // Mysql
+    /// Create Table
+    {
+        argments: [MYSQL_CREATE_TABLE],
+        assertion: ['!data'],
+        subType: TypeDataSubType.SUB_TYPE_MYSQL,
+        type: Type.TYPE_DATA
+    },
+    /// Inset Table
+    {
+        argments: [MYSQL_INSERT_DATA],
+        assertion: ['!data'],
+        subType: TypeDataSubType.SUB_TYPE_MYSQL,
+        type: Type.TYPE_DATA
+    },
+    /// Select Table
+    {
+        argments: [MYSQL_SELECT_DATA],
+        assertion: ['data.length === 1', 'data[0].id === 1', `data[0][${MYSQL_FIELD_NAME}] === "${MYSQL_FIELD_VALUE}"`],
+        subType: TypeDataSubType.SUB_TYPE_MYSQL,
+        type: Type.TYPE_DATA
+    },
+    /// Drop Table
+    {
+        argments: [MYSQL_DROP_TABLE],
+        assertion: ['!data'],
+        subType: TypeDataSubType.SUB_TYPE_MYSQL,
+        type: Type.TYPE_DATA
+    },
+    // Redis
+    /// set
+    {
+        argments: [[['set', REDIS_KEY_NAME, REDIS_KEY_VALUE]]],
+        assertion: ['!data'],
+        subType: TypeDataSubType.SUB_TYPE_REDIS,
+        type: Type.TYPE_DATA
+    },
+    /// get
+    {
+        argments: [[['get', REDIS_KEY_NAME]]],
+        assertion: ['data.length === 1', `data[0][1] === "${REDIS_KEY_VALUE}"`],
+        subType: TypeDataSubType.SUB_TYPE_REDIS,
+        type: Type.TYPE_DATA
+    },
+    /// del
+    {
+        argments: [[['del', REDIS_KEY_NAME]]],
+        assertion: ['!data'],
+        subType: TypeDataSubType.SUB_TYPE_REDIS,
+        type: Type.TYPE_DATA
+    },
+    /**
+     * Dom
+     */
+    // click
+    {
+        argments: [NORMAL_PAGE_SEARCH_SELECTOR],
+        subType: TypeDomSubType.SUB_TYPE_CLICK,
+        type: Type.TYPE_DOM
+    },
+    // keyboard
+    {
+        argments: [NORMAL_PAGE_SEARCH_SELECTOR, SEARCH_SELECTOR_VALUE],
+        subType: TypeDomSubType.SUB_TYPE_KEYBOARD,
+        type: Type.TYPE_DOM
+    },
+    // getAttr
+    {
+        argments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
+        assertion: [`data === ${SEARCH_SELECTOR_VALUE}`],
+        subType: TypeDomSubType.SUB_TYPE_GET_ATTR,
+        type: Type.TYPE_DOM
+    },
+    // setAttr
+    {
+        argments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD, SEARCH_SELECTOR_VALUE],
+        subType: TypeDomSubType.SUB_TYPE_SET_ATTR,
+        type: Type.TYPE_DOM
+    },
+    // getHtml
+    {
+        argments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        assertion: [`data === '${NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML}'`],
+        subType: TypeDomSubType.SUB_TYPE_GET_HTML,
+        type: Type.TYPE_DOM
+    },
+    // getText
+    {
+        argments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        assertion: [`data === "${NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT}"`],
+        subType: TypeDomSubType.SUB_TYPE_GET_TEXT,
+        type: Type.TYPE_DOM
+    },
+    // setInputFiles
+    {
+        argments: [NORMAL_PAGE_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
+        assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
+        subType: TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+        type: Type.TYPE_DOM
+    },
+];

@@ -13,4 +13,7 @@ var MessageType;
     MessageType["UNIT_RULE_ASSERT_ERROR"] = "UNIT_ASSERT_ERROR";
     // Puppter error
     MessageType["PUPPTER_INIT_ERROR"] = "PUPPTER_INIT_ERROR";
+    // Task message
+    MessageType["TASK_UNIT_EXEC_START"] = "TASK_UNIT_EXEC_START";
+    MessageType["TASK_UNIT_EXEC_END"] = "TASK_UNIT_EXEC_END";
 })(MessageType = exports.MessageType || (exports.MessageType = {}));

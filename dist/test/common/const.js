@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const os_1 = require("os");
 const path = require("path");
+const task_1 = require("../../source/types/task");
 // value
 exports.SEARCH_SELECTOR_VALUE = 'Botphus value';
 exports.EVENT_TIMEOUT = 3000;
@@ -23,6 +24,10 @@ exports.NORMAL_PAGE_FILE_MULTI_SELECTOR = 'form:nth-child(3) > div:nth-child(3) 
 exports.NORMAL_PAGE_DIALOG_SELECTOR = 'div:nth-child(2) > #dialog';
 exports.NORMAL_PAGE_CONSOLE_SELECTOR = 'div:nth-child(2) > #console';
 exports.NORMAL_PAGE_REQUEST_SELECTOR = 'div:nth-child(2) > #request';
+exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD = 'value';
+exports.NORMAL_PAGE_FILE_SELECTOR_FIELD = 'files';
+exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML = '<label for="search">搜索名称</label><input type="text" name="search" id="search">';
+exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT = '搜索名称';
 // Resource
 exports.RESOURCE_IMAGE_PATH = path.join(__dirname, '../../../test/src/test-image.png');
 exports.RESOURCE_PDF_PATH = path.join(__dirname, '../../../test/src/phocapdf-demo2.pdf');
@@ -42,6 +47,16 @@ exports.MYSQL_CONFIG = {
 exports.MYSQL_TABLE_NAME = 'bp_user';
 exports.MYSQL_FIELD_NAME = 'user_name';
 exports.MYSQL_FIELD_VALUE = 'Hans Zimmer';
+exports.MYSQL_CREATE_TABLE = `
+    CREATE TABLE ${exports.MYSQL_TABLE_NAME} (
+        id int(11) auto_increment NOT NULL,
+        ${exports.MYSQL_FIELD_NAME} varchar(128) NOT NULL,
+        PRIMARY KEY (id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+`;
+exports.MYSQL_INSERT_DATA = `INSERT INTO ${exports.MYSQL_TABLE_NAME} (${exports.MYSQL_FIELD_NAME}) VALUES ("${exports.MYSQL_FIELD_VALUE}")`;
+exports.MYSQL_SELECT_DATA = `SELECT * FROM ${exports.MYSQL_TABLE_NAME} WHERE ${exports.MYSQL_FIELD_NAME} = "${exports.MYSQL_FIELD_VALUE}"`;
+exports.MYSQL_DROP_TABLE = `DROP TABLE IF EXISTS ${exports.MYSQL_TABLE_NAME}`;
 /// redis
 exports.REDIS_CONFIG = {
     host: '127.0.0.1',
@@ -49,3 +64,110 @@ exports.REDIS_CONFIG = {
 };
 exports.REDIS_KEY_NAME = 'botphus:test';
 exports.REDIS_KEY_VALUE = 'Morgan Freeman';
+// Task
+exports.TASK_FULL_NAME = 'Full task';
+exports.TASK_FULL_LIST = [
+    /**
+     * Data
+     */
+    // Mysql
+    /// Create Table
+    {
+        argments: [exports.MYSQL_CREATE_TABLE],
+        assertion: ['!data'],
+        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.Type.TYPE_DATA
+    },
+    /// Inset Table
+    {
+        argments: [exports.MYSQL_INSERT_DATA],
+        assertion: ['!data'],
+        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.Type.TYPE_DATA
+    },
+    /// Select Table
+    {
+        argments: [exports.MYSQL_SELECT_DATA],
+        assertion: ['data.length === 1', 'data[0].id === 1', `data[0][${exports.MYSQL_FIELD_NAME}] === "${exports.MYSQL_FIELD_VALUE}"`],
+        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.Type.TYPE_DATA
+    },
+    /// Drop Table
+    {
+        argments: [exports.MYSQL_DROP_TABLE],
+        assertion: ['!data'],
+        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.Type.TYPE_DATA
+    },
+    // Redis
+    /// set
+    {
+        argments: [[['set', exports.REDIS_KEY_NAME, exports.REDIS_KEY_VALUE]]],
+        assertion: ['!data'],
+        subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
+        type: task_1.Type.TYPE_DATA
+    },
+    /// get
+    {
+        argments: [[['get', exports.REDIS_KEY_NAME]]],
+        assertion: ['data.length === 1', `data[0][1] === "${exports.REDIS_KEY_VALUE}"`],
+        subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
+        type: task_1.Type.TYPE_DATA
+    },
+    /// del
+    {
+        argments: [[['del', exports.REDIS_KEY_NAME]]],
+        assertion: ['!data'],
+        subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
+        type: task_1.Type.TYPE_DATA
+    },
+    /**
+     * Dom
+     */
+    // click
+    {
+        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR],
+        subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
+        type: task_1.Type.TYPE_DOM
+    },
+    // keyboard
+    {
+        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.SEARCH_SELECTOR_VALUE],
+        subType: task_1.TypeDomSubType.SUB_TYPE_KEYBOARD,
+        type: task_1.Type.TYPE_DOM
+    },
+    // getAttr
+    {
+        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
+        assertion: [`data === ${exports.SEARCH_SELECTOR_VALUE}`],
+        subType: task_1.TypeDomSubType.SUB_TYPE_GET_ATTR,
+        type: task_1.Type.TYPE_DOM
+    },
+    // setAttr
+    {
+        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD, exports.SEARCH_SELECTOR_VALUE],
+        subType: task_1.TypeDomSubType.SUB_TYPE_SET_ATTR,
+        type: task_1.Type.TYPE_DOM
+    },
+    // getHtml
+    {
+        argments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        assertion: [`data === '${exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML}'`],
+        subType: task_1.TypeDomSubType.SUB_TYPE_GET_HTML,
+        type: task_1.Type.TYPE_DOM
+    },
+    // getText
+    {
+        argments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        assertion: [`data === "${exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT}"`],
+        subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
+        type: task_1.Type.TYPE_DOM
+    },
+    // setInputFiles
+    {
+        argments: [exports.NORMAL_PAGE_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
+        assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
+        subType: task_1.TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+        type: task_1.Type.TYPE_DOM
+    },
+];

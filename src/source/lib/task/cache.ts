@@ -52,10 +52,11 @@ export function checkCache(cacheFilePath: string, taskNo: string, mtime: number)
 export function createCache(cacheFilePath: string, taskNo: string, taskRules: RuleTypeItem[]): Promise<string> {
     return template()
         .then((templateFunc) => {
-            return fse.outputFile(cacheFilePath, js(templateFunc({
+            const content = templateFunc({
                 libPath: BOTPHUS_LIB_PATH.replace(/\\/g, '\\\\'),
                 taskRules
-            })));
+            });
+            return fse.outputFile(cacheFilePath, js(content));
         })
         .then(() => taskNo)
         .catch((err) => {

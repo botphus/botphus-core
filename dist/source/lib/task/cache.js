@@ -49,10 +49,11 @@ exports.checkCache = checkCache;
 function createCache(cacheFilePath, taskNo, taskRules) {
     return handlebars_1.template()
         .then((templateFunc) => {
-        return fse.outputFile(cacheFilePath, js_beautify_1.js(templateFunc({
+        const content = templateFunc({
             libPath: const_1.BOTPHUS_LIB_PATH.replace(/\\/g, '\\\\'),
             taskRules
-        })));
+        });
+        return fse.outputFile(cacheFilePath, js_beautify_1.js(content));
     })
         .then(() => taskNo)
         .catch((err) => {

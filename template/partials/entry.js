@@ -5,6 +5,9 @@
  * @subType {{rule.subType}}
  */
 .then(function() {
+    if(excludeOption['{{rule.index}}']) return Promise.resolve();
+    // Rule exec start notice
+    sendProcessMessage([null, MessageType.TASK_UNIT_EXEC_START , '{{rule.index}}']);
     {{!-- TYPE_DATA --}}
     {{#if (eq rule.type 1)}}
     {{> entry_data rule=this}}
@@ -25,14 +28,18 @@
     {{#if (eq rule.type 5)}}
     {{> entry_page rule=this}}
     {{/if}}
+    {{#if rule.assertion}}
+    // Set assertion
+    .then(function(data) {
+        {{#each rule.assertion}}
+        if(!({{{this}}})) {
+            return Promise.reject(commonLib.createErrorMessage(new Error('Assert Failed:{{{replace this "'" "\'"}}}'), MessageType.UNIT_RULE_ASSERT_ERROR));
+        }
+        {{/each}}
+    })
+    {{/if}}
+    .then(function() {
+        // Rule exec end notice
+        return sendProcessMessage([null, MessageType.TASK_UNIT_EXEC_END , '{{rule.index}}']);
+    });
 })
-{{#if rule.assert}}
-// Set assertion
-.then(function(data) {
-    {{#each rule.assertion}}
-    if(!({{{this}}})) {
-        return Promise.reject(commonLib.createErrorMessage(new Error('Assertion Failed:{{{replace this "'" "\'"}}}'), MessageType.UNIT_RULE_ASSERT_ERROR));
-    }
-    {{/each}}
-})
-{{/if}}

@@ -1,8 +1,10 @@
 {{!-- SUB_TYPE_MYSQL --}}
-{{#if (and (eq rule.subType 100) mysqlConnectionNo)}}
-return unitLib.data.execSql(mysqlConnectionNo, '{{{replace rule.argments.[1] "'" "\'"}}}');
+{{#if (eq rule.subType 100)}}
+if(!mysqlConnectionNo) Promise.reject(new Error('"mysqlOption" is required when you use execSql'));
+return unitLib.data.execSql(mysqlConnectionNo, `{{{replace rule.argments.[0] "'" "\'"}}}`)
 {{/if}}
 {{!-- SUB_TYPE_REDIS --}}
-{{#if (and (eq rule.subType 101) redisConnectionNo)}}
-return unitLib.data.execRedis(redisConnectionNo, {{{JSONstringify rule.argments.[1]}}});
+{{#if (eq rule.subType 101)}}
+if(!redisConnectionNo) Promise.reject(new Error('"redisOption" is required when you use execRedis'));
+return unitLib.data.execRedis(redisConnectionNo, {{{JSONstringify rule.argments.[0]}}})
 {{/if}}
