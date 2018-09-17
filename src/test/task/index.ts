@@ -4,6 +4,6 @@ import removeTask from './remove';
 export default function() {
     describe('Task', () => {
         createTask();
-        // removeTask();
+        removeTask();
     });
 }
