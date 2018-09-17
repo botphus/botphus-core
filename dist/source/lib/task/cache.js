@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const fse = require("fs-extra");
+const js_beautify_1 = require("js-beautify");
 const common_1 = require("../../types/common");
 const common_2 = require("../common");
 const handlebars_1 = require("../handlebars");
@@ -48,10 +49,10 @@ exports.checkCache = checkCache;
 function createCache(cacheFilePath, taskNo, taskRules) {
     return handlebars_1.template()
         .then((templateFunc) => {
-        return fse.outputFile(cacheFilePath, templateFunc({
+        return fse.outputFile(cacheFilePath, js_beautify_1.js(templateFunc({
             libPath: const_1.BOTPHUS_LIB_PATH.replace(/\\/g, '\\\\'),
             taskRules
-        }));
+        })));
     })
         .then(() => taskNo)
         .catch((err) => {

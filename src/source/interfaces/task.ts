@@ -4,8 +4,9 @@ import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType, TypeEventSubType, T
  * 基础规则定义
  */
 interface IruleItem {
+    index?: string; // 索引
     argments?: any[]; // 规则参数
-    assert?: string[]; // 数据断言字符串
+    assertion?: string[]; // 数据断言字符串
 }
 
 /**
@@ -14,7 +15,8 @@ interface IruleItem {
 export interface IDataRuleItem extends IruleItem {
     type: Type.TYPE_DATA;
     subType: TypeDataSubType;
-    assert: string[];
+    assertion: string[];
+    argments: any[];
 }
 
 /**

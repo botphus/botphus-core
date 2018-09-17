@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "types": ["node", "mocha", "power-assert", "handlebars", "recursive-readdir", "puppeteer", "mysql", "ioredis"],
+        "types": ["node", "mocha", "power-assert", "handlebars", "recursive-readdir", "puppeteer", "mysql", "ioredis", "js-beautify"],
         "module": "commonjs",
         "target": "es6",
         "noImplicitAny": true,

@@ -2,11 +2,11 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 
 import {IBotphusConfig} from '../../interfaces/common';
-import {MessageType} from '../../types/common';
 import {RuleTypeItem} from '../../types/task';
 
-import {ErrorMessage, getTaskNoByTaskName} from '../common';
+import {getTaskNoByTaskName} from '../common';
 import {checkCache, createCache} from './cache';
+import {validTaskRules} from './valid';
 
 /**
  * Create Task & return task no
@@ -17,15 +17,14 @@ import {checkCache, createCache} from './cache';
  * @return {Promise<string>}           Promise with Task Number
  */
 export function createTask(taskName: string, mtime: number, taskRules: RuleTypeItem[], config: IBotphusConfig): Promise<string> {
-    // Check if task rule is right
-    if (taskRules.length === 0) {
-        return Promise.reject(new ErrorMessage('Task rules is empty', MessageType.TASK_RULES_RENDER_ERROR));
-    }
     const taskNo: string = getTaskNoByTaskName(taskName);
     // Cache file path for rules
     const cacheFilePath: string = path.join(config.cachePath, '/task-cache/', taskNo + '.js');
     // Check if cache exists
-    return checkCache(cacheFilePath, taskNo, mtime)
+    return validTaskRules(taskRules)
+        .then(() => {
+            return checkCache(cacheFilePath, taskNo, mtime);
+        })
         .then((curTaskNo) => {
             if (curTaskNo) {
                 return curTaskNo;
@@ -42,7 +41,7 @@ export function createTask(taskName: string, mtime: number, taskRules: RuleTypeI
  * Remove task file
  * @param  {string}         taskNo Task No
  * @param  {IBotphusConfig} config Botphus config
- * @return {Promise<void>}         Promise with none
+ * @return {Promise<void>}         Promise with nothing
  */
 export function removeTask(taskNo: string, config: IBotphusConfig): Promise<void> {
     // Cache file path
@@ -53,7 +52,7 @@ export function removeTask(taskNo: string, config: IBotphusConfig): Promise<void
 /**
  * Clear all task files from cache dir
  * @param  {IBotphusConfig} config Botphus config
- * @return {Promise<void>}         Promise with none
+ * @return {Promise<void>}         Promise with nothing
  */
 export function clearTask(config: IBotphusConfig): Promise<void> {
     return fse.emptyDir(path.join(config.cachePath, '/task-cache/'));

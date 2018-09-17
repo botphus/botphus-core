@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fse = require("fs-extra");
 const path = require("path");
-const common_1 = require("../../types/common");
-const common_2 = require("../common");
+const common_1 = require("../common");
 const cache_1 = require("./cache");
+const valid_1 = require("./valid");
 /**
  * Create Task & return task no
  * @param  {string}          taskName  Task Name
@@ -14,15 +14,14 @@ const cache_1 = require("./cache");
  * @return {Promise<string>}           Promise with Task Number
  */
 function createTask(taskName, mtime, taskRules, config) {
-    // Check if task rule is right
-    if (taskRules.length === 0) {
-        return Promise.reject(new common_2.ErrorMessage('Task rules is empty', common_1.MessageType.TASK_RULES_RENDER_ERROR));
-    }
-    const taskNo = common_2.getTaskNoByTaskName(taskName);
+    const taskNo = common_1.getTaskNoByTaskName(taskName);
     // Cache file path for rules
     const cacheFilePath = path.join(config.cachePath, '/task-cache/', taskNo + '.js');
     // Check if cache exists
-    return cache_1.checkCache(cacheFilePath, taskNo, mtime)
+    return valid_1.validTaskRules(taskRules)
+        .then(() => {
+        return cache_1.checkCache(cacheFilePath, taskNo, mtime);
+    })
         .then((curTaskNo) => {
         if (curTaskNo) {
             return curTaskNo;
@@ -39,7 +38,7 @@ exports.createTask = createTask;
  * Remove task file
  * @param  {string}         taskNo Task No
  * @param  {IBotphusConfig} config Botphus config
- * @return {Promise<void>}         Promise with none
+ * @return {Promise<void>}         Promise with nothing
  */
 function removeTask(taskNo, config) {
     // Cache file path
@@ -50,7 +49,7 @@ exports.removeTask = removeTask;
 /**
  * Clear all task files from cache dir
  * @param  {IBotphusConfig} config Botphus config
- * @return {Promise<void>}         Promise with none
+ * @return {Promise<void>}         Promise with nothing
  */
 function clearTask(config) {
     return fse.emptyDir(path.join(config.cachePath, '/task-cache/'));

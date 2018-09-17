@@ -27,9 +27,9 @@
     {{/if}}
 })
 {{#if rule.assert}}
-// Set assert function
+// Set assertion
 .then(function(data) {
-    {{#each rule.assert}}
+    {{#each rule.assertion}}
     if(!({{{this}}})) {
         return Promise.reject(commonLib.createErrorMessage(new Error('Assertion Failed:{{{replace this "'" "\'"}}}'), MessageType.UNIT_RULE_ASSERT_ERROR));
     }

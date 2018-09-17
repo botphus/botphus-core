@@ -19,8 +19,8 @@ export default function() {
             const taskName = 'test task';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    argments: ['div', '1'],
-                    assert: ['data.type === `123`', 'data.name === \'123\''],
+                    argments: ['div'],
+                    assertion: ['data.type === `123`', 'data.name === \'123\''],
                     subType: TypeDomSubType.SUB_TYPE_GET_TEXT,
                     type: Type.TYPE_DOM
                 }
@@ -35,7 +35,9 @@ export default function() {
             const taskName = 'test task2';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    argments: [100],
+                    argments: [100, (info: any) => {
+                        return info.args;
+                    }],
                     children: [
                         {
                             argments: ['div'],

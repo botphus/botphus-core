@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
+import {js} from 'js-beautify';
 
 import {MessageType} from '../../types/common';
 import {RuleTypeItem} from '../../types/task';
@@ -51,10 +52,10 @@ export function checkCache(cacheFilePath: string, taskNo: string, mtime: number)
 export function createCache(cacheFilePath: string, taskNo: string, taskRules: RuleTypeItem[]): Promise<string> {
     return template()
         .then((templateFunc) => {
-            return fse.outputFile(cacheFilePath, templateFunc({
+            return fse.outputFile(cacheFilePath, js(templateFunc({
                 libPath: BOTPHUS_LIB_PATH.replace(/\\/g, '\\\\'),
                 taskRules
-            }));
+            })));
         })
         .then(() => taskNo)
         .catch((err) => {
