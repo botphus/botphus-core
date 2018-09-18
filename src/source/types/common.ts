@@ -7,7 +7,7 @@ export enum MessageType {
     TASK_RULES_RENDER_ERROR = 'TASK_RULES_RENDER_ERROR', // When task rules cache render error
     // Unit Rule message
     UNIT_RULE_EXEC_ERROR = 'UNIT_RULE_EXEC_ERROR', // When unit rule exec failed
-    UNIT_RULE_ASSERT_ERROR = 'UNIT_ASSERT_ERROR', // When assert unit rule's result error
+    UNIT_RULE_ASSERT_ERROR = 'UNIT_RULE_ASSERT_ERROR', // When assert unit rule's result error
     // Puppter error
     PUPPTER_INIT_ERROR = 'PUPPTER_INIT_ERROR', // When puppter init failed
     // Task message

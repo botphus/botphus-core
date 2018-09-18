@@ -20,3 +20,9 @@ return eventFunc(page, {{rule.argments.[0]}}, function() {
         {{> entry rule=this}}
         {{/each}}
 }, {{{rule.argments.[1]}}})
+{{!-- SUB_TYPE_RESPONSE: json data --}}
+{{#if (eq rule.subType 301)}}
+    .then((response) => {
+        return response.json();
+    })
+{{/if}}

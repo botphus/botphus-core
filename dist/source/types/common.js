@@ -10,7 +10,7 @@ var MessageType;
     MessageType["TASK_RULES_RENDER_ERROR"] = "TASK_RULES_RENDER_ERROR";
     // Unit Rule message
     MessageType["UNIT_RULE_EXEC_ERROR"] = "UNIT_RULE_EXEC_ERROR";
-    MessageType["UNIT_RULE_ASSERT_ERROR"] = "UNIT_ASSERT_ERROR";
+    MessageType["UNIT_RULE_ASSERT_ERROR"] = "UNIT_RULE_ASSERT_ERROR";
     // Puppter error
     MessageType["PUPPTER_INIT_ERROR"] = "PUPPTER_INIT_ERROR";
     // Task message

@@ -60,7 +60,11 @@ puppeteer.launch(puppeteerLaunchOption)
                 endProcess(browser);
             })
             .catch(function(err) {
-                sendProcessMessage([commonLib.createErrorMessage(err, MessageType.UNIT_RULE_EXEC_ERROR)]);
+                if(err.type) {
+                    sendProcessMessage([err]);
+                } else {
+                    sendProcessMessage([commonLib.createErrorMessage(err, MessageType.UNIT_RULE_EXEC_ERROR)]);
+                }
                 endProcess(browser);
             });
     })

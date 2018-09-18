@@ -180,7 +180,9 @@ function pageTypeCheckAndRebuild(taskRule) {
                 if (!(typeof taskRule.argments[0] === 'object')) {
                     return new Error('SUB_TYPE_SCREENSHOT\'s option must be object');
                 }
-                taskRule.argments[0] = {};
+            }
+            else {
+                taskRule.argments = [{}];
             }
             break;
     }

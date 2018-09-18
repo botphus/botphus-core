@@ -139,7 +139,7 @@ exports.TASK_FULL_LIST = [
     // getAttr
     {
         argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
-        assertion: [`data === ${exports.SEARCH_SELECTOR_VALUE}`],
+        assertion: [`data === "${exports.SEARCH_SELECTOR_VALUE}"`],
         subType: task_1.TypeDomSubType.SUB_TYPE_GET_ATTR,
         type: task_1.Type.TYPE_DOM
     },
@@ -169,5 +169,134 @@ exports.TASK_FULL_LIST = [
         assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
         subType: task_1.TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
         type: task_1.Type.TYPE_DOM
+    },
+    /**
+     * Event
+     */
+    // dialog
+    {
+        argments: [exports.EVENT_TIMEOUT],
+        assertion: [`dialog.message() === "${exports.DIALOG_VALUE}"`, 'dialog.type() === "alert"'],
+        assertionVarName: 'dialog',
+        children: [
+            {
+                argments: [exports.NORMAL_PAGE_DIALOG_SELECTOR],
+                subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
+                type: task_1.Type.TYPE_DOM
+            }
+        ],
+        promptText: 'Botphus',
+        subType: task_1.TypeEventSubType.SUB_TYPE_DIALOG,
+        type: task_1.Type.TYPE_EVENT
+    },
+    // console
+    {
+        argments: [exports.EVENT_TIMEOUT],
+        assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 1', `consoleMessage.text() === "${exports.CONSOLE_VALUE}"`],
+        assertionVarName: 'consoleMessage',
+        children: [
+            {
+                argments: [exports.NORMAL_PAGE_CONSOLE_SELECTOR],
+                subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
+                type: task_1.Type.TYPE_DOM
+            }
+        ],
+        subType: task_1.TypeEventSubType.SUB_TYPE_CONSOLE,
+        type: task_1.Type.TYPE_EVENT
+    },
+    // request & response
+    {
+        argments: [exports.EVENT_TIMEOUT, (request) => {
+                return request.url() === 'https://api.github.com/';
+            }],
+        assertion: [`request.method() === "GET"`],
+        children: [
+            {
+                argments: [exports.EVENT_TIMEOUT, (response) => {
+                        return response.url() === 'https://api.github.com/';
+                    }],
+                assertion: ['resData'],
+                assertionVarName: 'resData',
+                children: [
+                    {
+                        argments: [exports.NORMAL_PAGE_REQUEST_SELECTOR],
+                        subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
+                        type: task_1.Type.TYPE_DOM
+                    }
+                ],
+                subType: task_1.TypeEventSubType.SUB_TYPE_RESPONSE,
+                type: task_1.Type.TYPE_EVENT
+            }
+        ],
+        subType: task_1.TypeEventSubType.SUB_TYPE_REQUEST,
+        type: task_1.Type.TYPE_EVENT
+    },
+    /**
+     * Time
+     */
+    {
+        argments: [exports.SLEEP_TIME],
+        subType: task_1.TypeTimeSubType.SUB_TYPE_SET_SLEEP,
+        type: task_1.Type.TYPE_TIME
+    },
+    /**
+     * Page
+     */
+    // setCookie
+    {
+        argments: [[
+                {
+                    name: exports.COOKIE_NAME,
+                    url: exports.COOKIE_URL,
+                    value: exports.COOKIE_VALUE
+                }
+            ]],
+        subType: task_1.TypePageSubType.SUB_TYPE_SET_COOKIE,
+        type: task_1.Type.TYPE_PAGE
+    },
+    // reload
+    {
+        subType: task_1.TypePageSubType.SUB_TYPE_RELOAD,
+        type: task_1.Type.TYPE_PAGE
+    },
+    // getCookie
+    {
+        argments: [[exports.COOKIE_URL]],
+        assertion: ['cookies.length === 1', `cookies[0].domain === "${exports.COOKIE_DOMAIN}"`, `cookies[0].name === "${exports.COOKIE_NAME}"`, `cookies[0].value === "${exports.COOKIE_VALUE}"`],
+        assertionVarName: 'cookies',
+        subType: task_1.TypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: task_1.Type.TYPE_PAGE
+    },
+    // deleteCookie
+    {
+        argments: [[
+                {
+                    name: exports.COOKIE_NAME,
+                    url: exports.COOKIE_URL
+                }
+            ]],
+        subType: task_1.TypePageSubType.SUB_TYPE_DELETE_COOKIE,
+        type: task_1.Type.TYPE_PAGE
+    },
+    // getCookie
+    {
+        argments: [[exports.COOKIE_URL]],
+        assertion: ['cookies.length === 0'],
+        assertionVarName: 'cookies',
+        subType: task_1.TypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: task_1.Type.TYPE_PAGE
+    },
+    // goto
+    {
+        argments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        subType: task_1.TypePageSubType.SUB_TYPE_GOTO,
+        type: task_1.Type.TYPE_PAGE
+    },
+    // screenShot
+    {
+        assertion: ['value instanceof Buffer'],
+        assertionVarName: 'value',
+        subType: task_1.TypePageSubType.SUB_TYPE_SCREENSHOT,
+        type: task_1.Type.TYPE_PAGE
     },
 ];

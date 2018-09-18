@@ -20,9 +20,7 @@ export default function() {
                                         .then((dialog) => {
                                             assert(dialog.message() === CONST.DIALOG_VALUE);
                                             assert(dialog.type() === 'alert');
-                                            dialog.dismiss();
-                                            // Sleep for code run end
-                                            return botphusUnit.time.sleep(CONST.SLEEP_TIME);
+                                            return dialog.accept();
                                         });
                                 })
                                 .then(() => {
@@ -50,8 +48,6 @@ export default function() {
                                             assert(consoleMessage.type() === 'log');
                                             assert(consoleMessage.args().length === 1);
                                             assert(consoleMessage.text() === CONST.CONSOLE_VALUE);
-                                            // Sleep for code run end
-                                            return botphusUnit.time.sleep(CONST.SLEEP_TIME);
                                         });
                                 })
                                 .then(() => {
@@ -88,8 +84,6 @@ export default function() {
                                         })
                                         .then((resData) => {
                                             assert(resData);
-                                            // Sleep for code run end
-                                            return botphusUnit.time.sleep(CONST.SLEEP_TIME);
                                         });
                                 })
                                 .then(() => {

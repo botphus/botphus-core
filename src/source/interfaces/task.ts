@@ -1,16 +1,18 @@
 import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType, TypeEventSubType, TypePageSubType, TypeTimeSubType} from '../types/task';
 
 /**
- * 基础规则定义
+ * Basic rule
  */
 interface IruleItem {
-    index?: string; // 索引
-    argments?: any[]; // 规则参数
-    assertion?: string[]; // 数据断言字符串
+    index?: string; // Index number, auto create
+    argments?: any[]; // Rule argments
+    assertion?: string[]; // Assertion list
+    assertionVarName?: string; // Assertion variable name
+    // children: RuleTypeItem[] for some type
 }
 
 /**
- * 数据类规则
+ * Data Rule
  */
 export interface IDataRuleItem extends IruleItem {
     type: Type.TYPE_DATA;
@@ -20,7 +22,7 @@ export interface IDataRuleItem extends IruleItem {
 }
 
 /**
- * DOM类规则
+ * Dom Rule
  */
 export interface IDomRuleItem extends IruleItem {
     type: Type.TYPE_DOM;
@@ -29,7 +31,7 @@ export interface IDomRuleItem extends IruleItem {
 }
 
 /**
- * 事件类规则
+ * Event Rule
  */
 export interface IEventRuleItem extends IruleItem {
     type: Type.TYPE_EVENT;
@@ -37,8 +39,14 @@ export interface IEventRuleItem extends IruleItem {
     children: RuleTypeItem[];
 }
 
+// Event dialog rule
+export interface IEventDialogRuleItem extends IEventRuleItem {
+    subType: TypeEventSubType.SUB_TYPE_DIALOG;
+    promptText?: string; // A text to enter in prompt. Does not cause any effects if the dialog's type is not prompt. default is "confirm"
+}
+
 /**
- * 时间类规则
+ * Time Rule
  */
 export interface ITimeRuleItem extends IruleItem {
     type: Type.TYPE_TIME;
@@ -46,7 +54,7 @@ export interface ITimeRuleItem extends IruleItem {
 }
 
 /**
- * 页面类规则
+ * Page Rule
  */
 export interface IPageRuleItem extends IruleItem {
     type: Type.TYPE_PAGE;

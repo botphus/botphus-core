@@ -30,12 +30,22 @@
     {{/if}}
     {{#if rule.assertion}}
     // Set assertion
-    .then(function(data) {
+    .then(function({{#if rule.assertionVarName}}{{rule.assertionVarName}}{{else}}data{{/if}}) {
         {{#each rule.assertion}}
         if(!({{{this}}})) {
             return Promise.reject(commonLib.createErrorMessage(new Error('Assert Failed:{{{replace this "'" "\'"}}}'), MessageType.UNIT_RULE_ASSERT_ERROR));
         }
         {{/each}}
+        {{!-- SUB_TYPE_DIALOG --}}
+        {{#if (eq rule.subType 303)}}
+        return {{#if rule.assertionVarName}}{{rule.assertionVarName}}{{else}}data{{/if}};
+        {{/if}}
+    })
+    {{/if}}
+    {{!-- SUB_TYPE_DIALOG --}}
+    {{#if (eq rule.subType 303)}}
+    .then((dialog) => {
+        return dialog.accept('{{#if rule.promptText}}{{{replace rule.promptText "'" "\'"}}}{{else}}confirm{{/if}}');
     })
     {{/if}}
     .then(function() {

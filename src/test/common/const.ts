@@ -1,7 +1,7 @@
 import {tmpdir} from 'os';
 import * as path from 'path';
 
-import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType} from '../../source/types/task';
+import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType, TypeEventSubType, TypePageSubType, TypeTimeSubType} from '../../source/types/task';
 
 // value
 export const SEARCH_SELECTOR_VALUE = 'Botphus value';
@@ -147,7 +147,7 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     // getAttr
     {
         argments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
-        assertion: [`data === ${SEARCH_SELECTOR_VALUE}`],
+        assertion: [`data === "${SEARCH_SELECTOR_VALUE}"`],
         subType: TypeDomSubType.SUB_TYPE_GET_ATTR,
         type: Type.TYPE_DOM
     },
@@ -177,5 +177,134 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
         assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
         subType: TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
         type: Type.TYPE_DOM
+    },
+    /**
+     * Event
+     */
+    // dialog
+    {
+        argments: [EVENT_TIMEOUT],
+        assertion: [`dialog.message() === "${DIALOG_VALUE}"`, 'dialog.type() === "alert"'],
+        assertionVarName: 'dialog',
+        children: [
+            {
+                argments: [NORMAL_PAGE_DIALOG_SELECTOR],
+                subType: TypeDomSubType.SUB_TYPE_CLICK,
+                type: Type.TYPE_DOM
+            }
+        ],
+        promptText: 'Botphus',
+        subType: TypeEventSubType.SUB_TYPE_DIALOG,
+        type: Type.TYPE_EVENT
+    },
+    // console
+    {
+        argments: [EVENT_TIMEOUT],
+        assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 1', `consoleMessage.text() === "${CONSOLE_VALUE}"`],
+        assertionVarName: 'consoleMessage',
+        children: [
+            {
+                argments: [NORMAL_PAGE_CONSOLE_SELECTOR],
+                subType: TypeDomSubType.SUB_TYPE_CLICK,
+                type: Type.TYPE_DOM
+            }
+        ],
+        subType: TypeEventSubType.SUB_TYPE_CONSOLE,
+        type: Type.TYPE_EVENT
+    },
+    // request & response
+    {
+        argments: [EVENT_TIMEOUT, (request: any) => {
+            return request.url() === 'https://api.github.com/';
+        }],
+        assertion: [`request.method() === "GET"`],
+        children: [
+            {
+                argments: [EVENT_TIMEOUT, (response: any) => {
+                    return response.url() === 'https://api.github.com/';
+                }],
+                assertion: ['resData'],
+                assertionVarName: 'resData',
+                children: [
+                    {
+                        argments: [NORMAL_PAGE_REQUEST_SELECTOR],
+                        subType: TypeDomSubType.SUB_TYPE_CLICK,
+                        type: Type.TYPE_DOM
+                    }
+                ],
+                subType: TypeEventSubType.SUB_TYPE_RESPONSE,
+                type: Type.TYPE_EVENT
+            }
+        ],
+        subType: TypeEventSubType.SUB_TYPE_REQUEST,
+        type: Type.TYPE_EVENT
+    },
+    /**
+     * Time
+     */
+    {
+        argments: [SLEEP_TIME],
+        subType: TypeTimeSubType.SUB_TYPE_SET_SLEEP,
+        type: Type.TYPE_TIME
+    },
+    /**
+     * Page
+     */
+    // setCookie
+    {
+        argments: [[
+            {
+                name: COOKIE_NAME,
+                url: COOKIE_URL,
+                value: COOKIE_VALUE
+            }
+        ]],
+        subType: TypePageSubType.SUB_TYPE_SET_COOKIE,
+        type: Type.TYPE_PAGE
+    },
+    // reload
+    {
+        subType: TypePageSubType.SUB_TYPE_RELOAD,
+        type: Type.TYPE_PAGE
+    },
+    // getCookie
+    {
+        argments: [[COOKIE_URL]],
+        assertion: ['cookies.length === 1', `cookies[0].domain === "${COOKIE_DOMAIN}"`, `cookies[0].name === "${COOKIE_NAME}"`, `cookies[0].value === "${COOKIE_VALUE}"`],
+        assertionVarName: 'cookies',
+        subType: TypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: Type.TYPE_PAGE
+    },
+    // deleteCookie
+    {
+        argments: [[
+            {
+                name: COOKIE_NAME,
+                url: COOKIE_URL
+            }
+        ]],
+        subType: TypePageSubType.SUB_TYPE_DELETE_COOKIE,
+        type: Type.TYPE_PAGE
+    },
+    // getCookie
+    {
+        argments: [[COOKIE_URL]],
+        assertion: ['cookies.length === 0'],
+        assertionVarName: 'cookies',
+        subType: TypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: Type.TYPE_PAGE
+    },
+    // goto
+    {
+        argments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        subType: TypePageSubType.SUB_TYPE_GOTO,
+        type: Type.TYPE_PAGE
+    },
+    // screenShot
+    {
+        assertion: ['value instanceof Buffer'],
+        assertionVarName: 'value',
+        subType: TypePageSubType.SUB_TYPE_SCREENSHOT,
+        type: Type.TYPE_PAGE
     },
 ];

@@ -19,9 +19,7 @@ function default_1() {
                             .then((dialog) => {
                             assert(dialog.message() === CONST.DIALOG_VALUE);
                             assert(dialog.type() === 'alert');
-                            dialog.dismiss();
-                            // Sleep for code run end
-                            return unit_1.default.time.sleep(CONST.SLEEP_TIME);
+                            return dialog.accept();
                         });
                     })
                         .then(() => {
@@ -49,8 +47,6 @@ function default_1() {
                             assert(consoleMessage.type() === 'log');
                             assert(consoleMessage.args().length === 1);
                             assert(consoleMessage.text() === CONST.CONSOLE_VALUE);
-                            // Sleep for code run end
-                            return unit_1.default.time.sleep(CONST.SLEEP_TIME);
                         });
                     })
                         .then(() => {
@@ -87,8 +83,6 @@ function default_1() {
                         })
                             .then((resData) => {
                             assert(resData);
-                            // Sleep for code run end
-                            return unit_1.default.time.sleep(CONST.SLEEP_TIME);
                         });
                     })
                         .then(() => {

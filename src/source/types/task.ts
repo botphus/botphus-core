@@ -1,10 +1,10 @@
-import {IDataRuleItem, IDomRuleItem, IEventRuleItem, IPageRuleItem, ITimeRuleItem} from '../interfaces/task';
+import {IDataRuleItem, IDomRuleItem, IEventDialogRuleItem, IEventRuleItem, IPageRuleItem, ITimeRuleItem} from '../interfaces/task';
 
 /**
  * Combine different rule item to one
  * @type {Object}
  */
-export type RuleTypeItem = IDataRuleItem | IDomRuleItem | IEventRuleItem | ITimeRuleItem | IPageRuleItem;
+export type RuleTypeItem = IDataRuleItem | IDomRuleItem | IEventDialogRuleItem | IEventRuleItem | ITimeRuleItem | IPageRuleItem;
 
 /**
  * Task Type
