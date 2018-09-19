@@ -9,6 +9,7 @@ return unitLib.page.setCookie(page, {{{JSONstringify rule.argments.[0]}}})
 {{!-- SUB_TYPE_GET_COOKIE --}}
 {{#if (eq rule.subType 502)}}
 return unitLib.page.getCookie(page, {{{JSONstringify rule.argments.[0]}}})
+{{> data_send rule=this}}
 {{/if}}
 {{!-- SUB_TYPE_DELETE_COOKIE --}}
 {{#if (eq rule.subType 503)}}

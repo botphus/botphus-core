@@ -6,8 +6,16 @@
  */
 .then(function() {
     if(excludeOption['{{rule.index}}']) return Promise.resolve();
+    totalCase++;
+    curOrder++;
     // Rule exec start notice
-    sendProcessMessage([null, MessageType.TASK_UNIT_EXEC_START , '{{rule.index}}']);
+    sendProcessMessage([null, {
+        type: MessageType.TASK_UNIT_EXEC_START,
+        index: '{{rule.index}}',
+        order: curOrder,
+        sendTime: new Date().getTime()
+    }]);
+    {{!-- Start task unit --}}
     {{!-- TYPE_DATA --}}
     {{#if (eq rule.type 1)}}
     {{> entry_data rule=this}}
@@ -50,6 +58,11 @@
     {{/if}}
     .then(function() {
         // Rule exec end notice
-        return sendProcessMessage([null, MessageType.TASK_UNIT_EXEC_END , '{{rule.index}}']);
+        sendProcessMessage([null, {
+            type: MessageType.TASK_UNIT_EXEC_END,
+            index: '{{rule.index}}',
+            order: curOrder,
+            sendTime: new Date().getTime()
+        }]);
     });
 })

@@ -12,10 +12,10 @@ const mysqlLib = require(path.join('{{libPath}}', '/dist/source/lib/connection/m
 const redisLib = require(path.join('{{libPath}}', '/dist/source/lib/connection/redis'));
 
 // Init process parmas
-const puppeteerLaunchOption = process.env.puppeteerLaunchOption;
-const mysqlOption = process.env.mysqlOption;
-const redisOption = process.env.redisOption;
-const excludeOption = process.env.excludeOption;
+const puppeteerLaunchOption = process.env.PUPPETEER_LAUNCH_OPTION ? JSON.parse(process.env.PUPPETEER_LAUNCH_OPTION) : null;
+const mysqlOption = process.env.MYSQL_OPTION ? JSON.parse(process.env.MYSQL_OPTION) : null;
+const redisOption = process.env.REDIS_OPTION ? JSON.parse(process.env.REDIS_OPTION) : null;
+const excludeOption = process.env.EXCLUDE_OPTION ? JSON.parse(process.env.EXCLUDE_OPTION) : {};
 
 // Init mysql & redis
 let mysqlConnectionNo = '';
@@ -27,13 +27,32 @@ if(redisOption) {
     redisConnectionNo = redisLib.createRedisConnection(redisOption);
 }
 
+// Cover info
+let totalCase = 0; // Total case count
+let curOrder = 0; // Cur case order
+
 /**
  * Send Process message
  * @param  {Array|Error}  message message info
  */
 function sendProcessMessage(message) {
-    if(process.send) process.send(message);
-    else console.log(message);
+    const err = message[0];
+    if(process.send) {
+        // Rebuild error message for parent process
+        if(err) {
+            message[0] = {
+                type: err.type,
+                name: err.name,
+                message: err.message,
+                stack: err.stack
+            }
+        }
+        return process.send(message);
+    }
+    if(err) {
+        return console.error(err);
+    }
+    console.log(message);
 }
 
 /**
@@ -46,18 +65,36 @@ function endProcess(browser) {
     if(redisConnectionNo) redisLib.redisConnectionCache[redisConnectionNo].quit();
 }
 
+sendProcessMessage([null, {
+    type: MessageType.TASK_START,
+    index: 'start',
+    puppeteerLaunchOption: puppeteerLaunchOption,
+    mysqlOption: mysqlOption,
+    redisOption: redisOption,
+    excludeOption: excludeOption,
+    sendTime: new Date().getTime()
+}]);
+
 // Get parent 
-puppeteer.launch(puppeteerLaunchOption)
+(puppeteerLaunchOption ? puppeteer.launch(puppeteerLaunchOption) : puppeteer.launch())
     .then(function(browser) {
         return browser.newPage()
             .then(function(page) {
-                return page.goto(process.env.START_PAGE)
+                const startFunc = process.env.START_PAGE ? page.goto(process.env.START_PAGE) : Promise.resolve();
+                return startFunc
                     {{#each taskRules}}
                     {{> entry rule=this }}
                     {{/each}}
             })
             .then(function() {
+                // Close browser & send end message
                 endProcess(browser);
+                sendProcessMessage([null, {
+                    type: MessageType.TASK_END,
+                    index: 'end',
+                    totalCase: totalCase,
+                    sendTime: new Date().getTime()
+                }]);
             })
             .catch(function(err) {
                 if(err.type) {

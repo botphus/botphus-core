@@ -69,6 +69,7 @@ export const REDIS_CONFIG = {
   host: '127.0.0.1',
   port: 6379
 };
+
 export const REDIS_KEY_NAME = 'botphus:test';
 export const REDIS_KEY_VALUE = 'Morgan Freeman';
 
@@ -82,28 +83,28 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     /// Create Table
     {
         argments: [MYSQL_CREATE_TABLE],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: TypeDataSubType.SUB_TYPE_MYSQL,
         type: Type.TYPE_DATA
     },
     /// Inset Table
     {
         argments: [MYSQL_INSERT_DATA],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: TypeDataSubType.SUB_TYPE_MYSQL,
         type: Type.TYPE_DATA
     },
     /// Select Table
     {
         argments: [MYSQL_SELECT_DATA],
-        assertion: ['data.length === 1', 'data[0].id === 1', `data[0][${MYSQL_FIELD_NAME}] === "${MYSQL_FIELD_VALUE}"`],
+        assertion: ['data.length === 1', 'data[0].id === 1', `data[0].${MYSQL_FIELD_NAME} === "${MYSQL_FIELD_VALUE}"`],
         subType: TypeDataSubType.SUB_TYPE_MYSQL,
         type: Type.TYPE_DATA
     },
     /// Drop Table
     {
         argments: [MYSQL_DROP_TABLE],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: TypeDataSubType.SUB_TYPE_MYSQL,
         type: Type.TYPE_DATA
     },
@@ -111,7 +112,7 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     /// set
     {
         argments: [[['set', REDIS_KEY_NAME, REDIS_KEY_VALUE]]],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: TypeDataSubType.SUB_TYPE_REDIS,
         type: Type.TYPE_DATA
     },
@@ -125,9 +126,15 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     /// del
     {
         argments: [[['del', REDIS_KEY_NAME]]],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: TypeDataSubType.SUB_TYPE_REDIS,
         type: Type.TYPE_DATA
+    },
+    // goto
+    {
+        argments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        subType: TypePageSubType.SUB_TYPE_GOTO,
+        type: Type.TYPE_PAGE
     },
     /**
      * Dom
@@ -174,8 +181,14 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     // setInputFiles
     {
         argments: [NORMAL_PAGE_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
-        assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
         subType: TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+        type: Type.TYPE_DOM
+    },
+    // getAttr
+    {
+        argments: [NORMAL_PAGE_FILE_SELECTOR, NORMAL_PAGE_FILE_SELECTOR_FIELD],
+        assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
+        subType: TypeDomSubType.SUB_TYPE_GET_ATTR,
         type: Type.TYPE_DOM
     },
     /**
@@ -214,15 +227,12 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     },
     // request & response
     {
-        argments: [EVENT_TIMEOUT, (request: any) => {
-            return request.url() === 'https://api.github.com/';
-        }],
+        argments: [EVENT_TIMEOUT],
         assertion: [`request.method() === "GET"`],
+        assertionVarName: 'request',
         children: [
             {
-                argments: [EVENT_TIMEOUT, (response: any) => {
-                    return response.url() === 'https://api.github.com/';
-                }],
+                argments: [EVENT_TIMEOUT],
                 assertion: ['resData'],
                 assertionVarName: 'resData',
                 children: [
@@ -308,3 +318,15 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
         type: Type.TYPE_PAGE
     },
 ];
+
+let taskCaseCount = 0;
+function countFullList(list: RuleTypeItem[]) {
+    list.forEach((rule: RuleTypeItem) => {
+        taskCaseCount++;
+        if (rule.type === Type.TYPE_EVENT) {
+            countFullList(rule.children);
+        }
+    });
+}
+countFullList(TASK_FULL_LIST);
+export const TASK_FULL_LIST_CASE_COUNT = taskCaseCount;

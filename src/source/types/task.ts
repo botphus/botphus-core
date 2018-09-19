@@ -1,4 +1,19 @@
-import {IDataRuleItem, IDomRuleItem, IEventDialogRuleItem, IEventRuleItem, IPageRuleItem, ITimeRuleItem} from '../interfaces/task';
+import {IErrorMessage} from '../interfaces/common';
+import {
+    IDataRuleItem, IDomRuleItem, IEventDialogRuleItem, IEventRuleItem, IPageRuleItem,
+    ITaskEndMessage, ITaskStartMessage, ITaskUnitMessage, ItaskUnitReceiveDataMessage, ITimeRuleItem
+} from '../interfaces/task';
+
+/**
+ * Task Message Data
+ * @type {Object}
+ */
+export type TaskMessageData = ITaskUnitMessage | ITaskStartMessage | ITaskEndMessage | ItaskUnitReceiveDataMessage;
+/**
+ * Task Message
+ * @type {Array}
+ */
+export type TaskMessage = [IErrorMessage, TaskMessageData];
 
 /**
  * Combine different rule item to one

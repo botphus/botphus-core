@@ -1,10 +1,12 @@
+import {ChildProcess} from 'child_process';
 import {tmpdir} from 'os';
 import {join} from 'path';
 
 import {IBotphusConfig} from './interfaces/common';
+import {ITaskStartOption} from './interfaces/task';
 import {RuleTypeItem} from './types/task';
 
-import {clearTask, createTask, removeTask} from './lib/task';
+import {clearTask, createTask, removeTask, startTask} from './lib/task';
 
 /**
  * Botphus Core Task
@@ -43,9 +45,15 @@ class BotphusCore {
     public clearTask(): Promise<void> {
         return clearTask(this.config);
     }
-    // todo, 开始任务,返回任务执行子进程
-    public startTask(): any {
-        return '';
+    /**
+     * Start task
+     * @param  {string}                taskNo      Task No
+     * @param  {string}                startPage   Task start page
+     * @param  {ITaskStartOption={}}   startOption Task start option
+     * @return {Promise<ChildProcess>}             Promise with task child process
+     */
+    public startTask(taskNo: string, startPage: string, startOption: ITaskStartOption = {}): Promise<ChildProcess> {
+        return startTask(taskNo, startPage, startOption, this.config);
     }
 }
 

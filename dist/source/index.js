@@ -36,9 +36,15 @@ class BotphusCore {
     clearTask() {
         return task_1.clearTask(this.config);
     }
-    // todo, 开始任务,返回任务执行子进程
-    startTask() {
-        return '';
+    /**
+     * Start task
+     * @param  {string}                taskNo      Task No
+     * @param  {string}                startPage   Task start page
+     * @param  {ITaskStartOption={}}   startOption Task start option
+     * @return {Promise<ChildProcess>}             Promise with task child process
+     */
+    startTask(taskNo, startPage, startOption = {}) {
+        return task_1.startTask(taskNo, startPage, startOption, this.config);
     }
 }
 exports.default = BotphusCore;

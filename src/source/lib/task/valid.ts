@@ -52,11 +52,10 @@ function loopRules(taskRules: RuleTypeItem[], parentIndex?: string): Error {
  */
 function assignTaskRule(taskRule: RuleTypeItem): Error {
     // Check common fields
-    /* istanbul ignore next */
-    if (taskRule.assertion && taskRule.assertion.some((assertionStr) => {
+    if (taskRule.assertion && (taskRule.assertion.length === 0 || taskRule.assertion.some((assertionStr) => {
         return typeof assertionStr !== 'string';
-    })) {
-        return new Error('Assert content must be string');
+    }))) {
+        return new Error('Assertion list can\'t be empty array & list item\'s content must be string');
     }
     switch (taskRule.type) {
         case Type.TYPE_DATA:
@@ -141,7 +140,7 @@ function domTypeCheckAndRebuild(taskRule: IDomRuleItem): Error {
  */
 function eventTypeCheckAndRebuild(taskRule: IEventRuleItem): Error {
     // Valid common fields
-    if (!(taskRule.children && Array.isArray(taskRule.children))) {
+    if (!(taskRule.children && Array.isArray(taskRule.children) && taskRule.children.length > 0)) {
         return new Error('Data type rule must have children field');
     }
     if (!(taskRule.argments && (taskRule.argments.length === 1 || taskRule.argments.length === 2)
@@ -201,7 +200,7 @@ function pageTypeCheckAndRebuild(taskRule: IPageRuleItem): Error {
 function timeTypeCheckAndRebuild(taskRule: ITimeRuleItem): Error {
     switch (taskRule.subType) {
         case TypeTimeSubType.SUB_TYPE_SET_SLEEP:
-            if (!(taskRule.argments && typeof taskRule.argments[0])) {
+            if (!(taskRule.argments && typeof taskRule.argments[0] === 'number')) {
                 return new Error('SUB_TYPE_SET_SLEEP must have sleepTime & sleepTime must be millisecond number.');
             }
             break;

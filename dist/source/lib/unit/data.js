@@ -11,7 +11,12 @@ const redis_1 = require("../connection/redis");
  */
 function execSql(connectionNo, sqlQuery) {
     return new Promise((resolve, reject) => {
+        if (!mysql_1.mysqlConnectionCache[connectionNo]) {
+            return reject(new Error(`MySql connection No "${connectionNo}" is not exist`));
+        }
         mysql_1.mysqlConnectionCache[connectionNo].query(sqlQuery, (error, results) => {
+            // Unreachable code in test
+            /* istanbul ignore next */
             if (error) {
                 return reject(error);
             }
@@ -28,6 +33,9 @@ exports.execSql = execSql;
  * @return {Promise<any>}              Promise with return data
  */
 function execRedis(connectionNo, commands) {
+    if (!redis_1.redisConnectionCache[connectionNo]) {
+        return Promise.reject(new Error(`Redis connection No "${connectionNo}" is not exist`));
+    }
     return redis_1.redisConnectionCache[connectionNo].multi(commands).exec();
 }
 exports.execRedis = execRedis;

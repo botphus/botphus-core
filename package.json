@@ -17,6 +17,11 @@
     "test:benchmark": "node ./dist/test/benchmark/",
     "lint": "tslint -c tslint.json -p tsconfig.json"
   },
+  "nyc": {
+    "exclude": [
+      "dist/test/**"
+    ]
+  },
   "pre-commit": [
     "commit"
   ],

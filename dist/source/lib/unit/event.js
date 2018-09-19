@@ -72,7 +72,9 @@ function eventListener(page, eventName, timeout, childFunc, checkFunc) {
         // Register a listener
         page.on(eventName, curEventListener);
         function curEventListener(info) {
-            // For timeout
+            // For timer check
+            // Just in case, the code will trigger for some special time
+            /* istanbul ignore next */
             if (!timer) {
                 return;
             }

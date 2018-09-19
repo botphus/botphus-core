@@ -1,10 +1,10 @@
-import func from './func/';
+import method from './method/';
 import task from './task/';
 import unit from './unit/';
 
 describe('Parse', () => {
-    // Common func
-    func();
+    // public method
+    method();
     // Test Unit
     unit();
     // Test Task

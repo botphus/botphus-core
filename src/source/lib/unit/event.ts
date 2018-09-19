@@ -72,7 +72,9 @@ function eventListener<T>(page: puppeteer.Page, eventName: puppeteer.PageEvents,
         // Register a listener
         page.on(eventName, curEventListener);
         function curEventListener(info: any) {
-            // For timeout
+            // For timer check
+            // Just in case, the code will trigger for some special time
+            /* istanbul ignore next */
             if (!timer) {
                 return;
             }

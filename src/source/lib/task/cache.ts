@@ -11,14 +11,12 @@ import {template} from '../handlebars';
 import {BOTPHUS_LIB_PATH} from '../../const';
 
 /**
- * check if cache file exist
- * @param  {string}          cacheFilePath Cache File Path
- * @param  {string}          taskNo        Task No
- * @param  {number}          mtime         Modify Time, a 13 digit Unix Timestamp
- * @return {Promise<string>}               Promise, if existed, return taskNo
+ * Get cache by file path
+ * @param  {string}            cacheFilePath Cache File Path
+ * @return {Promise<fs.Stats>}               Promise, if existed, return file stats
  */
-export function checkCache(cacheFilePath: string, taskNo: string, mtime: number): Promise<string> {
-    // 1. check if cache file exist
+export function getCache(cacheFilePath: string): Promise<fs.Stats> {
+    // Check if cache file exist
     return new Promise((resolve) => {
         fs.stat(cacheFilePath, (err, stats) => {
             // if inexistence, continue with empty stats
@@ -28,9 +26,20 @@ export function checkCache(cacheFilePath: string, taskNo: string, mtime: number)
             // else continue with stats
             return resolve(stats);
         });
-    })
-    // 2. check file mtime
-    .then((stats: fs.Stats) => {
+    });
+}
+
+/**
+ * check if cache file exist
+ * @param  {string}          cacheFilePath Cache File Path
+ * @param  {string}          taskNo        Task No
+ * @param  {number}          mtime         Modify Time, a 13 digit Unix Timestamp
+ * @return {Promise<string>}               Promise, if existed, return taskNo
+ */
+export function checkCache(cacheFilePath: string, taskNo: string, mtime: number): Promise<string> {
+    return getCache(cacheFilePath)
+    // check file mtime
+    .then((stats) => {
         // check if stats inexistence, continue with empty
         if (!stats) {
             return '';
@@ -59,7 +68,9 @@ export function createCache(cacheFilePath: string, taskNo: string, taskRules: Ru
             return fse.outputFile(cacheFilePath, js(content));
         })
         .then(() => taskNo)
-        .catch((err) => {
+        // Unreachable code in test
+        .catch(/* istanbul ignore next */(err) => {
+            /* istanbul ignore next */
             return Promise.reject(createErrorMessage(err, MessageType.TASK_RULES_RENDER_ERROR));
         });
 }

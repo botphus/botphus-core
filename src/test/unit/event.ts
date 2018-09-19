@@ -97,5 +97,55 @@ export default function() {
                         });
                 });
         });
+        it('Event#response with Error checkFunc', (done) => {
+            puppeteer.launch(CONST.PUPPETEER_LAUNCH_OPTION)
+                .then((browser) => {
+                    return browser.newPage()
+                        .then((page) => {
+                            return page.goto(CONST.NORMAL_PAGE_PATH)
+                                .then(() => {
+                                    return botphusUnit.event.request(page, 100, () => {
+                                        // trigger request
+                                        return botphusUnit.dom.click(page, CONST.NORMAL_PAGE_REQUEST_SELECTOR);
+                                    }, (request) => {
+                                        return request.url() !== CONST.REQUEST_PATH;
+                                    });
+                                })
+                                .then(() => {
+                                    browser.close();
+                                    done(new Error('Invalid expectation'));
+                                })
+                                .catch(() => {
+                                    browser.close();
+                                    done();
+                                });
+                        });
+                });
+        });
+        it('Event#response with timeout', (done) => {
+            puppeteer.launch(CONST.PUPPETEER_LAUNCH_OPTION)
+                .then((browser) => {
+                    return browser.newPage()
+                        .then((page) => {
+                            return page.goto(CONST.NORMAL_PAGE_PATH)
+                                .then(() => {
+                                    return botphusUnit.event.response(page, 0, () => {
+                                        // trigger request
+                                        return botphusUnit.dom.click(page, CONST.NORMAL_PAGE_REQUEST_SELECTOR);
+                                    }, (response) => {
+                                        return response.url() === CONST.REQUEST_PATH;
+                                    });
+                                })
+                                .then(() => {
+                                    browser.close();
+                                    done(new Error('Invalid expectation'));
+                                })
+                                .catch(() => {
+                                    browser.close();
+                                    done();
+                                });
+                        });
+                });
+        });
     });
 }

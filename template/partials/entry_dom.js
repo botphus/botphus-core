@@ -9,14 +9,17 @@ return unitLib.dom.setAttr(page, '{{{replace rule.argments.[0] "'" "\'"}}}', '{{
 {{!-- SUB_TYPE_GET_ATTR --}}
 {{#if (eq rule.subType 202)}}
 return unitLib.dom.getAttr(page, '{{{replace rule.argments.[0] "'" "\'"}}}', '{{{replace rule.argments.[1] "'" "\'"}}}')
+{{> data_send rule=this}}
 {{/if}}
 {{!-- SUB_TYPE_GET_HTML --}}
 {{#if (eq rule.subType 203)}}
-return unitLib.dom.getAttr(page, '{{{replace rule.argments.[0] "'" "\'"}}}')
+return unitLib.dom.getHtml(page, '{{{replace rule.argments.[0] "'" "\'"}}}')
+{{> data_send rule=this}}
 {{/if}}
 {{!-- SUB_TYPE_GET_TEXT --}}
 {{#if (eq rule.subType 204)}}
 return unitLib.dom.getText(page, '{{{replace rule.argments.[0] "'" "\'"}}}')
+{{> data_send rule=this}}
 {{/if}}
 {{!-- SUB_TYPE_CLICK --}}
 {{#if (eq rule.subType 205)}}

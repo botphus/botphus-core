@@ -74,28 +74,28 @@ exports.TASK_FULL_LIST = [
     /// Create Table
     {
         argments: [exports.MYSQL_CREATE_TABLE],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.Type.TYPE_DATA
     },
     /// Inset Table
     {
         argments: [exports.MYSQL_INSERT_DATA],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.Type.TYPE_DATA
     },
     /// Select Table
     {
         argments: [exports.MYSQL_SELECT_DATA],
-        assertion: ['data.length === 1', 'data[0].id === 1', `data[0][${exports.MYSQL_FIELD_NAME}] === "${exports.MYSQL_FIELD_VALUE}"`],
+        assertion: ['data.length === 1', 'data[0].id === 1', `data[0].${exports.MYSQL_FIELD_NAME} === "${exports.MYSQL_FIELD_VALUE}"`],
         subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.Type.TYPE_DATA
     },
     /// Drop Table
     {
         argments: [exports.MYSQL_DROP_TABLE],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.Type.TYPE_DATA
     },
@@ -103,7 +103,7 @@ exports.TASK_FULL_LIST = [
     /// set
     {
         argments: [[['set', exports.REDIS_KEY_NAME, exports.REDIS_KEY_VALUE]]],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
         type: task_1.Type.TYPE_DATA
     },
@@ -117,9 +117,15 @@ exports.TASK_FULL_LIST = [
     /// del
     {
         argments: [[['del', exports.REDIS_KEY_NAME]]],
-        assertion: ['!data'],
+        assertion: ['data'],
         subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
         type: task_1.Type.TYPE_DATA
+    },
+    // goto
+    {
+        argments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        subType: task_1.TypePageSubType.SUB_TYPE_GOTO,
+        type: task_1.Type.TYPE_PAGE
     },
     /**
      * Dom
@@ -166,8 +172,14 @@ exports.TASK_FULL_LIST = [
     // setInputFiles
     {
         argments: [exports.NORMAL_PAGE_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
-        assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
         subType: task_1.TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+        type: task_1.Type.TYPE_DOM
+    },
+    // getAttr
+    {
+        argments: [exports.NORMAL_PAGE_FILE_SELECTOR, exports.NORMAL_PAGE_FILE_SELECTOR_FIELD],
+        assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
+        subType: task_1.TypeDomSubType.SUB_TYPE_GET_ATTR,
         type: task_1.Type.TYPE_DOM
     },
     /**
@@ -206,15 +218,12 @@ exports.TASK_FULL_LIST = [
     },
     // request & response
     {
-        argments: [exports.EVENT_TIMEOUT, (request) => {
-                return request.url() === 'https://api.github.com/';
-            }],
+        argments: [exports.EVENT_TIMEOUT],
         assertion: [`request.method() === "GET"`],
+        assertionVarName: 'request',
         children: [
             {
-                argments: [exports.EVENT_TIMEOUT, (response) => {
-                        return response.url() === 'https://api.github.com/';
-                    }],
+                argments: [exports.EVENT_TIMEOUT],
                 assertion: ['resData'],
                 assertionVarName: 'resData',
                 children: [
@@ -300,3 +309,14 @@ exports.TASK_FULL_LIST = [
         type: task_1.Type.TYPE_PAGE
     },
 ];
+let taskCaseCount = 0;
+function countFullList(list) {
+    list.forEach((rule) => {
+        taskCaseCount++;
+        if (rule.type === task_1.Type.TYPE_EVENT) {
+            countFullList(rule.children);
+        }
+    });
+}
+countFullList(exports.TASK_FULL_LIST);
+exports.TASK_FULL_LIST_CASE_COUNT = taskCaseCount;

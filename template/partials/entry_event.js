@@ -25,4 +25,5 @@ return eventFunc(page, {{rule.argments.[0]}}, function() {
     .then((response) => {
         return response.json();
     })
+    {{> data_send rule=this}}
 {{/if}}
