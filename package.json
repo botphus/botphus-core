@@ -8,6 +8,7 @@
     "test": "dist/test/"
   },
   "scripts": {
+    "prepublish": "npm run test",
     "build": "npm run lint && tsc",
     "build:declaration": "tsc --declaration src/source/index.ts && git clean -f src/source/*.js && git clean -f src/source/*/*.d.ts",
     "commit": "npm run test",
