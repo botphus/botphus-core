@@ -52,7 +52,7 @@ exports.checkCache = checkCache;
  * Create a cache file
  * @param  {string}          cacheFilePath Cache File Path
  * @param  {string}          taskNo        Task No
- * @param  {RuleTypeItem[]}  taskRules     Task Rules
+ * @param  {TaskRuleTypeItem[]}  taskRules     Task Rules
  * @return {Promise<string>}               Promise, if success, return taskNo;
  */
 function createCache(cacheFilePath, taskNo, taskRules) {

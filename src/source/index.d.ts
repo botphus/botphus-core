@@ -1,16 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const os_1 = require("os");
-const path_1 = require("path");
-const task_1 = require("./lib/task");
+/// <reference types="node" />
+import { ChildProcess } from 'child_process';
+import { IBotphusConfig } from './interfaces/common';
+import { ITaskStartOption } from './interfaces/task';
+import { TaskRuleTypeItem } from './types/task';
 /**
  * Botphus Core Task
  */
-class BotphusCore {
-    constructor(customConfig) {
-        // Update basic config
-        this.config = Object.assign({ cachePath: path_1.join(os_1.tmpdir(), '/botphus/') }, customConfig);
-    }
+declare class BotphusCore {
+    private config;
+    constructor(customConfig?: IBotphusConfig);
     /**
      * Create Task & return task no
      * @param  {string}          taskName  Task Name
@@ -18,24 +16,18 @@ class BotphusCore {
      * @param  {TaskRuleTypeItem[]}  taskRules Task Rule List
      * @return {Promise<string>}           Promise with Task Number
      */
-    createTask(taskName, mtime, taskRules) {
-        return task_1.createTask(taskName, mtime, taskRules, this.config);
-    }
+    public createTask(taskName: string, mtime: number, taskRules: TaskRuleTypeItem[]): Promise<string>;
     /**
      * Remove task with taskNo
      * @param  {string}        taskNo Task No
      * @return {Promise<void>}        Promise with none
      */
-    removeTask(taskNo) {
-        return task_1.removeTask(taskNo, this.config);
-    }
+    public removeTask(taskNo: string): Promise<void>;
     /**
      * Remove All Task Cache file
      * @return {Promise<void>} Promise with none
      */
-    clearTask() {
-        return task_1.clearTask(this.config);
-    }
+    public clearTask(): Promise<void>;
     /**
      * Start task
      * @param  {string}                taskNo      Task No
@@ -43,8 +35,12 @@ class BotphusCore {
      * @param  {ITaskStartOption={}}   startOption Task start option
      * @return {Promise<ChildProcess>}             Promise with task child process
      */
-    startTask(taskNo, startPage, startOption = {}) {
-        return task_1.startTask(taskNo, startPage, startOption, this.config);
-    }
+    public startTask(taskNo: string, startPage: string, startOption?: ITaskStartOption): Promise<ChildProcess>;
 }
-exports.default = BotphusCore;
+
+export default BotphusCore;
+
+export * from './types/common';
+export * from './types/task';
+export * from './interfaces/common';
+export * from './interfaces/task';

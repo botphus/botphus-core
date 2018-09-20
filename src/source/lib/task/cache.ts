@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import {js} from 'js-beautify';
 
 import {MessageType} from '../../types/common';
-import {RuleTypeItem} from '../../types/task';
+import {TaskRuleTypeItem} from '../../types/task';
 
 import {createErrorMessage} from '../common';
 import {template} from '../handlebars';
@@ -55,10 +55,10 @@ export function checkCache(cacheFilePath: string, taskNo: string, mtime: number)
  * Create a cache file
  * @param  {string}          cacheFilePath Cache File Path
  * @param  {string}          taskNo        Task No
- * @param  {RuleTypeItem[]}  taskRules     Task Rules
+ * @param  {TaskRuleTypeItem[]}  taskRules     Task Rules
  * @return {Promise<string>}               Promise, if success, return taskNo;
  */
-export function createCache(cacheFilePath: string, taskNo: string, taskRules: RuleTypeItem[]): Promise<string> {
+export function createCache(cacheFilePath: string, taskNo: string, taskRules: TaskRuleTypeItem[]): Promise<string> {
     return template()
         .then((templateFunc) => {
             const content = templateFunc({

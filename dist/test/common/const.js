@@ -75,57 +75,57 @@ exports.TASK_FULL_LIST = [
     {
         argments: [exports.MYSQL_CREATE_TABLE],
         assertion: ['data'],
-        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-        type: task_1.Type.TYPE_DATA
+        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.TaskType.TYPE_DATA
     },
     /// Inset Table
     {
         argments: [exports.MYSQL_INSERT_DATA],
         assertion: ['data'],
-        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-        type: task_1.Type.TYPE_DATA
+        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.TaskType.TYPE_DATA
     },
     /// Select Table
     {
         argments: [exports.MYSQL_SELECT_DATA],
         assertion: ['data.length === 1', 'data[0].id === 1', `data[0].${exports.MYSQL_FIELD_NAME} === "${exports.MYSQL_FIELD_VALUE}"`],
-        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-        type: task_1.Type.TYPE_DATA
+        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.TaskType.TYPE_DATA
     },
     /// Drop Table
     {
         argments: [exports.MYSQL_DROP_TABLE],
         assertion: ['data'],
-        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-        type: task_1.Type.TYPE_DATA
+        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: task_1.TaskType.TYPE_DATA
     },
     // Redis
     /// set
     {
         argments: [[['set', exports.REDIS_KEY_NAME, exports.REDIS_KEY_VALUE]]],
         assertion: ['data'],
-        subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
-        type: task_1.Type.TYPE_DATA
+        subType: task_1.TaskTypeDataSubType.SUB_TYPE_REDIS,
+        type: task_1.TaskType.TYPE_DATA
     },
     /// get
     {
         argments: [[['get', exports.REDIS_KEY_NAME]]],
         assertion: ['data.length === 1', `data[0][1] === "${exports.REDIS_KEY_VALUE}"`],
-        subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
-        type: task_1.Type.TYPE_DATA
+        subType: task_1.TaskTypeDataSubType.SUB_TYPE_REDIS,
+        type: task_1.TaskType.TYPE_DATA
     },
     /// del
     {
         argments: [[['del', exports.REDIS_KEY_NAME]]],
         assertion: ['data'],
-        subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
-        type: task_1.Type.TYPE_DATA
+        subType: task_1.TaskTypeDataSubType.SUB_TYPE_REDIS,
+        type: task_1.TaskType.TYPE_DATA
     },
     // goto
     {
         argments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
-        subType: task_1.TypePageSubType.SUB_TYPE_GOTO,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_GOTO,
+        type: task_1.TaskType.TYPE_PAGE
     },
     /**
      * Dom
@@ -133,54 +133,54 @@ exports.TASK_FULL_LIST = [
     // click
     {
         argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR],
-        subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
+        type: task_1.TaskType.TYPE_DOM
     },
     // keyboard
     {
         argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.SEARCH_SELECTOR_VALUE],
-        subType: task_1.TypeDomSubType.SUB_TYPE_KEYBOARD,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_KEYBOARD,
+        type: task_1.TaskType.TYPE_DOM
     },
     // getAttr
     {
         argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
         assertion: [`data === "${exports.SEARCH_SELECTOR_VALUE}"`],
-        subType: task_1.TypeDomSubType.SUB_TYPE_GET_ATTR,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
+        type: task_1.TaskType.TYPE_DOM
     },
     // setAttr
     {
         argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD, exports.SEARCH_SELECTOR_VALUE],
-        subType: task_1.TypeDomSubType.SUB_TYPE_SET_ATTR,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_ATTR,
+        type: task_1.TaskType.TYPE_DOM
     },
     // getHtml
     {
         argments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === '${exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML}'`],
-        subType: task_1.TypeDomSubType.SUB_TYPE_GET_HTML,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_HTML,
+        type: task_1.TaskType.TYPE_DOM
     },
     // getText
     {
         argments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === "${exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT}"`],
-        subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+        type: task_1.TaskType.TYPE_DOM
     },
     // setInputFiles
     {
         argments: [exports.NORMAL_PAGE_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
-        subType: task_1.TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+        type: task_1.TaskType.TYPE_DOM
     },
     // getAttr
     {
         argments: [exports.NORMAL_PAGE_FILE_SELECTOR, exports.NORMAL_PAGE_FILE_SELECTOR_FIELD],
         assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
-        subType: task_1.TypeDomSubType.SUB_TYPE_GET_ATTR,
-        type: task_1.Type.TYPE_DOM
+        subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
+        type: task_1.TaskType.TYPE_DOM
     },
     /**
      * Event
@@ -193,13 +193,13 @@ exports.TASK_FULL_LIST = [
         children: [
             {
                 argments: [exports.NORMAL_PAGE_DIALOG_SELECTOR],
-                subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
-                type: task_1.Type.TYPE_DOM
+                subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
+                type: task_1.TaskType.TYPE_DOM
             }
         ],
         promptText: 'Botphus',
-        subType: task_1.TypeEventSubType.SUB_TYPE_DIALOG,
-        type: task_1.Type.TYPE_EVENT
+        subType: task_1.TaskTypeEventSubType.SUB_TYPE_DIALOG,
+        type: task_1.TaskType.TYPE_EVENT
     },
     // console
     {
@@ -209,12 +209,12 @@ exports.TASK_FULL_LIST = [
         children: [
             {
                 argments: [exports.NORMAL_PAGE_CONSOLE_SELECTOR],
-                subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
-                type: task_1.Type.TYPE_DOM
+                subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
+                type: task_1.TaskType.TYPE_DOM
             }
         ],
-        subType: task_1.TypeEventSubType.SUB_TYPE_CONSOLE,
-        type: task_1.Type.TYPE_EVENT
+        subType: task_1.TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+        type: task_1.TaskType.TYPE_EVENT
     },
     // request & response
     {
@@ -229,24 +229,24 @@ exports.TASK_FULL_LIST = [
                 children: [
                     {
                         argments: [exports.NORMAL_PAGE_REQUEST_SELECTOR],
-                        subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
-                        type: task_1.Type.TYPE_DOM
+                        subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
+                        type: task_1.TaskType.TYPE_DOM
                     }
                 ],
-                subType: task_1.TypeEventSubType.SUB_TYPE_RESPONSE,
-                type: task_1.Type.TYPE_EVENT
+                subType: task_1.TaskTypeEventSubType.SUB_TYPE_RESPONSE,
+                type: task_1.TaskType.TYPE_EVENT
             }
         ],
-        subType: task_1.TypeEventSubType.SUB_TYPE_REQUEST,
-        type: task_1.Type.TYPE_EVENT
+        subType: task_1.TaskTypeEventSubType.SUB_TYPE_REQUEST,
+        type: task_1.TaskType.TYPE_EVENT
     },
     /**
      * Time
      */
     {
         argments: [exports.SLEEP_TIME],
-        subType: task_1.TypeTimeSubType.SUB_TYPE_SET_SLEEP,
-        type: task_1.Type.TYPE_TIME
+        subType: task_1.TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
+        type: task_1.TaskType.TYPE_TIME
     },
     /**
      * Page
@@ -260,21 +260,21 @@ exports.TASK_FULL_LIST = [
                     value: exports.COOKIE_VALUE
                 }
             ]],
-        subType: task_1.TypePageSubType.SUB_TYPE_SET_COOKIE,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_SET_COOKIE,
+        type: task_1.TaskType.TYPE_PAGE
     },
     // reload
     {
-        subType: task_1.TypePageSubType.SUB_TYPE_RELOAD,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_RELOAD,
+        type: task_1.TaskType.TYPE_PAGE
     },
     // getCookie
     {
         argments: [[exports.COOKIE_URL]],
         assertion: ['cookies.length === 1', `cookies[0].domain === "${exports.COOKIE_DOMAIN}"`, `cookies[0].name === "${exports.COOKIE_NAME}"`, `cookies[0].value === "${exports.COOKIE_VALUE}"`],
         assertionVarName: 'cookies',
-        subType: task_1.TypePageSubType.SUB_TYPE_GET_COOKIE,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: task_1.TaskType.TYPE_PAGE
     },
     // deleteCookie
     {
@@ -284,36 +284,36 @@ exports.TASK_FULL_LIST = [
                     url: exports.COOKIE_URL
                 }
             ]],
-        subType: task_1.TypePageSubType.SUB_TYPE_DELETE_COOKIE,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_DELETE_COOKIE,
+        type: task_1.TaskType.TYPE_PAGE
     },
     // getCookie
     {
         argments: [[exports.COOKIE_URL]],
         assertion: ['cookies.length === 0'],
         assertionVarName: 'cookies',
-        subType: task_1.TypePageSubType.SUB_TYPE_GET_COOKIE,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: task_1.TaskType.TYPE_PAGE
     },
     // goto
     {
         argments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
-        subType: task_1.TypePageSubType.SUB_TYPE_GOTO,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_GOTO,
+        type: task_1.TaskType.TYPE_PAGE
     },
     // screenShot
     {
         assertion: ['value instanceof Buffer'],
         assertionVarName: 'value',
-        subType: task_1.TypePageSubType.SUB_TYPE_SCREENSHOT,
-        type: task_1.Type.TYPE_PAGE
+        subType: task_1.TaskTypePageSubType.SUB_TYPE_SCREENSHOT,
+        type: task_1.TaskType.TYPE_PAGE
     },
 ];
 let taskCaseCount = 0;
 function countFullList(list) {
     list.forEach((rule) => {
         taskCaseCount++;
-        if (rule.type === task_1.Type.TYPE_EVENT) {
+        if (rule.type === task_1.TaskType.TYPE_EVENT) {
             countFullList(rule.children);
         }
     });

@@ -4,7 +4,7 @@ import {join} from 'path';
 
 import {IBotphusConfig} from './interfaces/common';
 import {ITaskStartOption} from './interfaces/task';
-import {RuleTypeItem} from './types/task';
+import {TaskRuleTypeItem} from './types/task';
 
 import {clearTask, createTask, removeTask, startTask} from './lib/task';
 
@@ -24,10 +24,10 @@ class BotphusCore {
      * Create Task & return task no
      * @param  {string}          taskName  Task Name
      * @param  {number}          mtime     Task Update Time, 13 digits timestamp
-     * @param  {RuleTypeItem[]}  taskRules Task Rule List
+     * @param  {TaskRuleTypeItem[]}  taskRules Task Rule List
      * @return {Promise<string>}           Promise with Task Number
      */
-    public createTask(taskName: string, mtime: number, taskRules: RuleTypeItem[]): Promise<string> {
+    public createTask(taskName: string, mtime: number, taskRules: TaskRuleTypeItem[]): Promise<string> {
         return createTask(taskName, mtime, taskRules, this.config);
     }
     /**

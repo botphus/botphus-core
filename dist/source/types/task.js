@@ -3,62 +3,62 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Task Type
  */
-var Type;
-(function (Type) {
-    Type[Type["TYPE_DATA"] = 1] = "TYPE_DATA";
-    Type[Type["TYPE_DOM"] = 2] = "TYPE_DOM";
-    Type[Type["TYPE_EVENT"] = 3] = "TYPE_EVENT";
-    Type[Type["TYPE_TIME"] = 4] = "TYPE_TIME";
-    Type[Type["TYPE_PAGE"] = 5] = "TYPE_PAGE";
-})(Type = exports.Type || (exports.Type = {}));
+var TaskType;
+(function (TaskType) {
+    TaskType[TaskType["TYPE_DATA"] = 1] = "TYPE_DATA";
+    TaskType[TaskType["TYPE_DOM"] = 2] = "TYPE_DOM";
+    TaskType[TaskType["TYPE_EVENT"] = 3] = "TYPE_EVENT";
+    TaskType[TaskType["TYPE_TIME"] = 4] = "TYPE_TIME";
+    TaskType[TaskType["TYPE_PAGE"] = 5] = "TYPE_PAGE";
+})(TaskType = exports.TaskType || (exports.TaskType = {}));
 // Task sub type
 /**
  * Sub type: Data
  */
-var TypeDataSubType;
-(function (TypeDataSubType) {
-    TypeDataSubType[TypeDataSubType["SUB_TYPE_MYSQL"] = 100] = "SUB_TYPE_MYSQL";
-    TypeDataSubType[TypeDataSubType["SUB_TYPE_REDIS"] = 101] = "SUB_TYPE_REDIS";
-})(TypeDataSubType = exports.TypeDataSubType || (exports.TypeDataSubType = {}));
+var TaskTypeDataSubType;
+(function (TaskTypeDataSubType) {
+    TaskTypeDataSubType[TaskTypeDataSubType["SUB_TYPE_MYSQL"] = 100] = "SUB_TYPE_MYSQL";
+    TaskTypeDataSubType[TaskTypeDataSubType["SUB_TYPE_REDIS"] = 101] = "SUB_TYPE_REDIS";
+})(TaskTypeDataSubType = exports.TaskTypeDataSubType || (exports.TaskTypeDataSubType = {}));
 /**
  * Sub type: Dom
  */
-var TypeDomSubType;
-(function (TypeDomSubType) {
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_KEYBOARD"] = 200] = "SUB_TYPE_KEYBOARD";
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_SET_ATTR"] = 201] = "SUB_TYPE_SET_ATTR";
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_GET_ATTR"] = 202] = "SUB_TYPE_GET_ATTR";
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_GET_HTML"] = 203] = "SUB_TYPE_GET_HTML";
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_GET_TEXT"] = 204] = "SUB_TYPE_GET_TEXT";
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_CLICK"] = 205] = "SUB_TYPE_CLICK";
-    TypeDomSubType[TypeDomSubType["SUB_TYPE_SET_INPUT_FILES"] = 206] = "SUB_TYPE_SET_INPUT_FILES";
-})(TypeDomSubType = exports.TypeDomSubType || (exports.TypeDomSubType = {}));
+var TaskTypeDomSubType;
+(function (TaskTypeDomSubType) {
+    TaskTypeDomSubType[TaskTypeDomSubType["SUB_TYPE_KEYBOARD"] = 200] = "SUB_TYPE_KEYBOARD";
+    TaskTypeDomSubType[TaskTypeDomSubType["SUB_TYPE_SET_ATTR"] = 201] = "SUB_TYPE_SET_ATTR";
+    TaskTypeDomSubType[TaskTypeDomSubType["SUB_TYPE_GET_ATTR"] = 202] = "SUB_TYPE_GET_ATTR";
+    TaskTypeDomSubType[TaskTypeDomSubType["SUB_TYPE_GET_HTML"] = 203] = "SUB_TYPE_GET_HTML";
+    TaskTypeDomSubType[TaskTypeDomSubType["SUB_TYPE_GET_TEXT"] = 204] = "SUB_TYPE_GET_TEXT";
+    TaskTypeDomSubType[TaskTypeDomSubType["SUB_TYPE_CLICK"] = 205] = "SUB_TYPE_CLICK";
+    TaskTypeDomSubType[TaskTypeDomSubType["SUB_TYPE_SET_INPUT_FILES"] = 206] = "SUB_TYPE_SET_INPUT_FILES";
+})(TaskTypeDomSubType = exports.TaskTypeDomSubType || (exports.TaskTypeDomSubType = {}));
 /**
  * Sub type: Event
  */
-var TypeEventSubType;
-(function (TypeEventSubType) {
-    TypeEventSubType[TypeEventSubType["SUB_TYPE_REQUEST"] = 300] = "SUB_TYPE_REQUEST";
-    TypeEventSubType[TypeEventSubType["SUB_TYPE_RESPONSE"] = 301] = "SUB_TYPE_RESPONSE";
-    TypeEventSubType[TypeEventSubType["SUB_TYPE_CONSOLE"] = 302] = "SUB_TYPE_CONSOLE";
-    TypeEventSubType[TypeEventSubType["SUB_TYPE_DIALOG"] = 303] = "SUB_TYPE_DIALOG";
-})(TypeEventSubType = exports.TypeEventSubType || (exports.TypeEventSubType = {}));
+var TaskTypeEventSubType;
+(function (TaskTypeEventSubType) {
+    TaskTypeEventSubType[TaskTypeEventSubType["SUB_TYPE_REQUEST"] = 300] = "SUB_TYPE_REQUEST";
+    TaskTypeEventSubType[TaskTypeEventSubType["SUB_TYPE_RESPONSE"] = 301] = "SUB_TYPE_RESPONSE";
+    TaskTypeEventSubType[TaskTypeEventSubType["SUB_TYPE_CONSOLE"] = 302] = "SUB_TYPE_CONSOLE";
+    TaskTypeEventSubType[TaskTypeEventSubType["SUB_TYPE_DIALOG"] = 303] = "SUB_TYPE_DIALOG";
+})(TaskTypeEventSubType = exports.TaskTypeEventSubType || (exports.TaskTypeEventSubType = {}));
 /**
  * Sub type: Time
  */
-var TypeTimeSubType;
-(function (TypeTimeSubType) {
-    TypeTimeSubType[TypeTimeSubType["SUB_TYPE_SET_SLEEP"] = 400] = "SUB_TYPE_SET_SLEEP";
-})(TypeTimeSubType = exports.TypeTimeSubType || (exports.TypeTimeSubType = {}));
+var TaskTypeTimeSubType;
+(function (TaskTypeTimeSubType) {
+    TaskTypeTimeSubType[TaskTypeTimeSubType["SUB_TYPE_SET_SLEEP"] = 400] = "SUB_TYPE_SET_SLEEP";
+})(TaskTypeTimeSubType = exports.TaskTypeTimeSubType || (exports.TaskTypeTimeSubType = {}));
 /**
  * Sub type: Page
  */
-var TypePageSubType;
-(function (TypePageSubType) {
-    TypePageSubType[TypePageSubType["SUB_TYPE_RELOAD"] = 500] = "SUB_TYPE_RELOAD";
-    TypePageSubType[TypePageSubType["SUB_TYPE_SET_COOKIE"] = 501] = "SUB_TYPE_SET_COOKIE";
-    TypePageSubType[TypePageSubType["SUB_TYPE_GET_COOKIE"] = 502] = "SUB_TYPE_GET_COOKIE";
-    TypePageSubType[TypePageSubType["SUB_TYPE_DELETE_COOKIE"] = 503] = "SUB_TYPE_DELETE_COOKIE";
-    TypePageSubType[TypePageSubType["SUB_TYPE_GOTO"] = 504] = "SUB_TYPE_GOTO";
-    TypePageSubType[TypePageSubType["SUB_TYPE_SCREENSHOT"] = 505] = "SUB_TYPE_SCREENSHOT";
-})(TypePageSubType = exports.TypePageSubType || (exports.TypePageSubType = {}));
+var TaskTypePageSubType;
+(function (TaskTypePageSubType) {
+    TaskTypePageSubType[TaskTypePageSubType["SUB_TYPE_RELOAD"] = 500] = "SUB_TYPE_RELOAD";
+    TaskTypePageSubType[TaskTypePageSubType["SUB_TYPE_SET_COOKIE"] = 501] = "SUB_TYPE_SET_COOKIE";
+    TaskTypePageSubType[TaskTypePageSubType["SUB_TYPE_GET_COOKIE"] = 502] = "SUB_TYPE_GET_COOKIE";
+    TaskTypePageSubType[TaskTypePageSubType["SUB_TYPE_DELETE_COOKIE"] = 503] = "SUB_TYPE_DELETE_COOKIE";
+    TaskTypePageSubType[TaskTypePageSubType["SUB_TYPE_GOTO"] = 504] = "SUB_TYPE_GOTO";
+    TaskTypePageSubType[TaskTypePageSubType["SUB_TYPE_SCREENSHOT"] = 505] = "SUB_TYPE_SCREENSHOT";
+})(TaskTypePageSubType = exports.TaskTypePageSubType || (exports.TaskTypePageSubType = {}));

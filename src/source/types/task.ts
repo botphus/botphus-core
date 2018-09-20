@@ -1,7 +1,7 @@
 import {IErrorMessage} from '../interfaces/common';
 import {
-    IDataRuleItem, IDomRuleItem, IEventDialogRuleItem, IEventRuleItem, IPageRuleItem,
-    ITaskEndMessage, ITaskStartMessage, ITaskUnitMessage, ItaskUnitReceiveDataMessage, ITimeRuleItem
+    ITaskDataRuleItem, ITaskDomRuleItem, ITaskEndMessage, ITaskEventDialogRuleItem, ITaskEventRuleItem, ITaskPageRuleItem,
+    ITaskStartMessage, ITaskTimeRuleItem, ITaskUnitMessage, ItaskUnitReceiveDataMessage
 } from '../interfaces/task';
 
 /**
@@ -19,12 +19,12 @@ export type TaskMessage = [IErrorMessage, TaskMessageData];
  * Combine different rule item to one
  * @type {Object}
  */
-export type RuleTypeItem = IDataRuleItem | IDomRuleItem | IEventDialogRuleItem | IEventRuleItem | ITimeRuleItem | IPageRuleItem;
+export type TaskRuleTypeItem = ITaskDataRuleItem | ITaskDomRuleItem | ITaskEventDialogRuleItem | ITaskEventRuleItem | ITaskTimeRuleItem | ITaskPageRuleItem;
 
 /**
  * Task Type
  */
-export enum Type {
+export enum TaskType {
     TYPE_DATA = 1, // Data action
     TYPE_DOM = 2, // DOM action
     TYPE_EVENT = 3, // EVENT listener
@@ -36,7 +36,7 @@ export enum Type {
 /**
  * Sub type: Data
  */
-export enum TypeDataSubType {
+export enum TaskTypeDataSubType {
     SUB_TYPE_MYSQL = 100, // Exec MySQL Query
     SUB_TYPE_REDIS = 101, // Exec Redis command
 }
@@ -44,7 +44,7 @@ export enum TypeDataSubType {
 /**
  * Sub type: Dom
  */
-export enum TypeDomSubType {
+export enum TaskTypeDomSubType {
     SUB_TYPE_KEYBOARD = 200, // Input some text
     SUB_TYPE_SET_ATTR = 201, // Set selector's attribute value
     SUB_TYPE_GET_ATTR = 202, // Get selector's attribute value
@@ -57,7 +57,7 @@ export enum TypeDomSubType {
 /**
  * Sub type: Event
  */
-export enum TypeEventSubType {
+export enum TaskTypeEventSubType {
     SUB_TYPE_REQUEST = 300, // Request listener
     SUB_TYPE_RESPONSE = 301, // Response listener
     SUB_TYPE_CONSOLE = 302, // Console listener
@@ -67,14 +67,14 @@ export enum TypeEventSubType {
 /**
  * Sub type: Time
  */
-export enum TypeTimeSubType {
+export enum TaskTypeTimeSubType {
     SUB_TYPE_SET_SLEEP = 400, // Sleep
 }
 
 /**
  * Sub type: Page
  */
-export enum TypePageSubType {
+export enum TaskTypePageSubType {
     SUB_TYPE_RELOAD = 500, // Reload Page
     SUB_TYPE_SET_COOKIE = 501, // Set cookies
     SUB_TYPE_GET_COOKIE = 502, // Get cookies

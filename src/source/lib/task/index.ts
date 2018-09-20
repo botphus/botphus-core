@@ -5,7 +5,7 @@ import * as path from 'path';
 import {IBotphusConfig} from '../../interfaces/common';
 import {ITaskStartOption} from '../../interfaces/task';
 import {MessageType} from '../../types/common';
-import {RuleTypeItem} from '../../types/task';
+import {TaskRuleTypeItem} from '../../types/task';
 
 import {ErrorMessage, getTaskNoByTaskName} from '../common';
 import {checkCache, createCache, getCache} from './cache';
@@ -15,11 +15,11 @@ import {validTaskRules} from './valid';
  * Create Task & return task no
  * @param  {string}          taskName  Task Name
  * @param  {number}          mtime     Task Update Time, 13 digits timestamp
- * @param  {RuleTypeItem[]}  taskRules Task Rule List
+ * @param  {TaskRuleTypeItem[]}  taskRules Task Rule List
  * @param  {IBotphusConfig}  config    Botphus config
  * @return {Promise<string>}           Promise with Task Number
  */
-export function createTask(taskName: string, mtime: number, taskRules: RuleTypeItem[], config: IBotphusConfig): Promise<string> {
+export function createTask(taskName: string, mtime: number, taskRules: TaskRuleTypeItem[], config: IBotphusConfig): Promise<string> {
     const taskNo: string = getTaskNoByTaskName(taskName);
     // Cache file path for rules
     const cacheFilePath: string = path.join(config.cachePath, '/task-cache/', taskNo + '.js');

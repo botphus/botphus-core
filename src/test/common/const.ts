@@ -1,7 +1,7 @@
 import {tmpdir} from 'os';
 import * as path from 'path';
 
-import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType, TypeEventSubType, TypePageSubType, TypeTimeSubType} from '../../source/types/task';
+import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../../source/types/task';
 
 // value
 export const SEARCH_SELECTOR_VALUE = 'Botphus value';
@@ -75,7 +75,7 @@ export const REDIS_KEY_VALUE = 'Morgan Freeman';
 
 // Task
 export const TASK_FULL_NAME = 'Full task';
-export const TASK_FULL_LIST: RuleTypeItem[] = [
+export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     /**
      * Data
      */
@@ -84,57 +84,57 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     {
         argments: [MYSQL_CREATE_TABLE],
         assertion: ['data'],
-        subType: TypeDataSubType.SUB_TYPE_MYSQL,
-        type: Type.TYPE_DATA
+        subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: TaskType.TYPE_DATA
     },
     /// Inset Table
     {
         argments: [MYSQL_INSERT_DATA],
         assertion: ['data'],
-        subType: TypeDataSubType.SUB_TYPE_MYSQL,
-        type: Type.TYPE_DATA
+        subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: TaskType.TYPE_DATA
     },
     /// Select Table
     {
         argments: [MYSQL_SELECT_DATA],
         assertion: ['data.length === 1', 'data[0].id === 1', `data[0].${MYSQL_FIELD_NAME} === "${MYSQL_FIELD_VALUE}"`],
-        subType: TypeDataSubType.SUB_TYPE_MYSQL,
-        type: Type.TYPE_DATA
+        subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: TaskType.TYPE_DATA
     },
     /// Drop Table
     {
         argments: [MYSQL_DROP_TABLE],
         assertion: ['data'],
-        subType: TypeDataSubType.SUB_TYPE_MYSQL,
-        type: Type.TYPE_DATA
+        subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
+        type: TaskType.TYPE_DATA
     },
     // Redis
     /// set
     {
         argments: [[['set', REDIS_KEY_NAME, REDIS_KEY_VALUE]]],
         assertion: ['data'],
-        subType: TypeDataSubType.SUB_TYPE_REDIS,
-        type: Type.TYPE_DATA
+        subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
+        type: TaskType.TYPE_DATA
     },
     /// get
     {
         argments: [[['get', REDIS_KEY_NAME]]],
         assertion: ['data.length === 1', `data[0][1] === "${REDIS_KEY_VALUE}"`],
-        subType: TypeDataSubType.SUB_TYPE_REDIS,
-        type: Type.TYPE_DATA
+        subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
+        type: TaskType.TYPE_DATA
     },
     /// del
     {
         argments: [[['del', REDIS_KEY_NAME]]],
         assertion: ['data'],
-        subType: TypeDataSubType.SUB_TYPE_REDIS,
-        type: Type.TYPE_DATA
+        subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
+        type: TaskType.TYPE_DATA
     },
     // goto
     {
         argments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
-        subType: TypePageSubType.SUB_TYPE_GOTO,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_GOTO,
+        type: TaskType.TYPE_PAGE
     },
     /**
      * Dom
@@ -142,54 +142,54 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
     // click
     {
         argments: [NORMAL_PAGE_SEARCH_SELECTOR],
-        subType: TypeDomSubType.SUB_TYPE_CLICK,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+        type: TaskType.TYPE_DOM
     },
     // keyboard
     {
         argments: [NORMAL_PAGE_SEARCH_SELECTOR, SEARCH_SELECTOR_VALUE],
-        subType: TypeDomSubType.SUB_TYPE_KEYBOARD,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_KEYBOARD,
+        type: TaskType.TYPE_DOM
     },
     // getAttr
     {
         argments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
         assertion: [`data === "${SEARCH_SELECTOR_VALUE}"`],
-        subType: TypeDomSubType.SUB_TYPE_GET_ATTR,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
+        type: TaskType.TYPE_DOM
     },
     // setAttr
     {
         argments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD, SEARCH_SELECTOR_VALUE],
-        subType: TypeDomSubType.SUB_TYPE_SET_ATTR,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_SET_ATTR,
+        type: TaskType.TYPE_DOM
     },
     // getHtml
     {
         argments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === '${NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML}'`],
-        subType: TypeDomSubType.SUB_TYPE_GET_HTML,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_GET_HTML,
+        type: TaskType.TYPE_DOM
     },
     // getText
     {
         argments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === "${NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT}"`],
-        subType: TypeDomSubType.SUB_TYPE_GET_TEXT,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+        type: TaskType.TYPE_DOM
     },
     // setInputFiles
     {
         argments: [NORMAL_PAGE_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
-        subType: TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+        type: TaskType.TYPE_DOM
     },
     // getAttr
     {
         argments: [NORMAL_PAGE_FILE_SELECTOR, NORMAL_PAGE_FILE_SELECTOR_FIELD],
         assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
-        subType: TypeDomSubType.SUB_TYPE_GET_ATTR,
-        type: Type.TYPE_DOM
+        subType: TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
+        type: TaskType.TYPE_DOM
     },
     /**
      * Event
@@ -202,13 +202,13 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
         children: [
             {
                 argments: [NORMAL_PAGE_DIALOG_SELECTOR],
-                subType: TypeDomSubType.SUB_TYPE_CLICK,
-                type: Type.TYPE_DOM
+                subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+                type: TaskType.TYPE_DOM
             }
         ],
         promptText: 'Botphus',
-        subType: TypeEventSubType.SUB_TYPE_DIALOG,
-        type: Type.TYPE_EVENT
+        subType: TaskTypeEventSubType.SUB_TYPE_DIALOG,
+        type: TaskType.TYPE_EVENT
     },
     // console
     {
@@ -218,12 +218,12 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
         children: [
             {
                 argments: [NORMAL_PAGE_CONSOLE_SELECTOR],
-                subType: TypeDomSubType.SUB_TYPE_CLICK,
-                type: Type.TYPE_DOM
+                subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+                type: TaskType.TYPE_DOM
             }
         ],
-        subType: TypeEventSubType.SUB_TYPE_CONSOLE,
-        type: Type.TYPE_EVENT
+        subType: TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+        type: TaskType.TYPE_EVENT
     },
     // request & response
     {
@@ -238,24 +238,24 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
                 children: [
                     {
                         argments: [NORMAL_PAGE_REQUEST_SELECTOR],
-                        subType: TypeDomSubType.SUB_TYPE_CLICK,
-                        type: Type.TYPE_DOM
+                        subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+                        type: TaskType.TYPE_DOM
                     }
                 ],
-                subType: TypeEventSubType.SUB_TYPE_RESPONSE,
-                type: Type.TYPE_EVENT
+                subType: TaskTypeEventSubType.SUB_TYPE_RESPONSE,
+                type: TaskType.TYPE_EVENT
             }
         ],
-        subType: TypeEventSubType.SUB_TYPE_REQUEST,
-        type: Type.TYPE_EVENT
+        subType: TaskTypeEventSubType.SUB_TYPE_REQUEST,
+        type: TaskType.TYPE_EVENT
     },
     /**
      * Time
      */
     {
         argments: [SLEEP_TIME],
-        subType: TypeTimeSubType.SUB_TYPE_SET_SLEEP,
-        type: Type.TYPE_TIME
+        subType: TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
+        type: TaskType.TYPE_TIME
     },
     /**
      * Page
@@ -269,21 +269,21 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
                 value: COOKIE_VALUE
             }
         ]],
-        subType: TypePageSubType.SUB_TYPE_SET_COOKIE,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_SET_COOKIE,
+        type: TaskType.TYPE_PAGE
     },
     // reload
     {
-        subType: TypePageSubType.SUB_TYPE_RELOAD,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_RELOAD,
+        type: TaskType.TYPE_PAGE
     },
     // getCookie
     {
         argments: [[COOKIE_URL]],
         assertion: ['cookies.length === 1', `cookies[0].domain === "${COOKIE_DOMAIN}"`, `cookies[0].name === "${COOKIE_NAME}"`, `cookies[0].value === "${COOKIE_VALUE}"`],
         assertionVarName: 'cookies',
-        subType: TypePageSubType.SUB_TYPE_GET_COOKIE,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: TaskType.TYPE_PAGE
     },
     // deleteCookie
     {
@@ -293,37 +293,37 @@ export const TASK_FULL_LIST: RuleTypeItem[] = [
                 url: COOKIE_URL
             }
         ]],
-        subType: TypePageSubType.SUB_TYPE_DELETE_COOKIE,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_DELETE_COOKIE,
+        type: TaskType.TYPE_PAGE
     },
     // getCookie
     {
         argments: [[COOKIE_URL]],
         assertion: ['cookies.length === 0'],
         assertionVarName: 'cookies',
-        subType: TypePageSubType.SUB_TYPE_GET_COOKIE,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
+        type: TaskType.TYPE_PAGE
     },
     // goto
     {
         argments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
-        subType: TypePageSubType.SUB_TYPE_GOTO,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_GOTO,
+        type: TaskType.TYPE_PAGE
     },
     // screenShot
     {
         assertion: ['value instanceof Buffer'],
         assertionVarName: 'value',
-        subType: TypePageSubType.SUB_TYPE_SCREENSHOT,
-        type: Type.TYPE_PAGE
+        subType: TaskTypePageSubType.SUB_TYPE_SCREENSHOT,
+        type: TaskType.TYPE_PAGE
     },
 ];
 
 let taskCaseCount = 0;
-function countFullList(list: RuleTypeItem[]) {
-    list.forEach((rule: RuleTypeItem) => {
+function countFullList(list: TaskRuleTypeItem[]) {
+    list.forEach((rule: TaskRuleTypeItem) => {
         taskCaseCount++;
-        if (rule.type === Type.TYPE_EVENT) {
+        if (rule.type === TaskType.TYPE_EVENT) {
             countFullList(rule.children);
         }
     });

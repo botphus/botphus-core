@@ -14,8 +14,8 @@ function default_1() {
                 {
                     argments: ['div'],
                     assertion: ['data.type === `123`', 'data.name === \'123\''],
-                    subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
-                    type: task_1.Type.TYPE_DOM
+                    subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+                    type: task_1.TaskType.TYPE_DOM
                 }
             ])
                 .then(() => {
@@ -29,8 +29,8 @@ function default_1() {
                 {
                     argments: ['div'],
                     assertion: ['data.type === `123`', 'data.name === \'123\''],
-                    subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
-                    type: task_1.Type.TYPE_DOM
+                    subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+                    type: task_1.TaskType.TYPE_DOM
                 }
             ])
                 .then(() => {
@@ -44,8 +44,8 @@ function default_1() {
                 {
                     argments: ['div'],
                     assertion: ['data.type === `123`', 'data.name === \'123\''],
-                    subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
-                    type: task_1.Type.TYPE_DOM
+                    subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+                    type: task_1.TaskType.TYPE_DOM
                 }
             ])
                 .then(() => {
@@ -63,12 +63,12 @@ function default_1() {
                     children: [
                         {
                             argments: ['div'],
-                            subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
-                            type: task_1.Type.TYPE_DOM,
+                            subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
+                            type: task_1.TaskType.TYPE_DOM,
                         }
                     ],
-                    subType: task_1.TypeEventSubType.SUB_TYPE_CONSOLE,
-                    type: task_1.Type.TYPE_EVENT,
+                    subType: task_1.TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+                    type: task_1.TaskType.TYPE_EVENT,
                 }
             ])
                 .then(() => {
@@ -98,8 +98,8 @@ function default_1() {
                     {
                         argments: [],
                         assertion: [],
-                        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-                        type: task_1.Type.TYPE_DATA,
+                        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+                        type: task_1.TaskType.TYPE_DATA,
                     }
                 ])
                     .then(() => {
@@ -114,8 +114,8 @@ function default_1() {
                     {
                         argments: [],
                         assertion: [{}],
-                        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-                        type: task_1.Type.TYPE_DATA,
+                        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+                        type: task_1.TaskType.TYPE_DATA,
                     }
                 ])
                     .then(() => {
@@ -129,8 +129,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-                        type: task_1.Type.TYPE_DATA,
+                        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+                        type: task_1.TaskType.TYPE_DATA,
                     }
                 ])
                     .then(() => {
@@ -144,8 +144,8 @@ function default_1() {
                     {
                         argments: [],
                         assertion: ['data === "test"'],
-                        subType: task_1.TypeDataSubType.SUB_TYPE_MYSQL,
-                        type: task_1.Type.TYPE_DATA,
+                        subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
+                        type: task_1.TaskType.TYPE_DATA,
                     }
                 ])
                     .then(() => {
@@ -159,8 +159,8 @@ function default_1() {
                     {
                         argments: [],
                         assertion: ['data === "test"'],
-                        subType: task_1.TypeDataSubType.SUB_TYPE_REDIS,
-                        type: task_1.Type.TYPE_DATA,
+                        subType: task_1.TaskTypeDataSubType.SUB_TYPE_REDIS,
+                        type: task_1.TaskType.TYPE_DATA,
                     }
                 ])
                     .then(() => {
@@ -173,8 +173,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypeDomSubType.SUB_TYPE_CLICK,
-                        type: task_1.Type.TYPE_DOM,
+                        subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
+                        type: task_1.TaskType.TYPE_DOM,
                     }
                 ])
                     .then(() => {
@@ -187,8 +187,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypeDomSubType.SUB_TYPE_KEYBOARD,
-                        type: task_1.Type.TYPE_DOM,
+                        subType: task_1.TaskTypeDomSubType.SUB_TYPE_KEYBOARD,
+                        type: task_1.TaskType.TYPE_DOM,
                     }
                 ])
                     .then(() => {
@@ -201,8 +201,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypeDomSubType.SUB_TYPE_GET_ATTR,
-                        type: task_1.Type.TYPE_DOM,
+                        subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
+                        type: task_1.TaskType.TYPE_DOM,
                     }
                 ])
                     .then(() => {
@@ -215,8 +215,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypeDomSubType.SUB_TYPE_SET_ATTR,
-                        type: task_1.Type.TYPE_DOM,
+                        subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_ATTR,
+                        type: task_1.TaskType.TYPE_DOM,
                     }
                 ])
                     .then(() => {
@@ -229,8 +229,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
-                        type: task_1.Type.TYPE_DOM,
+                        subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+                        type: task_1.TaskType.TYPE_DOM,
                     }
                 ])
                     .then(() => {
@@ -243,8 +243,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         children: [],
-                        subType: task_1.TypeEventSubType.SUB_TYPE_CONSOLE,
-                        type: task_1.Type.TYPE_EVENT,
+                        subType: task_1.TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+                        type: task_1.TaskType.TYPE_EVENT,
                     }
                 ])
                     .then(() => {
@@ -261,12 +261,12 @@ function default_1() {
                             {
                                 argments: ['div'],
                                 assertion: ['data.type === `123`', 'data.name === \'123\''],
-                                subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
-                                type: task_1.Type.TYPE_DOM
+                                subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+                                type: task_1.TaskType.TYPE_DOM
                             }
                         ],
-                        subType: task_1.TypeEventSubType.SUB_TYPE_CONSOLE,
-                        type: task_1.Type.TYPE_EVENT,
+                        subType: task_1.TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+                        type: task_1.TaskType.TYPE_EVENT,
                     }
                 ])
                     .then(() => {
@@ -283,12 +283,12 @@ function default_1() {
                             {
                                 argments: ['div'],
                                 assertion: ['data.type === `123`', 'data.name === \'123\''],
-                                subType: task_1.TypeDomSubType.SUB_TYPE_GET_TEXT,
-                                type: task_1.Type.TYPE_DOM
+                                subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+                                type: task_1.TaskType.TYPE_DOM
                             }
                         ],
-                        subType: task_1.TypeEventSubType.SUB_TYPE_CONSOLE,
-                        type: task_1.Type.TYPE_EVENT,
+                        subType: task_1.TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+                        type: task_1.TaskType.TYPE_EVENT,
                     }
                 ])
                     .then(() => {
@@ -301,8 +301,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypePageSubType.SUB_TYPE_SET_COOKIE,
-                        type: task_1.Type.TYPE_PAGE,
+                        subType: task_1.TaskTypePageSubType.SUB_TYPE_SET_COOKIE,
+                        type: task_1.TaskType.TYPE_PAGE,
                     }
                 ])
                     .then(() => {
@@ -315,8 +315,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypePageSubType.SUB_TYPE_GET_COOKIE,
-                        type: task_1.Type.TYPE_PAGE,
+                        subType: task_1.TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
+                        type: task_1.TaskType.TYPE_PAGE,
                     }
                 ])
                     .then(() => {
@@ -329,8 +329,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypePageSubType.SUB_TYPE_GOTO,
-                        type: task_1.Type.TYPE_PAGE,
+                        subType: task_1.TaskTypePageSubType.SUB_TYPE_GOTO,
+                        type: task_1.TaskType.TYPE_PAGE,
                     }
                 ])
                     .then(() => {
@@ -343,8 +343,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: ['test'],
-                        subType: task_1.TypePageSubType.SUB_TYPE_SCREENSHOT,
-                        type: task_1.Type.TYPE_PAGE,
+                        subType: task_1.TaskTypePageSubType.SUB_TYPE_SCREENSHOT,
+                        type: task_1.TaskType.TYPE_PAGE,
                     }
                 ])
                     .then(() => {
@@ -357,8 +357,8 @@ function default_1() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         argments: [],
-                        subType: task_1.TypeTimeSubType.SUB_TYPE_SET_SLEEP,
-                        type: task_1.Type.TYPE_TIME,
+                        subType: task_1.TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
+                        type: task_1.TaskType.TYPE_TIME,
                     }
                 ])
                     .then(() => {

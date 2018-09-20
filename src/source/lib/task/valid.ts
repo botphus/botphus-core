@@ -1,16 +1,16 @@
 import {MessageType} from '../../types/common';
-import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType, TypePageSubType, TypeTimeSubType} from '../../types/task';
+import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../../types/task';
 
-import {IDataRuleItem, IDomRuleItem, IEventRuleItem, IPageRuleItem, ITimeRuleItem} from '../../interfaces/task';
+import {ITaskDataRuleItem, ITaskDomRuleItem, ITaskEventRuleItem, ITaskPageRuleItem, ITaskTimeRuleItem} from '../../interfaces/task';
 
 import {createErrorMessage, ErrorMessage} from '../common';
 
 /**
  * Valid task rules
- * @param  {RuleTypeItem[]} taskRules Task Rule List
+ * @param  {TaskRuleTypeItem[]} taskRules Task Rule List
  * @return {Promise<void>}            Promise with nothing
  */
-export function validTaskRules(taskRules: RuleTypeItem[]): Promise<void> {
+export function validTaskRules(taskRules: TaskRuleTypeItem[]): Promise<void> {
     // Check if task rule is right
     if (taskRules.length === 0) {
         return Promise.reject(new ErrorMessage('Task rule list is empty', MessageType.TASK_RULES_VALID_ERROR));
@@ -24,17 +24,17 @@ export function validTaskRules(taskRules: RuleTypeItem[]): Promise<void> {
 
 /**
  * Loop through rules & check every rule & rebuild rule
- * @param  {RuleTypeItem[]} taskRules Task Rule List
+ * @param  {TaskRuleTypeItem[]} taskRules Task Rule List
  * @return {Error}                    Error message
  */
-function loopRules(taskRules: RuleTypeItem[], parentIndex?: string): Error {
+function loopRules(taskRules: TaskRuleTypeItem[], parentIndex?: string): Error {
     let err: Error;
-    taskRules.every((taskRule: RuleTypeItem, index: number) => {
+    taskRules.every((taskRule: TaskRuleTypeItem, index: number) => {
         err = assignTaskRule(taskRule);
         // Set rule index
         taskRule.index = parentIndex ? `${parentIndex}-${index}` : `${index}`;
         // if rule's type is event, check children
-        if (!err && taskRule.type === Type.TYPE_EVENT) {
+        if (!err && taskRule.type === TaskType.TYPE_EVENT) {
             err = loopRules(taskRule.children, `${taskRule.index}`);
         }
         if (err) {
@@ -47,10 +47,10 @@ function loopRules(taskRules: RuleTypeItem[], parentIndex?: string): Error {
 
 /**
  * Assign task rule to type check function
- * @param  {RuleTypeItem} taskRule Task Rule
+ * @param  {TaskRuleTypeItem} taskRule Task Rule
  * @return {Error}                 Error message
  */
-function assignTaskRule(taskRule: RuleTypeItem): Error {
+function assignTaskRule(taskRule: TaskRuleTypeItem): Error {
     // Check common fields
     if (taskRule.assertion && (taskRule.assertion.length === 0 || taskRule.assertion.some((assertionStr) => {
         return typeof assertionStr !== 'string';
@@ -58,36 +58,36 @@ function assignTaskRule(taskRule: RuleTypeItem): Error {
         return new Error('Assertion list can\'t be empty array & list item\'s content must be string');
     }
     switch (taskRule.type) {
-        case Type.TYPE_DATA:
+        case TaskType.TYPE_DATA:
             return dataTypeCheckAndRebuild(taskRule);
-        case Type.TYPE_DOM:
+        case TaskType.TYPE_DOM:
             return domTypeCheckAndRebuild(taskRule);
-        case Type.TYPE_EVENT:
+        case TaskType.TYPE_EVENT:
             return eventTypeCheckAndRebuild(taskRule);
-        case Type.TYPE_PAGE:
+        case TaskType.TYPE_PAGE:
             return pageTypeCheckAndRebuild(taskRule);
-        case Type.TYPE_TIME:
+        case TaskType.TYPE_TIME:
             return timeTypeCheckAndRebuild(taskRule);
     }
 }
 
 /**
  * Data type check & rebuild
- * @param  {IDataRuleItem} taskRule Data Rule
+ * @param  {ITaskDataRuleItem} taskRule Data Rule
  * @return {Error}                  Error message
  */
-function dataTypeCheckAndRebuild(taskRule: IDataRuleItem): Error {
+function dataTypeCheckAndRebuild(taskRule: ITaskDataRuleItem): Error {
     // Valid common fields
     if (!taskRule.assertion) {
         return new Error('Data type rule must have assertion field');
     }
     switch (taskRule.subType) {
-        case TypeDataSubType.SUB_TYPE_MYSQL:
+        case TaskTypeDataSubType.SUB_TYPE_MYSQL:
             if (!(taskRule.argments && taskRule.argments.length === 1 && typeof taskRule.argments[0] === 'string')) {
                 return new Error('SUB_TYPE_MYSQL must have sqlQuery & sqlQuery must be string');
             }
             break;
-        case TypeDataSubType.SUB_TYPE_REDIS:
+        case TaskTypeDataSubType.SUB_TYPE_REDIS:
             if (!(taskRule.argments && taskRule.argments.length === 1 && Array.isArray(taskRule.argments[0]))) {
                 return new Error('SUB_TYPE_REDIS must have commands && commands must be string[][]');
             }
@@ -97,35 +97,35 @@ function dataTypeCheckAndRebuild(taskRule: IDataRuleItem): Error {
 
 /**
  * Dom type check & rebuild
- * @param  {IDomRuleItem} taskRule Dom Rule
+ * @param  {ITaskDomRuleItem} taskRule Dom Rule
  * @return {Error}                 Error message
  */
-function domTypeCheckAndRebuild(taskRule: IDomRuleItem): Error {
+function domTypeCheckAndRebuild(taskRule: ITaskDomRuleItem): Error {
     switch (taskRule.subType) {
-        case TypeDomSubType.SUB_TYPE_CLICK:
-        case TypeDomSubType.SUB_TYPE_GET_HTML:
-        case TypeDomSubType.SUB_TYPE_GET_TEXT:
+        case TaskTypeDomSubType.SUB_TYPE_CLICK:
+        case TaskTypeDomSubType.SUB_TYPE_GET_HTML:
+        case TaskTypeDomSubType.SUB_TYPE_GET_TEXT:
             if (!(taskRule.argments && taskRule.argments.length === 1 && typeof taskRule.argments[0] === 'string')) {
                 return new Error('SUB_TYPE_CLICK/SUB_TYPE_GET_HTML/SUB_TYPE_GET_TEXT must have selector & selector must be string');
             }
             break;
-        case TypeDomSubType.SUB_TYPE_KEYBOARD:
+        case TaskTypeDomSubType.SUB_TYPE_KEYBOARD:
             if (!(taskRule.argments && taskRule.argments.length === 2 && typeof taskRule.argments[0] === 'string' && typeof taskRule.argments[1] === 'string')) {
                 return new Error('SUB_TYPE_KEYBOARD must have selector, text & selector, text must be string');
             }
             break;
-        case TypeDomSubType.SUB_TYPE_GET_ATTR:
+        case TaskTypeDomSubType.SUB_TYPE_GET_ATTR:
             if (!(taskRule.argments && taskRule.argments.length === 2 && typeof taskRule.argments[0] === 'string' && typeof taskRule.argments[1] === 'string')) {
                 return new Error('SUB_TYPE_GET_ATTR must have selector, attrName & selector, attrName must be string');
             }
             break;
-        case TypeDomSubType.SUB_TYPE_SET_ATTR:
+        case TaskTypeDomSubType.SUB_TYPE_SET_ATTR:
             if (!(taskRule.argments && taskRule.argments.length === 3 &&
                 typeof taskRule.argments[0] === 'string' && typeof taskRule.argments[1] === 'string' && typeof taskRule.argments[2] === 'string')) {
                 return new Error('SUB_TYPE_SET_ATTR must have selector, attrName, attrValue & selector, attrName, attrValue must be string');
             }
             break;
-        case TypeDomSubType.SUB_TYPE_SET_INPUT_FILES:
+        case TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES:
             if (!(taskRule.argments && taskRule.argments.length === 2 &&
                 typeof taskRule.argments[0] === 'string' && Array.isArray(taskRule.argments[1]))) {
                 return new Error('SUB_TYPE_SET_INPUT_FILES must have selector, filesPath & selector must be string & filesPath must be string[]');
@@ -135,10 +135,10 @@ function domTypeCheckAndRebuild(taskRule: IDomRuleItem): Error {
 
 /**
  * Event type check & rebuild
- * @param  {IEventRuleItem} taskRule Event Rule
+ * @param  {ITaskEventRuleItem} taskRule Event Rule
  * @return {Error}                   Error message
  */
-function eventTypeCheckAndRebuild(taskRule: IEventRuleItem): Error {
+function eventTypeCheckAndRebuild(taskRule: ITaskEventRuleItem): Error {
     // Valid common fields
     if (!(taskRule.children && Array.isArray(taskRule.children) && taskRule.children.length > 0)) {
         return new Error('Data type rule must have children field');
@@ -160,27 +160,27 @@ function eventTypeCheckAndRebuild(taskRule: IEventRuleItem): Error {
 
 /**
  * Page type check & rebuild
- * @param  {IPageRuleItem} taskRule Page Rule
+ * @param  {ITaskPageRuleItem} taskRule Page Rule
  * @return {Error}                  Error message
  */
-function pageTypeCheckAndRebuild(taskRule: IPageRuleItem): Error {
+function pageTypeCheckAndRebuild(taskRule: ITaskPageRuleItem): Error {
     switch (taskRule.subType) {
-        case TypePageSubType.SUB_TYPE_SET_COOKIE:
-        case TypePageSubType.SUB_TYPE_DELETE_COOKIE:
+        case TaskTypePageSubType.SUB_TYPE_SET_COOKIE:
+        case TaskTypePageSubType.SUB_TYPE_DELETE_COOKIE:
             if (!(taskRule.argments && Array.isArray(taskRule.argments[0]))) {
                 return new Error('SUB_TYPE_SET_COOKIE/SUB_TYPE_DELETE_COOKIE must have cookies & cookies must be array');
             }
-        case TypePageSubType.SUB_TYPE_GET_COOKIE:
+        case TaskTypePageSubType.SUB_TYPE_GET_COOKIE:
             if (taskRule.argments && !(Array.isArray(taskRule.argments[0]))) {
                 return new Error('SUB_TYPE_GET_COOKIE must have urls & urls must be array');
             }
             break;
-        case TypePageSubType.SUB_TYPE_GOTO:
+        case TaskTypePageSubType.SUB_TYPE_GOTO:
             if (!(taskRule.argments && typeof taskRule.argments[0] === 'string')) {
                 return new Error('SUB_TYPE_GOTO must have url & url must be array');
             }
             break;
-        case TypePageSubType.SUB_TYPE_SCREENSHOT:
+        case TaskTypePageSubType.SUB_TYPE_SCREENSHOT:
             if (taskRule.argments) {
                 if (!(typeof taskRule.argments[0] === 'object')) {
                     return new Error('SUB_TYPE_SCREENSHOT\'s option must be object');
@@ -194,12 +194,12 @@ function pageTypeCheckAndRebuild(taskRule: IPageRuleItem): Error {
 
 /**
  * Time type check & rebuild
- * @param  {ITimeRuleItem} taskRule Time Rule
+ * @param  {ITaskTimeRuleItem} taskRule Time Rule
  * @return {Error}                  Error message
  */
-function timeTypeCheckAndRebuild(taskRule: ITimeRuleItem): Error {
+function timeTypeCheckAndRebuild(taskRule: ITaskTimeRuleItem): Error {
     switch (taskRule.subType) {
-        case TypeTimeSubType.SUB_TYPE_SET_SLEEP:
+        case TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP:
             if (!(taskRule.argments && typeof taskRule.argments[0] === 'number')) {
                 return new Error('SUB_TYPE_SET_SLEEP must have sleepTime & sleepTime must be millisecond number.');
             }

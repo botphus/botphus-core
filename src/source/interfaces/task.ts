@@ -3,7 +3,7 @@ import {ConnectionConfig} from 'mysql';
 import {LaunchOptions} from 'puppeteer';
 
 import {MessageType} from '../types/common';
-import {RuleTypeItem, Type, TypeDataSubType, TypeDomSubType, TypeEventSubType, TypePageSubType, TypeTimeSubType} from '../types/task';
+import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../types/task';
 
 /**
  * Task exclude unit map
@@ -65,21 +65,21 @@ export interface ItaskUnitReceiveDataMessage extends ITaskMessage {
 /**
  * Basic rule
  */
-interface IruleItem {
+interface ITaskRuleItem {
     index?: string; // Index number, auto create
-    type: Type; // Type
+    type: TaskType; // Type
     argments?: any[]; // Rule argments
     assertion?: string[]; // Assertion list
     assertionVarName?: string; // Assertion variable name
-    // children: RuleTypeItem[] for some type
+    // children: TaskRuleTypeItem[] for some type
 }
 
 /**
  * Data Rule
  */
-export interface IDataRuleItem extends IruleItem {
-    type: Type.TYPE_DATA;
-    subType: TypeDataSubType;
+export interface ITaskDataRuleItem extends ITaskRuleItem {
+    type: TaskType.TYPE_DATA;
+    subType: TaskTypeDataSubType;
     assertion: string[];
     argments: any[];
 }
@@ -87,39 +87,39 @@ export interface IDataRuleItem extends IruleItem {
 /**
  * Dom Rule
  */
-export interface IDomRuleItem extends IruleItem {
-    type: Type.TYPE_DOM;
-    subType: TypeDomSubType;
+export interface ITaskDomRuleItem extends ITaskRuleItem {
+    type: TaskType.TYPE_DOM;
+    subType: TaskTypeDomSubType;
     argments: any[];
 }
 
 /**
  * Event Rule
  */
-export interface IEventRuleItem extends IruleItem {
-    type: Type.TYPE_EVENT;
-    subType: TypeEventSubType;
-    children: RuleTypeItem[];
+export interface ITaskEventRuleItem extends ITaskRuleItem {
+    type: TaskType.TYPE_EVENT;
+    subType: TaskTypeEventSubType;
+    children: TaskRuleTypeItem[];
 }
 
 // Event dialog rule
-export interface IEventDialogRuleItem extends IEventRuleItem {
-    subType: TypeEventSubType.SUB_TYPE_DIALOG;
+export interface ITaskEventDialogRuleItem extends ITaskEventRuleItem {
+    subType: TaskTypeEventSubType.SUB_TYPE_DIALOG;
     promptText?: string; // A text to enter in prompt. Does not cause any effects if the dialog's type is not prompt. default is "confirm"
 }
 
 /**
  * Time Rule
  */
-export interface ITimeRuleItem extends IruleItem {
-    type: Type.TYPE_TIME;
-    subType: TypeTimeSubType;
+export interface ITaskTimeRuleItem extends ITaskRuleItem {
+    type: TaskType.TYPE_TIME;
+    subType: TaskTypeTimeSubType;
 }
 
 /**
  * Page Rule
  */
-export interface IPageRuleItem extends IruleItem {
-    type: Type.TYPE_PAGE;
-    subType: TypePageSubType;
+export interface ITaskPageRuleItem extends ITaskRuleItem {
+    type: TaskType.TYPE_PAGE;
+    subType: TaskTypePageSubType;
 }

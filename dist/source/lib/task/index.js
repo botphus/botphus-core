@@ -11,7 +11,7 @@ const valid_1 = require("./valid");
  * Create Task & return task no
  * @param  {string}          taskName  Task Name
  * @param  {number}          mtime     Task Update Time, 13 digits timestamp
- * @param  {RuleTypeItem[]}  taskRules Task Rule List
+ * @param  {TaskRuleTypeItem[]}  taskRules Task Rule List
  * @param  {IBotphusConfig}  config    Botphus config
  * @return {Promise<string>}           Promise with Task Number
  */
