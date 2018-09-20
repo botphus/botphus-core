@@ -1,4 +1,7 @@
 "use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const os_1 = require("os");
 const path_1 = require("path");
@@ -48,3 +51,6 @@ class BotphusCore {
     }
 }
 exports.default = BotphusCore;
+// export types
+__export(require("./types/common"));
+__export(require("./types/task"));

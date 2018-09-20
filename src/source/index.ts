@@ -58,3 +58,9 @@ class BotphusCore {
 }
 
 export default BotphusCore;
+// export types
+export * from './types/common';
+export * from './types/task';
+// export interfaces
+export * from './interfaces/common';
+export * from './interfaces/task';
