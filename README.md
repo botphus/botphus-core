@@ -20,10 +20,10 @@
 - 服务端和PC客户端均可使用
 
 ## 索引
-- [API文档](doc/API.md)
-- [测试单元配置](doc/unit.md)
-- [进程通知](doc/process_message.md)
-- [常见问题](doc/troubleshooting.md)
+- [API文档](docs/API.md)
+- [测试单元配置](docs/unit.md)
+- [进程通知](docs/process_message.md)
+- [常见问题](docs/troubleshooting.md)
 
 ## 快速使用
 
