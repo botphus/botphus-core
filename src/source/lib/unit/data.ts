@@ -26,7 +26,7 @@ export function execSql(connectionNo: string, sqlQuery: string): Promise<any> {
 
 /**
  * Exec redis
- * @reference https://github.com/luin/ioredis
+ * @reference https://github.com/luin/ioredis#transaction
  * @param  {string}       connectionNo Redis Connection No
  * @param  {string[][]}   commands     Redis Commands
  * @return {Promise<any>}              Promise with return data

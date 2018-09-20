@@ -218,12 +218,16 @@ exports.TASK_FULL_LIST = [
     },
     // request & response
     {
-        argments: [exports.EVENT_TIMEOUT],
+        argments: [exports.EVENT_TIMEOUT, (request) => {
+                return request.url() === 'https://api.github.com/';
+            }],
         assertion: [`request.method() === "GET"`],
         assertionVarName: 'request',
         children: [
             {
-                argments: [exports.EVENT_TIMEOUT],
+                argments: [exports.EVENT_TIMEOUT, (response) => {
+                        return response.url() === 'https://api.github.com/';
+                    }],
                 assertion: ['resData'],
                 assertionVarName: 'resData',
                 children: [

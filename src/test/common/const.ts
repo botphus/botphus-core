@@ -1,5 +1,6 @@
 import {tmpdir} from 'os';
 import * as path from 'path';
+import * as puppeteer from 'puppeteer';
 
 import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../../source/types/task';
 
@@ -227,12 +228,16 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // request & response
     {
-        argments: [EVENT_TIMEOUT],
+        argments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
+            return request.url() === 'https://api.github.com/';
+        }],
         assertion: [`request.method() === "GET"`],
         assertionVarName: 'request',
         children: [
             {
-                argments: [EVENT_TIMEOUT],
+                argments: [EVENT_TIMEOUT, (response: puppeteer.Response) => {
+                    return response.url() === 'https://api.github.com/';
+                }],
                 assertion: ['resData'],
                 assertionVarName: 'resData',
                 children: [
