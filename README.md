@@ -29,7 +29,7 @@
 
 ### 安装
 ```shell
-npm install botphus-core --save-dev
+npm install botphus-core --save
 ```
 
 ### 使用
