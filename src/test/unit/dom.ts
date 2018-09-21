@@ -6,7 +6,7 @@ import botphusUnit from '../../source/lib/unit/';
 import * as CONST from '../common/const';
 
 export default function() {
-    describe('Unit#Dom', () => {
+    describe('Normal', () => {
         it('Dom#click', (done) => {
             puppeteer.launch(CONST.PUPPETEER_LAUNCH_OPTION)
                 .then((browser) => {

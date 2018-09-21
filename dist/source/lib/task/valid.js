@@ -139,9 +139,9 @@ function eventTypeCheckAndRebuild(taskRule) {
     }
     if (!(taskRule.argments && (taskRule.argments.length === 1 || taskRule.argments.length === 2)
         && typeof taskRule.argments[0] === 'number')) {
-        return new Error('TYPE_EVENT must have timeout & timeout must be millisecond number.');
+        return new Error('TYPE_EVENT must have timeout & timeout must be millisecond number');
     }
-    if (taskRule.argments[1] && !(typeof taskRule.argments[1] === 'function')) {
+    if (taskRule.argments.length === 2 && !(typeof taskRule.argments[1] === 'function')) {
         return new Error('if TYPE_EVENT have checkFunc, checkFunc must be function');
     }
     // Change argments checkFunc to string
@@ -170,8 +170,12 @@ function pageTypeCheckAndRebuild(taskRule) {
             }
             break;
         case task_1.TaskTypePageSubType.SUB_TYPE_GOTO:
-            if (!(taskRule.argments && typeof taskRule.argments[0] === 'string')) {
+            if (!(taskRule.argments && (taskRule.argments.length === 1 || taskRule.argments.length === 2)
+                && typeof taskRule.argments[0] === 'string')) {
                 return new Error('SUB_TYPE_GOTO must have url & url must be array');
+            }
+            if (taskRule.argments.length === 2 && !(typeof taskRule.argments[1] === 'object')) {
+                return new Error('if SUB_TYPE_GOTO have option, option must be object');
             }
             break;
         case task_1.TaskTypePageSubType.SUB_TYPE_SCREENSHOT:

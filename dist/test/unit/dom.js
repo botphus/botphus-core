@@ -5,7 +5,7 @@ const puppeteer = require("puppeteer");
 const unit_1 = require("../../source/lib/unit/");
 const CONST = require("../common/const");
 function default_1() {
-    describe('Unit#Dom', () => {
+    describe('Normal', () => {
         it('Dom#click', (done) => {
             puppeteer.launch(CONST.PUPPETEER_LAUNCH_OPTION)
                 .then((browser) => {

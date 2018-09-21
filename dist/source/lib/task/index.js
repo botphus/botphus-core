@@ -79,7 +79,8 @@ function startTask(taskNo, startPage, startOption, config) {
                 MYSQL_OPTION: startOption.mysqlOption ? JSON.stringify(startOption.mysqlOption) : '',
                 PUPPETEER_LAUNCH_OPTION: startOption.puppeteerLaunchOption ? JSON.stringify(startOption.puppeteerLaunchOption) : '',
                 REDIS_OPTION: startOption.redisOption ? JSON.stringify(startOption.redisOption) : '',
-                START_PAGE: startPage
+                START_PAGE: startPage,
+                START_PAGE_OPTION: startOption.startPageOption ? JSON.stringify(startOption.startPageOption) : ''
             }
         });
         return Promise.resolve(subprocess);

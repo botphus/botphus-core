@@ -16,6 +16,7 @@ const puppeteerLaunchOption = process.env.PUPPETEER_LAUNCH_OPTION ? JSON.parse(p
 const mysqlOption = process.env.MYSQL_OPTION ? JSON.parse(process.env.MYSQL_OPTION) : null;
 const redisOption = process.env.REDIS_OPTION ? JSON.parse(process.env.REDIS_OPTION) : null;
 const excludeOption = process.env.EXCLUDE_OPTION ? JSON.parse(process.env.EXCLUDE_OPTION) : {};
+const startOption = process.env.START_PAGE_OPTION ? JSON.parse(process.env.START_PAGE_OPTION) : null;
 
 // Init mysql & redis
 let mysqlConnectionNo = '';
@@ -80,7 +81,8 @@ sendProcessMessage([null, {
     .then(function(browser) {
         return browser.newPage()
             .then(function(page) {
-                const startFunc = process.env.START_PAGE ? page.goto(process.env.START_PAGE) : Promise.resolve();
+                const startFunc = process.env.START_PAGE ? 
+                    (startOption ? unitLib.page.goto(page, process.env.START_PAGE, startOption) : unitLib.page.goto(page, process.env.START_PAGE)) : Promise.resolve();
                 return startFunc
                     {{#each taskRules}}
                     {{> entry rule=this }}

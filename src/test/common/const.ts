@@ -32,13 +32,34 @@ export const NORMAL_PAGE_FILE_SELECTOR_FIELD = 'files';
 export const NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML = '<label for="search">搜索名称</label><input type="text" name="search" id="search">';
 export const NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT = '搜索名称';
 
+// React Page
+export const REACT_PAGE_PATH = 'file://' + path.join(__dirname, '../../../test/src/react_test_page.html');
+export const REACT_PAGE_FORM_SELECTOR = '#container > form:nth-child(1)';
+export const REACT_PAGE_FORM_ITEM_SELECTOR = '.ant-form-item-control-wrapper:nth-child(2) .ant-form-item-children';
+export const REACT_PAGE_FORM_SELECT1_SELECTOR = `${REACT_PAGE_FORM_SELECTOR} > .ant-form-item:nth-child(2) > ${REACT_PAGE_FORM_ITEM_SELECTOR}`;
+export const REACT_PAGE_FORM_SELECT2_SELECTOR = `${REACT_PAGE_FORM_SELECTOR} > .ant-form-item:nth-child(3) > ${REACT_PAGE_FORM_ITEM_SELECTOR}`;
+export const REACT_PAGE_FORM_BUTTON_SELECTOR = `${REACT_PAGE_FORM_SELECTOR} > .ant-form-item:nth-child(12) .ant-form-item-children`;
+export const REACT_PAGE_FORM_BUTTON_SUBMIT_SELECTOR = `${REACT_PAGE_FORM_BUTTON_SELECTOR} > button:nth-child(1)`;
+export const REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR = 'div > .ant-select-dropdown > div > .ant-select-dropdown-menu > .ant-select-dropdown-menu-item:nth-child(1)';
+export const REACT_PAGE_OUTSIDE_SELECT1_DROPDOWN_SELECTOR = `div:nth-child(3) > ${REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR}`;
+export const REACT_PAGE_OUTSIDE_SELECT2_DROPDOWN_SELECTOR = `div:nth-child(4) > ${REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR}`;
+
+export const REACT_PAGE_CONSOLE_FORM_MESSAGE = 'Received values of form: ';
+
 // Resource
 export const RESOURCE_IMAGE_PATH = path.join(__dirname, '../../../test/src/test-image.png');
 export const RESOURCE_PDF_PATH = path.join(__dirname, '../../../test/src/phocapdf-demo2.pdf');
 export const RESOURCE_FILE_NAME_REG = /^\S+[\\/]([^\\/]+\.[^\\/]+)$/;
 
 // puppeteer
-export const PUPPETEER_LAUNCH_OPTION = {args: ['--no-sandbox']};
+// Close sandbox mode
+export const PUPPETEER_LAUNCH_OPTION = {
+    args: ['--no-sandbox']
+};
+export const PUPPETEER_REACT_LAUNCH_OPTION = {
+    args: ['--no-sandbox'],
+    slowMo: 50
+};
 
 // Request
 export const REQUEST_PATH = 'https://api.github.com/';
@@ -324,14 +345,17 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
 ];
 
-let taskCaseCount = 0;
+let taskFullListCaseCount = 0;
 function countFullList(list: TaskRuleTypeItem[]) {
     list.forEach((rule: TaskRuleTypeItem) => {
-        taskCaseCount++;
+        taskFullListCaseCount++;
         if (rule.type === TaskType.TYPE_EVENT) {
             countFullList(rule.children);
         }
     });
 }
 countFullList(TASK_FULL_LIST);
-export const TASK_FULL_LIST_CASE_COUNT = taskCaseCount;
+export const TASK_FULL_LIST_CASE_COUNT = taskFullListCaseCount;
+
+export const TASK_REACT_NAME = 'React task';
+export const TASK_REACT_LIST: TaskRuleTypeItem[] = [];

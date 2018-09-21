@@ -339,6 +339,20 @@ export default function() {
                     })
                     .catch(() => done());
             });
+            it('createTask with wrong page goto rule option argment', (done) => {
+                const taskName = 'test task';
+                botphusCore.createTask(taskName, new Date().getTime(), [
+                    {
+                        argments: ['https://bing.com', ''],
+                        subType: TaskTypePageSubType.SUB_TYPE_GOTO,
+                        type: TaskType.TYPE_PAGE,
+                    }
+                ])
+                    .then(() => {
+                        done(new Error('Invalid expectation'));
+                    })
+                    .catch(() => done());
+            });
             it('createTask with wrong page screenshot rule argments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [

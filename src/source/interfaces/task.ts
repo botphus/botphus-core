@@ -1,6 +1,6 @@
 import {ClusterOptions, RedisOptions} from 'ioredis';
 import {ConnectionConfig} from 'mysql';
-import {LaunchOptions} from 'puppeteer';
+import {LaunchOptions, NavigationOptions} from 'puppeteer';
 
 import {MessageType} from '../types/common';
 import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../types/task';
@@ -21,6 +21,7 @@ export interface ITaskStartOption {
     redisOption?: RedisOptions | ClusterOptions; // ioredis option, details:
     // https://github.com/luin/ioredis/blob/master/API.md#new_Redis_new AND https://github.com/luin/ioredis/blob/master/API.md#new_Cluster_new
     excludeOption?: ITaskExcludeUnit;
+    startPageOption?: NavigationOptions; // Puppeteer start page option, details: https://pptr.dev/#?product=Puppeteer&version=v1.8.0&show=api-pagegotourl-options
 }
 
 /**

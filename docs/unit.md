@@ -505,9 +505,12 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 
 **入参**
 
-- 参数类型: [url: string]
+- 参数类型: [url: string, option: puppeteer.NavigationOptions = {
+    waitUntil: 'domcontentloaded'
+}]
 - 参数说明:
     - url: 跳转地址
+    - puppeteer.NavigationOptions: 跳转配置,详见[page.goto](https://pptr.dev/#?product=Puppeteer&version=v1.7.0&show=api-pagegotourl-options)
 - 返回数据
     - 无
 

@@ -71,3 +71,4 @@ startPage | `string` | null | 默认着陆页,如果为空,则默认不跳转页
 [startOption.mysqlOption] | `object` | null | mysql连接配置,详见[mysql](https://github.com/mysqljs/mysql#introduction)
 [startOption.redisOption] | `object`/`array` | null | redis连接配置,详见[ioredis:new Redis](https://github.com/luin/ioredis/blob/master/API.md#new_Redis_new)或[ioredis:new Cluster](https://github.com/luin/ioredis/blob/master/API.md#new_Cluster_new)
 [startOption.excludeOption] | `object` | {} | 过滤`任务单元索引序号`,key由数组下标组成,子任务以`-`连接.如`{'0-0': true}`
+[startOption.startPageOption] | `object` | {'waitUntil': 'domcontentloaded'} | 启动页配置,详见[page.goto](https://pptr.dev/#?product=Puppeteer&version=v1.8.0&show=api-pagegotourl-options)

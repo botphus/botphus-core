@@ -28,12 +28,31 @@ exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD = 'value';
 exports.NORMAL_PAGE_FILE_SELECTOR_FIELD = 'files';
 exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML = '<label for="search">搜索名称</label><input type="text" name="search" id="search">';
 exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT = '搜索名称';
+// React Page
+exports.REACT_PAGE_PATH = 'file://' + path.join(__dirname, '../../../test/src/react_test_page.html');
+exports.REACT_PAGE_FORM_SELECTOR = '#container > form:nth-child(1)';
+exports.REACT_PAGE_FORM_ITEM_SELECTOR = '.ant-form-item-control-wrapper:nth-child(2) .ant-form-item-children';
+exports.REACT_PAGE_FORM_SELECT1_SELECTOR = `${exports.REACT_PAGE_FORM_SELECTOR} > .ant-form-item:nth-child(2) > ${exports.REACT_PAGE_FORM_ITEM_SELECTOR}`;
+exports.REACT_PAGE_FORM_SELECT2_SELECTOR = `${exports.REACT_PAGE_FORM_SELECTOR} > .ant-form-item:nth-child(3) > ${exports.REACT_PAGE_FORM_ITEM_SELECTOR}`;
+exports.REACT_PAGE_FORM_BUTTON_SELECTOR = `${exports.REACT_PAGE_FORM_SELECTOR} > .ant-form-item:nth-child(12) .ant-form-item-children`;
+exports.REACT_PAGE_FORM_BUTTON_SUBMIT_SELECTOR = `${exports.REACT_PAGE_FORM_BUTTON_SELECTOR} > button:nth-child(1)`;
+exports.REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR = 'div > .ant-select-dropdown > div > .ant-select-dropdown-menu > .ant-select-dropdown-menu-item:nth-child(1)';
+exports.REACT_PAGE_OUTSIDE_SELECT1_DROPDOWN_SELECTOR = `div:nth-child(3) > ${exports.REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR}`;
+exports.REACT_PAGE_OUTSIDE_SELECT2_DROPDOWN_SELECTOR = `div:nth-child(4) > ${exports.REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR}`;
+exports.REACT_PAGE_CONSOLE_FORM_MESSAGE = 'Received values of form: ';
 // Resource
 exports.RESOURCE_IMAGE_PATH = path.join(__dirname, '../../../test/src/test-image.png');
 exports.RESOURCE_PDF_PATH = path.join(__dirname, '../../../test/src/phocapdf-demo2.pdf');
 exports.RESOURCE_FILE_NAME_REG = /^\S+[\\/]([^\\/]+\.[^\\/]+)$/;
 // puppeteer
-exports.PUPPETEER_LAUNCH_OPTION = { args: ['--no-sandbox'] };
+// Close sandbox mode
+exports.PUPPETEER_LAUNCH_OPTION = {
+    args: ['--no-sandbox']
+};
+exports.PUPPETEER_REACT_LAUNCH_OPTION = {
+    args: ['--no-sandbox'],
+    slowMo: 50
+};
 // Request
 exports.REQUEST_PATH = 'https://api.github.com/';
 // Data
@@ -313,14 +332,16 @@ exports.TASK_FULL_LIST = [
         type: task_1.TaskType.TYPE_PAGE
     },
 ];
-let taskCaseCount = 0;
+let taskFullListCaseCount = 0;
 function countFullList(list) {
     list.forEach((rule) => {
-        taskCaseCount++;
+        taskFullListCaseCount++;
         if (rule.type === task_1.TaskType.TYPE_EVENT) {
             countFullList(rule.children);
         }
     });
 }
 countFullList(exports.TASK_FULL_LIST);
-exports.TASK_FULL_LIST_CASE_COUNT = taskCaseCount;
+exports.TASK_FULL_LIST_CASE_COUNT = taskFullListCaseCount;
+exports.TASK_REACT_NAME = 'React task';
+exports.TASK_REACT_LIST = [];

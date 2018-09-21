@@ -48,14 +48,15 @@ export function deleteCookie(page: puppeteer.Page, cookies: puppeteer.DeleteCook
 /**
  * Redirect to target url
  * @reference https://pptr.dev/#?product=Puppeteer&version=v1.7.0&show=api-pagegotourl-options
- * @param  {puppeteer.Page}              page Current Page
- * @param  {string}                      url  target url
- * @return {Promise<puppeteer.Response>}      Page Response
+ * @param  {puppeteer.Page}              page   Current Page
+ * @param  {string}                      url    target url
+ * @param  {puppeteer.NavigationOptions} option page action
+ * @return {Promise<puppeteer.Response>}        Page Response
  */
-export function goto(page: puppeteer.Page, url: string): Promise<puppeteer.Response> {
-    return page.goto(url, {
-        waitUntil: 'domcontentloaded'
-    });
+export function goto(page: puppeteer.Page, url: string, option: puppeteer.NavigationOptions = {
+    waitUntil: 'domcontentloaded'
+}): Promise<puppeteer.Response> {
+    return page.goto(url, option);
 }
 
 /**
