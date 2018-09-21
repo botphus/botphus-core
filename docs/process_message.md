@@ -25,7 +25,7 @@ subProcess.on('message', ([error, messageData]: TaskMessage) => {
 字段名 | 类型 | 描述 
 --- | --- | ---
 type | `enum` | [消息类型](#messageType) 
-index | `string` | 规则数组索引,`TASK_START`为`start`,`TASK_END`为`end`,其他为`任务单元索引序号`
+index | `string` | 规则数组索引,`TASK_START`为`start`,`TASK_END`为`end`,其他为`任务单元索引序号`(由数组下标组成,子任务以`-`连接.如`0-0`)
 sendTime | `number` | 发送消息时间,13位时间戳
 totalCase<sup>[注1](#messageData_tip)<sup> | `number` | 总测试用例数量
 order<sup>[注2](#messageData_tip)<sup> | `number` | 测试单元序列号
