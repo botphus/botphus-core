@@ -41,9 +41,11 @@ function default_1() {
                 }
             ])
                 .then(() => {
-                const stats = fs.statSync(path.join(CONST.CACHE_PATH, '/task-cache/', common_1.getTaskNoByTaskName(taskName) + '.js'));
-                assert(mtime === new Date(stats.mtime).getTime());
-                done();
+                setTimeout(() => {
+                    const stats = fs.statSync(path.join(CONST.CACHE_PATH, '/task-cache/', common_1.getTaskNoByTaskName(taskName) + '.js'));
+                    assert(mtime === new Date(stats.mtime).getTime());
+                    done();
+                }, 100);
             })
                 .catch(done);
         });
