@@ -13,11 +13,11 @@ import {validTaskRules} from './valid';
 
 /**
  * Create Task & return task no
- * @param  {string}          taskName  Task Name
- * @param  {number}          mtime     Task Update Time, 13 digits timestamp
+ * @param  {string}              taskName  Task Name
+ * @param  {number}              mtime     Task Update Time, 13 digits timestamp
  * @param  {TaskRuleTypeItem[]}  taskRules Task Rule List
- * @param  {IBotphusConfig}  config    Botphus config
- * @return {Promise<string>}           Promise with Task Number
+ * @param  {IBotphusConfig}      config    Botphus config
+ * @return {Promise<string>}               Promise with Task Number
  */
 export function createTask(taskName: string, mtime: number, taskRules: TaskRuleTypeItem[], config: IBotphusConfig): Promise<string> {
     const taskNo: string = getTaskNoByTaskName(taskName);

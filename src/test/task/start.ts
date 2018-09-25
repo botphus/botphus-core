@@ -107,6 +107,39 @@ export default function() {
                 })
                 .catch(done);
         });
+        it('startTask with react rules', (done) => {
+            botphusCore.startTask(getTaskNoByTaskName(CONST.TASK_REACT_NAME), CONST.REACT_PAGE_PATH, {
+                startPageOption: {
+                    waitUntil: 'networkidle0'
+                }
+            })
+                .then((subprocess) => {
+                    subprocess.on('message', ([error, messageData]: TaskMessage) => {
+                        // If process has error message
+                        if (error) {
+                            // kill for cover test
+                            subprocess.kill();
+                            return done(error.stack);
+                        }
+                        // Task End
+                        if (messageData.type === MessageType.TASK_END) {
+                            assert(messageData.index === 'end');
+                            assert(messageData.totalCase === (CONST.TASK_REACT_LIST_CASE_COUNT));
+                            // kill for cover test
+                            subprocess.kill();
+                            return done();
+                        }
+                    });
+                    // Listen close event
+                    subprocess.on('close', (code) => {
+                        if (code === 0 || !code) {
+                            return;
+                        }
+                        return done(new Error('Error exit'));
+                    });
+                })
+                .catch(done);
+        });
         it('startTask with wrong number', (done) => {
             botphusCore.startTask(getTaskNoByTaskName(CONST.TASK_FULL_NAME) + '1', '')
                 .then(() => {

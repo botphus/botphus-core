@@ -43,13 +43,17 @@ export const REACT_PAGE_FORM_BUTTON_SUBMIT_SELECTOR = `${REACT_PAGE_FORM_BUTTON_
 export const REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR = 'div > .ant-select-dropdown > div > .ant-select-dropdown-menu > .ant-select-dropdown-menu-item:nth-child(1)';
 export const REACT_PAGE_OUTSIDE_SELECT1_DROPDOWN_SELECTOR = `div:nth-child(3) > ${REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR}`;
 export const REACT_PAGE_OUTSIDE_SELECT2_DROPDOWN_SELECTOR = `div:nth-child(4) > ${REACT_PAGE_OUTSIDE_SELECT_DROPDOWN_ITEM_SELECTOR}`;
+export const REACT_PAGE_FORM_FILE_SELECTOR = `${REACT_PAGE_FORM_SELECTOR} > .ant-form-item:nth-child(10) .ant-form-item-children .ant-upload input`;
 
 export const REACT_PAGE_CONSOLE_FORM_MESSAGE = 'Received values of form: ';
+export const REACT_PAGE_CONSOLE_FORM_MESSAGE_UPLOAD = 'Upload event:';
+export const REACT_PAGE_UPLOAD_PATH = 'upload.do';
 
 // Resource
 export const RESOURCE_IMAGE_PATH = path.join(__dirname, '../../../test/src/test-image.png');
 export const RESOURCE_PDF_PATH = path.join(__dirname, '../../../test/src/phocapdf-demo2.pdf');
 export const RESOURCE_FILE_NAME_REG = /^\S+[\\/]([^\\/]+\.[^\\/]+)$/;
+export const RESOURCE_FILE_NAME = 'test-image.png';
 
 // puppeteer
 // Close sandbox mode
@@ -58,7 +62,7 @@ export const PUPPETEER_LAUNCH_OPTION = {
 };
 export const PUPPETEER_REACT_LAUNCH_OPTION = {
     args: ['--no-sandbox'],
-    slowMo: 50
+    slowMo: 20
 };
 
 // Request
@@ -345,17 +349,45 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
 ];
 
-let taskFullListCaseCount = 0;
-function countFullList(list: TaskRuleTypeItem[]) {
+export const TASK_REACT_NAME = 'React task';
+export const TASK_REACT_LIST: TaskRuleTypeItem[] = [
+    // console
+    {
+        argments: [EVENT_TIMEOUT, (consoleMessage: puppeteer.ConsoleMessage) => {
+            return consoleMessage.type() === 'log';
+        }],
+        assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 2', 'consoleMessage.text().indexOf("Upload event:") >= 0'],
+        assertionVarName: 'consoleMessage',
+        children: [
+            {
+                argments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
+                    return request.url().indexOf('upload.do') >= 0;
+                }],
+                children: [
+                    {
+                        argments: [REACT_PAGE_FORM_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
+                        subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+                        type: TaskType.TYPE_DOM
+                    }
+                ],
+                subType: TaskTypeEventSubType.SUB_TYPE_REQUEST,
+                type: TaskType.TYPE_EVENT
+            }
+        ],
+        subType: TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+        type: TaskType.TYPE_EVENT
+    }
+];
+
+function countListCase(list: TaskRuleTypeItem[]): number {
+    let totalCount = 0;
     list.forEach((rule: TaskRuleTypeItem) => {
-        taskFullListCaseCount++;
+        totalCount++;
         if (rule.type === TaskType.TYPE_EVENT) {
-            countFullList(rule.children);
+            totalCount = totalCount + countListCase(rule.children);
         }
     });
+    return totalCount;
 }
-countFullList(TASK_FULL_LIST);
-export const TASK_FULL_LIST_CASE_COUNT = taskFullListCaseCount;
-
-export const TASK_REACT_NAME = 'React task';
-export const TASK_REACT_LIST: TaskRuleTypeItem[] = [];
+export const TASK_FULL_LIST_CASE_COUNT = countListCase(TASK_FULL_LIST);
+export const TASK_REACT_LIST_CASE_COUNT = countListCase(TASK_REACT_LIST);

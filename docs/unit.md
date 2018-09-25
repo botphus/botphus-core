@@ -26,6 +26,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 - TaskType
     - [TYPE_DATA](#type_data): 数据类,mysql/redis测试单元.([代码](../src/source/lib/unit/data.ts)|[测试用例](../src/test/unit/data.ts))
     - [TYPE_DOM](#type_dom): DOM类,页面点击/输入等测试单元.([代码](../src/source/lib/unit/dom.ts)|[测试用例](../src/test/unit/dom.ts))
+        - React页面应用([React测试用例](https://codesandbox.io/s/2vrorqw12r)|[React页面源码](../src/test/unit/react_dom.ts))
     - [TYPE_EVENT](#type_event): 事件类,页面请求/控制台等测试单元.([代码](../src/source/lib/unit/event.ts)|[测试用例](../src/test/unit/event.ts))
     - [TYPE_TIME](#type_time): 时间类,休眠等测试单元.([代码](../src/source/lib/unit/time.ts)|[测试用例](../src/test/unit/time.ts))
     - [TYPE_PAGE](#type_page): 页面类,加载/跳转/cookie等测试单元.([代码](../src/source/lib/unit/page.ts)|[测试用例](../src/test/unit/page.ts))

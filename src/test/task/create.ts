@@ -1,5 +1,10 @@
+import * as fs from 'fs';
+import * as path from 'path';
+import * as assert from 'power-assert';
+
 import * as CONST from '../common/const';
 
+import {getTaskNoByTaskName} from '../../source/lib/common';
 import {TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../../source/types/task';
 
 import BotphusCore from '../../source/';
@@ -9,6 +14,7 @@ const botphusCore = new BotphusCore({
 
 export default function() {
     describe('Task#createTask', () => {
+        let mtime: number;
         it('createTask', (done) => {
             const taskName = 'test task';
             botphusCore.createTask(taskName, new Date().getTime(), [
@@ -20,6 +26,8 @@ export default function() {
                 }
             ])
                 .then(() => {
+                    const stats = fs.statSync(path.join(CONST.CACHE_PATH, '/task-cache/', getTaskNoByTaskName(taskName) + '.js'));
+                    mtime = new Date(stats.mtime).getTime();
                     done();
                 })
                 .catch(done);
@@ -35,6 +43,8 @@ export default function() {
                 }
             ])
                 .then(() => {
+                    const stats = fs.statSync(path.join(CONST.CACHE_PATH, '/task-cache/', getTaskNoByTaskName(taskName) + '.js'));
+                    assert(mtime === new Date(stats.mtime).getTime());
                     done();
                 })
                 .catch(done);
@@ -47,9 +57,18 @@ export default function() {
                     assertion: ['data.type === `123`', 'data.name === \'123\''],
                     subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
                     type: TaskType.TYPE_DOM
+                },
+                {
+                    argments: [{
+                        encoding: 'base64'
+                    }],
+                    subType: TaskTypePageSubType.SUB_TYPE_SCREENSHOT,
+                    type: TaskType.TYPE_PAGE
                 }
             ])
                 .then(() => {
+                    const stats = fs.statSync(path.join(CONST.CACHE_PATH, '/task-cache/', getTaskNoByTaskName(taskName) + '.js'));
+                    assert(mtime < new Date(stats.mtime).getTime());
                     done();
                 })
                 .catch(done);
@@ -79,6 +98,13 @@ export default function() {
         });
         it('createTask with full rules', (done) => {
             botphusCore.createTask(CONST.TASK_FULL_NAME, new Date().getTime(), CONST.TASK_FULL_LIST)
+                .then(() => {
+                    done();
+                })
+                .catch(done);
+        });
+        it('createTask with react rules', (done) => {
+            botphusCore.createTask(CONST.TASK_REACT_NAME, new Date().getTime(), CONST.TASK_REACT_LIST)
                 .then(() => {
                     done();
                 })
