@@ -63,6 +63,7 @@ export function createCache(cacheFilePath: string, taskNo: string, taskRules: Ta
         .then((templateFunc) => {
             const content = templateFunc({
                 libPath: BOTPHUS_LIB_PATH.replace(/\\/g, '\\\\'),
+                processPath: process.cwd().replace(/\\/g, '\\\\'),
                 taskRules
             });
             return fse.outputFile(cacheFilePath, js(content));
