@@ -1,5 +1,5 @@
 # botphus-core
-> `botphusCore`是`botphus`的核心测试程序,提供web测试单元任务配置和执行.
+> `botphusCore`是`botphus`的核心测试程序,通过底层使用[puppeteer](https://github.com/GoogleChrome/puppeteer)提供web测试单元任务配置和执行.
 
 [![build status][travis-image]][travis-url]
 [![codecov.io][codecov-image]][codecov-url]

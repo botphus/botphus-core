@@ -104,6 +104,7 @@ function default_1() {
         });
         it('startTask with react rules', (done) => {
             botphusCore.startTask(common_2.getTaskNoByTaskName(CONST.TASK_REACT_NAME), CONST.REACT_PAGE_PATH, {
+                puppeteerLaunchOption: CONST.PUPPETEER_REACT_LAUNCH_OPTION,
                 startPageOption: {
                     waitUntil: 'networkidle0'
                 }
