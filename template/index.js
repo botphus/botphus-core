@@ -1,5 +1,5 @@
 const path = require('path');
-const puppeteer = require(path.join('{{libPath}}', '/node_modules/puppeteer/'));
+const puppeteer = require(path.join('{{processPath}}', '/node_modules/puppeteer/'));
 
 // message type
 const commonType = require(path.join('{{libPath}}', '/dist/source/types/common'));

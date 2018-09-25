@@ -1,6 +1,6 @@
 {
   "name": "botphus-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Core testing lib for botphus",
   "main": "dist/source/index.js",
   "types": "src/source/index.d.ts",
