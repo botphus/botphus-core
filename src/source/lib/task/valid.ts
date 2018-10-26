@@ -130,6 +130,7 @@ function domTypeCheckAndRebuild(taskRule: ITaskDomRuleItem): Error {
                 typeof taskRule.argments[0] === 'string' && Array.isArray(taskRule.argments[1]))) {
                 return new Error('SUB_TYPE_SET_INPUT_FILES must have selector, filesPath & selector must be string & filesPath must be string[]');
             }
+            break;
     }
 }
 
