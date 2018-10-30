@@ -14,16 +14,23 @@ const eventFunc = unitLib.event.console;
 {{#if (eq rule.subType 303)}}
 const eventFunc = unitLib.event.dialog;
 {{/if}}
-return eventFunc(page, {{rule.argments.[0]}}, function() {
+return eventFunc(page, {{rule.arguments.[0]}}, function() {
     return Promise.resolve()
         {{#each rule.children}}
         {{> entry rule=this}}
         {{/each}}
-}, {{{rule.argments.[1]}}})
+}, {{{rule.arguments.[1]}}})
 {{!-- SUB_TYPE_RESPONSE: json data --}}
 {{#if (eq rule.subType 301)}}
     .then((response) => {
-        return response.json();
+        const headers = response.headers();
+        const contentType = headers['content-type'] || '';
+        // Check json data
+        if (/json/i.test(contentType)) {
+            return response.json();
+        } else {
+            return response.text();
+        }
     })
     {{> data_send rule=this}}
 {{/if}}

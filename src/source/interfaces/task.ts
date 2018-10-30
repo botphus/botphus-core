@@ -69,7 +69,7 @@ export interface ItaskUnitReceiveDataMessage extends ITaskMessage {
 interface ITaskRuleItem {
     index?: string; // Index number, auto create
     type: TaskType; // Type
-    argments?: any[]; // Rule argments
+    arguments?: any[]; // Rule arguments
     assertion?: string[]; // Assertion list
     assertionVarName?: string; // Assertion variable name
     // children: TaskRuleTypeItem[] for some type
@@ -82,7 +82,7 @@ export interface ITaskDataRuleItem extends ITaskRuleItem {
     type: TaskType.TYPE_DATA;
     subType: TaskTypeDataSubType;
     assertion: string[];
-    argments: any[];
+    arguments: any[];
 }
 
 /**
@@ -91,7 +91,7 @@ export interface ITaskDataRuleItem extends ITaskRuleItem {
 export interface ITaskDomRuleItem extends ITaskRuleItem {
     type: TaskType.TYPE_DOM;
     subType: TaskTypeDomSubType;
-    argments: any[];
+    arguments: any[];
 }
 
 /**

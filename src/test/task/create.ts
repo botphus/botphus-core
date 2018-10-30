@@ -19,7 +19,7 @@ export default function() {
             const taskName = 'test task';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    argments: ['div'],
+                    arguments: ['div'],
                     assertion: ['data.type === `123`', 'data.name === \'123\''],
                     subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
                     type: TaskType.TYPE_DOM
@@ -36,7 +36,7 @@ export default function() {
             const taskName = 'test task';
             botphusCore.createTask(taskName, new Date().getTime() - 1000, [
                 {
-                    argments: ['div'],
+                    arguments: ['div'],
                     assertion: ['data.type === `123`', 'data.name === \'123\''],
                     subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
                     type: TaskType.TYPE_DOM
@@ -55,13 +55,13 @@ export default function() {
             const taskName = 'test task';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    argments: ['div'],
+                    arguments: ['div'],
                     assertion: ['data.type === `123`', 'data.name === \'123\''],
                     subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
                     type: TaskType.TYPE_DOM
                 },
                 {
-                    argments: [{
+                    arguments: [{
                         encoding: 'base64'
                     }],
                     subType: TaskTypePageSubType.SUB_TYPE_SCREENSHOT,
@@ -79,12 +79,12 @@ export default function() {
             const taskName = 'test task2';
             botphusCore.createTask(taskName, new Date().getTime(), [
                 {
-                    argments: [100, (info: any) => {
+                    arguments: [100, (info: any) => {
                         return info.args;
                     }],
                     children: [
                         {
-                            argments: ['div'],
+                            arguments: ['div'],
                             subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
                             type: TaskType.TYPE_DOM,
                         }
@@ -125,7 +125,7 @@ export default function() {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         assertion: [],
                         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
                         type: TaskType.TYPE_DATA,
@@ -141,7 +141,7 @@ export default function() {
                 // @ts-ignore
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         assertion: [{}],
                         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
                         type: TaskType.TYPE_DATA,
@@ -157,7 +157,7 @@ export default function() {
                 // @ts-ignore
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
                         type: TaskType.TYPE_DATA,
                     }
@@ -167,11 +167,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong data mysql rule argments', (done) => {
+            it('createTask with wrong data mysql rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         assertion: ['data === "test"'],
                         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
                         type: TaskType.TYPE_DATA,
@@ -182,11 +182,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong data redis rule argments', (done) => {
+            it('createTask with wrong data redis rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         assertion: ['data === "test"'],
                         subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
                         type: TaskType.TYPE_DATA,
@@ -197,11 +197,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong dom click rule argments', (done) => {
+            it('createTask with wrong dom click rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
                         type: TaskType.TYPE_DOM,
                     }
@@ -211,11 +211,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong dom keyboard rule argments', (done) => {
+            it('createTask with wrong dom keyboard rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypeDomSubType.SUB_TYPE_KEYBOARD,
                         type: TaskType.TYPE_DOM,
                     }
@@ -225,11 +225,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong dom getAttr rule argments', (done) => {
+            it('createTask with wrong dom getAttr rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
                         type: TaskType.TYPE_DOM,
                     }
@@ -239,11 +239,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong dom setAttr rule argments', (done) => {
+            it('createTask with wrong dom setAttr rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypeDomSubType.SUB_TYPE_SET_ATTR,
                         type: TaskType.TYPE_DOM,
                     }
@@ -253,11 +253,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong dom setInputfiles rule argments', (done) => {
+            it('createTask with wrong dom setInputfiles rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
                         type: TaskType.TYPE_DOM,
                     }
@@ -281,14 +281,14 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong event rule argments', (done) => {
+            it('createTask with wrong event rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         children: [
                             {
-                                argments: ['div'],
+                                arguments: ['div'],
                                 assertion: ['data.type === `123`', 'data.name === \'123\''],
                                 subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
                                 type: TaskType.TYPE_DOM
@@ -303,14 +303,14 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong event rule argments', (done) => {
+            it('createTask with wrong event rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [100, 'test'],
+                        arguments: [100, 'test'],
                         children: [
                             {
-                                argments: ['div'],
+                                arguments: ['div'],
                                 assertion: ['data.type === `123`', 'data.name === \'123\''],
                                 subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
                                 type: TaskType.TYPE_DOM
@@ -325,11 +325,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong page setCookie rule argments', (done) => {
+            it('createTask with wrong page setCookie rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypePageSubType.SUB_TYPE_SET_COOKIE,
                         type: TaskType.TYPE_PAGE,
                     }
@@ -339,11 +339,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong page getCookie rule argments', (done) => {
+            it('createTask with wrong page getCookie rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
                         type: TaskType.TYPE_PAGE,
                     }
@@ -353,11 +353,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong page goto rule argments', (done) => {
+            it('createTask with wrong page goto rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypePageSubType.SUB_TYPE_GOTO,
                         type: TaskType.TYPE_PAGE,
                     }
@@ -371,7 +371,7 @@ export default function() {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: ['https://bing.com', ''],
+                        arguments: ['https://bing.com', ''],
                         subType: TaskTypePageSubType.SUB_TYPE_GOTO,
                         type: TaskType.TYPE_PAGE,
                     }
@@ -381,11 +381,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong page screenshot rule argments', (done) => {
+            it('createTask with wrong page screenshot rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: ['test'],
+                        arguments: ['test'],
                         subType: TaskTypePageSubType.SUB_TYPE_SCREENSHOT,
                         type: TaskType.TYPE_PAGE,
                     }
@@ -395,11 +395,11 @@ export default function() {
                     })
                     .catch(() => done());
             });
-            it('createTask with wrong time sleep rule argments', (done) => {
+            it('createTask with wrong time sleep rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
-                        argments: [],
+                        arguments: [],
                         subType: TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
                         type: TaskType.TYPE_TIME,
                     }
