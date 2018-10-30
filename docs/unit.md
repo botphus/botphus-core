@@ -9,7 +9,7 @@
 --- | --- | --- | ---
 type | `enum` | null | 单元类型,见[单元类型](#task_type)
 subType | `enum` | null | 单元子类型,见[单元类型](#task_type)对应类型的说明
-[argments]<sup>[注1](#task_params_tip)<sup> | `any[]` | null | 测试参数,根据类型不同传值不同
+[arguments]<sup>[注1](#task_params_tip)<sup> | `any[]` | null | 测试参数,根据类型不同传值不同
 [assertion]<sup>[注2](#task_params_tip)<sup> | `string[]` | null | 断言内容,一个javascript断言语句,如:'data.length === 1'
 [assertionVarName] | `string` | null | 断言内容的变量名称,和`assertion`配合使用,默认为'data'.
 children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
@@ -52,7 +52,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [`SELECT * FROM bp_user WHERE user_name = "your name"`],
+    arguments: [`SELECT * FROM bp_user WHERE user_name = "your name"`],
     assertion: ['data.length === 1', 'data[0].id === 1', `data[0].user_name === "your name"`],
     subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
     type: TaskType.TYPE_DATA
@@ -73,7 +73,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [[['set', 'botphus:test', 'your value']]],
+    arguments: [[['set', 'botphus:test', 'your value']]],
     assertion: ['data'],
     subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
     type: TaskType.TYPE_DATA
@@ -107,7 +107,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['form:nth-child(3) > div:nth-child(1) > #search', 'Botphus value'],
+    arguments: ['form:nth-child(3) > div:nth-child(1) > #search', 'Botphus value'],
     subType: TaskTypeDomSubType.SUB_TYPE_KEYBOARD,
     type: TaskType.TYPE_DOM
 }
@@ -129,7 +129,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['form:nth-child(3) > div:nth-child(1) > #search', 'value', 'Botphus value'],
+    arguments: ['form:nth-child(3) > div:nth-child(1) > #search', 'value', 'Botphus value'],
     subType: TaskTypeDomSubType.SUB_TYPE_SET_ATTR,
     type: TaskType.TYPE_DOM
 }
@@ -150,7 +150,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['form:nth-child(3) > div:nth-child(1) > #search', 'value'],
+    arguments: ['form:nth-child(3) > div:nth-child(1) > #search', 'value'],
     assertion: [`data === "Botphus value"`],
     subType: TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
     type: TaskType.TYPE_DOM
@@ -171,7 +171,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['form:nth-child(3) > div:nth-child(1)'],
+    arguments: ['form:nth-child(3) > div:nth-child(1)'],
     assertion: [`data === '<label for="search">搜索名称</label><input type="text" name="search" id="search">'`],
     subType: TaskTypeDomSubType.SUB_TYPE_GET_HTML,
     type: TaskType.TYPE_DOM
@@ -192,7 +192,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['form:nth-child(3) > div:nth-child(1)'],
+    arguments: ['form:nth-child(3) > div:nth-child(1)'],
     assertion: [`data === "搜索名称"`],
     subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
     type: TaskType.TYPE_DOM
@@ -213,7 +213,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['form:nth-child(3) > div:nth-child(1) > #search'],
+    arguments: ['form:nth-child(3) > div:nth-child(1) > #search'],
     subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
     type: TaskType.TYPE_DOM
 }
@@ -234,7 +234,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['form:nth-child(3) > div:nth-child(2) > #file', ['/botphus-core/test/src/test-image.png']],
+    arguments: ['form:nth-child(3) > div:nth-child(2) > #file', ['/botphus-core/test/src/test-image.png']],
     subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
     type: TaskType.TYPE_DOM
 }
@@ -264,14 +264,14 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [3000, (request: puppeteer.Request) => {
+    arguments: [3000, (request: puppeteer.Request) => {
         return request.url() === 'https://api.github.com/';
     }],
     assertion: [`request.method() === "GET"`],
     assertionVarName: 'request',
     children: [
         {
-            argments: ['div:nth-child(2) > #request'],
+            arguments: ['div:nth-child(2) > #request'],
             subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
             type: TaskType.TYPE_DOM
         }
@@ -296,14 +296,14 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [3000, (response: puppeteer.Response) => {
+    arguments: [3000, (response: puppeteer.Response) => {
         return response.url() === 'https://api.github.com/';
     }],
     assertion: ['resData'],
     assertionVarName: 'resData',
     children: [
         {
-            argments: ['div:nth-child(2) > #request'],
+            arguments: ['div:nth-child(2) > #request'],
             subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
             type: TaskType.TYPE_DOM
         }
@@ -328,12 +328,12 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [3000],
+    arguments: [3000],
     assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 1', `consoleMessage.text() === "${CONSOLE_VALUE}"`],
     assertionVarName: 'consoleMessage',
     children: [
         {
-            argments: ['div:nth-child(2) > #console'],
+            arguments: ['div:nth-child(2) > #console'],
             subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
             type: TaskType.TYPE_DOM
         }
@@ -358,12 +358,12 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [3000],
+    arguments: [3000],
     assertion: [`dialog.message() === "botphus dialog"`, 'dialog.type() === "alert"'],
     assertionVarName: 'dialog',
     children: [
         {
-            argments: ['div:nth-child(2) > #dialog'],
+            arguments: ['div:nth-child(2) > #dialog'],
             subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
             type: TaskType.TYPE_DOM
         }
@@ -394,7 +394,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [100],
+    arguments: [100],
     subType: TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
     type: TaskType.TYPE_TIME
 }
@@ -442,7 +442,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [[
+    arguments: [[
         {
             name: 'botphus',
             url: 'https://github.com/',
@@ -468,7 +468,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [['https://github.com/']],
+    arguments: [['https://github.com/']],
     assertion: ['cookies.length === 1', `cookies[0].domain === "github.com"`, `cookies[0].name === "botphus"`, `cookies[0].value === "botphus cookie value"`],
     assertionVarName: 'cookies',
     subType: TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
@@ -490,7 +490,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: [[
+    arguments: [[
         {
             name: 'botphus',
             url: 'https://github.com/'
@@ -518,7 +518,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 **配置示例**
 ```
 {
-    argments: ['https://github.com'],
+    arguments: ['https://github.com'],
     subType: TaskTypePageSubType.SUB_TYPE_GOTO,
     type: TaskType.TYPE_PAGE
 }

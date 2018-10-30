@@ -96,28 +96,28 @@ exports.TASK_FULL_LIST = [
     // Mysql
     /// Create Table
     {
-        argments: [exports.MYSQL_CREATE_TABLE],
+        arguments: [exports.MYSQL_CREATE_TABLE],
         assertion: ['data'],
         subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.TaskType.TYPE_DATA
     },
     /// Inset Table
     {
-        argments: [exports.MYSQL_INSERT_DATA],
+        arguments: [exports.MYSQL_INSERT_DATA],
         assertion: ['data'],
         subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.TaskType.TYPE_DATA
     },
     /// Select Table
     {
-        argments: [exports.MYSQL_SELECT_DATA],
+        arguments: [exports.MYSQL_SELECT_DATA],
         assertion: ['data.length === 1', 'data[0].id === 1', `data[0].${exports.MYSQL_FIELD_NAME} === "${exports.MYSQL_FIELD_VALUE}"`],
         subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.TaskType.TYPE_DATA
     },
     /// Drop Table
     {
-        argments: [exports.MYSQL_DROP_TABLE],
+        arguments: [exports.MYSQL_DROP_TABLE],
         assertion: ['data'],
         subType: task_1.TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: task_1.TaskType.TYPE_DATA
@@ -125,28 +125,28 @@ exports.TASK_FULL_LIST = [
     // Redis
     /// set
     {
-        argments: [[['set', exports.REDIS_KEY_NAME, exports.REDIS_KEY_VALUE]]],
+        arguments: [[['set', exports.REDIS_KEY_NAME, exports.REDIS_KEY_VALUE]]],
         assertion: ['data'],
         subType: task_1.TaskTypeDataSubType.SUB_TYPE_REDIS,
         type: task_1.TaskType.TYPE_DATA
     },
     /// get
     {
-        argments: [[['get', exports.REDIS_KEY_NAME]]],
+        arguments: [[['get', exports.REDIS_KEY_NAME]]],
         assertion: ['data.length === 1', `data[0][1] === "${exports.REDIS_KEY_VALUE}"`],
         subType: task_1.TaskTypeDataSubType.SUB_TYPE_REDIS,
         type: task_1.TaskType.TYPE_DATA
     },
     /// del
     {
-        argments: [[['del', exports.REDIS_KEY_NAME]]],
+        arguments: [[['del', exports.REDIS_KEY_NAME]]],
         assertion: ['data'],
         subType: task_1.TaskTypeDataSubType.SUB_TYPE_REDIS,
         type: task_1.TaskType.TYPE_DATA
     },
     // goto
     {
-        argments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        arguments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
         subType: task_1.TaskTypePageSubType.SUB_TYPE_GOTO,
         type: task_1.TaskType.TYPE_PAGE
     },
@@ -155,52 +155,52 @@ exports.TASK_FULL_LIST = [
      */
     // click
     {
-        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR],
+        arguments: [exports.NORMAL_PAGE_SEARCH_SELECTOR],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
         type: task_1.TaskType.TYPE_DOM
     },
     // keyboard
     {
-        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.SEARCH_SELECTOR_VALUE],
+        arguments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.SEARCH_SELECTOR_VALUE],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_KEYBOARD,
         type: task_1.TaskType.TYPE_DOM
     },
     // getAttr
     {
-        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
+        arguments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
         assertion: [`data === "${exports.SEARCH_SELECTOR_VALUE}"`],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
         type: task_1.TaskType.TYPE_DOM
     },
     // setAttr
     {
-        argments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD, exports.SEARCH_SELECTOR_VALUE],
+        arguments: [exports.NORMAL_PAGE_SEARCH_SELECTOR, exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD, exports.SEARCH_SELECTOR_VALUE],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_ATTR,
         type: task_1.TaskType.TYPE_DOM
     },
     // getHtml
     {
-        argments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        arguments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === '${exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML}'`],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_HTML,
         type: task_1.TaskType.TYPE_DOM
     },
     // getText
     {
-        argments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        arguments: [exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === "${exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT}"`],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
         type: task_1.TaskType.TYPE_DOM
     },
     // setInputFiles
     {
-        argments: [exports.NORMAL_PAGE_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
+        arguments: [exports.NORMAL_PAGE_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
         type: task_1.TaskType.TYPE_DOM
     },
     // getAttr
     {
-        argments: [exports.NORMAL_PAGE_FILE_SELECTOR, exports.NORMAL_PAGE_FILE_SELECTOR_FIELD],
+        arguments: [exports.NORMAL_PAGE_FILE_SELECTOR, exports.NORMAL_PAGE_FILE_SELECTOR_FIELD],
         assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
         subType: task_1.TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
         type: task_1.TaskType.TYPE_DOM
@@ -210,12 +210,12 @@ exports.TASK_FULL_LIST = [
      */
     // dialog
     {
-        argments: [exports.EVENT_TIMEOUT],
+        arguments: [exports.EVENT_TIMEOUT],
         assertion: [`dialog.message() === "${exports.DIALOG_VALUE}"`, 'dialog.type() === "alert"'],
         assertionVarName: 'dialog',
         children: [
             {
-                argments: [exports.NORMAL_PAGE_DIALOG_SELECTOR],
+                arguments: [exports.NORMAL_PAGE_DIALOG_SELECTOR],
                 subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
                 type: task_1.TaskType.TYPE_DOM
             }
@@ -226,12 +226,12 @@ exports.TASK_FULL_LIST = [
     },
     // console
     {
-        argments: [exports.EVENT_TIMEOUT],
+        arguments: [exports.EVENT_TIMEOUT],
         assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 1', `consoleMessage.text() === "${exports.CONSOLE_VALUE}"`],
         assertionVarName: 'consoleMessage',
         children: [
             {
-                argments: [exports.NORMAL_PAGE_CONSOLE_SELECTOR],
+                arguments: [exports.NORMAL_PAGE_CONSOLE_SELECTOR],
                 subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
                 type: task_1.TaskType.TYPE_DOM
             }
@@ -241,21 +241,21 @@ exports.TASK_FULL_LIST = [
     },
     // request & response
     {
-        argments: [exports.EVENT_TIMEOUT, (request) => {
+        arguments: [exports.EVENT_TIMEOUT, (request) => {
                 return request.url() === 'https://api.github.com/';
             }],
         assertion: [`request.method() === "GET"`],
         assertionVarName: 'request',
         children: [
             {
-                argments: [exports.EVENT_TIMEOUT, (response) => {
+                arguments: [exports.EVENT_TIMEOUT, (response) => {
                         return response.url() === 'https://api.github.com/';
                     }],
                 assertion: ['resData'],
                 assertionVarName: 'resData',
                 children: [
                     {
-                        argments: [exports.NORMAL_PAGE_REQUEST_SELECTOR],
+                        arguments: [exports.NORMAL_PAGE_REQUEST_SELECTOR],
                         subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
                         type: task_1.TaskType.TYPE_DOM
                     }
@@ -271,7 +271,7 @@ exports.TASK_FULL_LIST = [
      * Time
      */
     {
-        argments: [exports.SLEEP_TIME],
+        arguments: [exports.SLEEP_TIME],
         subType: task_1.TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
         type: task_1.TaskType.TYPE_TIME
     },
@@ -280,7 +280,7 @@ exports.TASK_FULL_LIST = [
      */
     // setCookie
     {
-        argments: [[
+        arguments: [[
                 {
                     name: exports.COOKIE_NAME,
                     url: exports.COOKIE_URL,
@@ -297,7 +297,7 @@ exports.TASK_FULL_LIST = [
     },
     // getCookie
     {
-        argments: [[exports.COOKIE_URL]],
+        arguments: [[exports.COOKIE_URL]],
         assertion: ['cookies.length === 1', `cookies[0].domain === "${exports.COOKIE_DOMAIN}"`, `cookies[0].name === "${exports.COOKIE_NAME}"`, `cookies[0].value === "${exports.COOKIE_VALUE}"`],
         assertionVarName: 'cookies',
         subType: task_1.TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
@@ -305,7 +305,7 @@ exports.TASK_FULL_LIST = [
     },
     // deleteCookie
     {
-        argments: [[
+        arguments: [[
                 {
                     name: exports.COOKIE_NAME,
                     url: exports.COOKIE_URL
@@ -316,7 +316,7 @@ exports.TASK_FULL_LIST = [
     },
     // getCookie
     {
-        argments: [[exports.COOKIE_URL]],
+        arguments: [[exports.COOKIE_URL]],
         assertion: ['cookies.length === 0'],
         assertionVarName: 'cookies',
         subType: task_1.TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
@@ -324,7 +324,7 @@ exports.TASK_FULL_LIST = [
     },
     // goto
     {
-        argments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        arguments: [exports.NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
         subType: task_1.TaskTypePageSubType.SUB_TYPE_GOTO,
         type: task_1.TaskType.TYPE_PAGE
     },
@@ -340,19 +340,19 @@ exports.TASK_REACT_NAME = 'React task';
 exports.TASK_REACT_LIST = [
     // console
     {
-        argments: [exports.EVENT_TIMEOUT, (consoleMessage) => {
+        arguments: [exports.EVENT_TIMEOUT, (consoleMessage) => {
                 return consoleMessage.type() === 'log';
             }],
         assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 2', 'consoleMessage.text().indexOf("Upload event:") >= 0'],
         assertionVarName: 'consoleMessage',
         children: [
             {
-                argments: [exports.EVENT_TIMEOUT, (request) => {
+                arguments: [exports.EVENT_TIMEOUT, (request) => {
                         return request.url().indexOf('upload.do') >= 0;
                     }],
                 children: [
                     {
-                        argments: [exports.REACT_PAGE_FORM_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
+                        arguments: [exports.REACT_PAGE_FORM_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
                         subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
                         type: task_1.TaskType.TYPE_DOM
                     }

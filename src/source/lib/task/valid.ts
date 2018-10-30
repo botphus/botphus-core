@@ -83,12 +83,12 @@ function dataTypeCheckAndRebuild(taskRule: ITaskDataRuleItem): Error {
     }
     switch (taskRule.subType) {
         case TaskTypeDataSubType.SUB_TYPE_MYSQL:
-            if (!(taskRule.argments && taskRule.argments.length === 1 && typeof taskRule.argments[0] === 'string')) {
+            if (!(taskRule.arguments && taskRule.arguments.length === 1 && typeof taskRule.arguments[0] === 'string')) {
                 return new Error('SUB_TYPE_MYSQL must have sqlQuery & sqlQuery must be string');
             }
             break;
         case TaskTypeDataSubType.SUB_TYPE_REDIS:
-            if (!(taskRule.argments && taskRule.argments.length === 1 && Array.isArray(taskRule.argments[0]))) {
+            if (!(taskRule.arguments && taskRule.arguments.length === 1 && Array.isArray(taskRule.arguments[0]))) {
                 return new Error('SUB_TYPE_REDIS must have commands && commands must be string[][]');
             }
             break;
@@ -105,29 +105,29 @@ function domTypeCheckAndRebuild(taskRule: ITaskDomRuleItem): Error {
         case TaskTypeDomSubType.SUB_TYPE_CLICK:
         case TaskTypeDomSubType.SUB_TYPE_GET_HTML:
         case TaskTypeDomSubType.SUB_TYPE_GET_TEXT:
-            if (!(taskRule.argments && taskRule.argments.length === 1 && typeof taskRule.argments[0] === 'string')) {
+            if (!(taskRule.arguments && taskRule.arguments.length === 1 && typeof taskRule.arguments[0] === 'string')) {
                 return new Error('SUB_TYPE_CLICK/SUB_TYPE_GET_HTML/SUB_TYPE_GET_TEXT must have selector & selector must be string');
             }
             break;
         case TaskTypeDomSubType.SUB_TYPE_KEYBOARD:
-            if (!(taskRule.argments && taskRule.argments.length === 2 && typeof taskRule.argments[0] === 'string' && typeof taskRule.argments[1] === 'string')) {
+            if (!(taskRule.arguments && taskRule.arguments.length === 2 && typeof taskRule.arguments[0] === 'string' && typeof taskRule.arguments[1] === 'string')) {
                 return new Error('SUB_TYPE_KEYBOARD must have selector, text & selector, text must be string');
             }
             break;
         case TaskTypeDomSubType.SUB_TYPE_GET_ATTR:
-            if (!(taskRule.argments && taskRule.argments.length === 2 && typeof taskRule.argments[0] === 'string' && typeof taskRule.argments[1] === 'string')) {
+            if (!(taskRule.arguments && taskRule.arguments.length === 2 && typeof taskRule.arguments[0] === 'string' && typeof taskRule.arguments[1] === 'string')) {
                 return new Error('SUB_TYPE_GET_ATTR must have selector, attrName & selector, attrName must be string');
             }
             break;
         case TaskTypeDomSubType.SUB_TYPE_SET_ATTR:
-            if (!(taskRule.argments && taskRule.argments.length === 3 &&
-                typeof taskRule.argments[0] === 'string' && typeof taskRule.argments[1] === 'string' && typeof taskRule.argments[2] === 'string')) {
+            if (!(taskRule.arguments && taskRule.arguments.length === 3 &&
+                typeof taskRule.arguments[0] === 'string' && typeof taskRule.arguments[1] === 'string' && typeof taskRule.arguments[2] === 'string')) {
                 return new Error('SUB_TYPE_SET_ATTR must have selector, attrName, attrValue & selector, attrName, attrValue must be string');
             }
             break;
         case TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES:
-            if (!(taskRule.argments && taskRule.argments.length === 2 &&
-                typeof taskRule.argments[0] === 'string' && Array.isArray(taskRule.argments[1]))) {
+            if (!(taskRule.arguments && taskRule.arguments.length === 2 &&
+                typeof taskRule.arguments[0] === 'string' && Array.isArray(taskRule.arguments[1]))) {
                 return new Error('SUB_TYPE_SET_INPUT_FILES must have selector, filesPath & selector must be string & filesPath must be string[]');
             }
             break;
@@ -144,18 +144,18 @@ function eventTypeCheckAndRebuild(taskRule: ITaskEventRuleItem): Error {
     if (!(taskRule.children && Array.isArray(taskRule.children) && taskRule.children.length > 0)) {
         return new Error('Data type rule must have children field');
     }
-    if (!(taskRule.argments && (taskRule.argments.length === 1 || taskRule.argments.length === 2)
-        && typeof taskRule.argments[0] === 'number')) {
+    if (!(taskRule.arguments && (taskRule.arguments.length === 1 || taskRule.arguments.length === 2)
+        && typeof taskRule.arguments[0] === 'number')) {
         return new Error('TYPE_EVENT must have timeout & timeout must be millisecond number');
     }
-    if (taskRule.argments.length === 2 && !(typeof taskRule.argments[1] === 'function')) {
+    if (taskRule.arguments.length === 2 && !(typeof taskRule.arguments[1] === 'function')) {
         return new Error('if TYPE_EVENT have checkFunc, checkFunc must be function');
     }
-    // Change argments checkFunc to string
-    if (taskRule.argments.length === 1) {
-        taskRule.argments[1] = 'null';
+    // Change arguments checkFunc to string
+    if (taskRule.arguments.length === 1) {
+        taskRule.arguments[1] = 'null';
     } else {
-        taskRule.argments[1] = taskRule.argments[1].toString();
+        taskRule.arguments[1] = taskRule.arguments[1].toString();
     }
 }
 
@@ -168,30 +168,30 @@ function pageTypeCheckAndRebuild(taskRule: ITaskPageRuleItem): Error {
     switch (taskRule.subType) {
         case TaskTypePageSubType.SUB_TYPE_SET_COOKIE:
         case TaskTypePageSubType.SUB_TYPE_DELETE_COOKIE:
-            if (!(taskRule.argments && Array.isArray(taskRule.argments[0]))) {
+            if (!(taskRule.arguments && Array.isArray(taskRule.arguments[0]))) {
                 return new Error('SUB_TYPE_SET_COOKIE/SUB_TYPE_DELETE_COOKIE must have cookies & cookies must be array');
             }
         case TaskTypePageSubType.SUB_TYPE_GET_COOKIE:
-            if (taskRule.argments && !(Array.isArray(taskRule.argments[0]))) {
+            if (taskRule.arguments && !(Array.isArray(taskRule.arguments[0]))) {
                 return new Error('SUB_TYPE_GET_COOKIE must have urls & urls must be array');
             }
             break;
         case TaskTypePageSubType.SUB_TYPE_GOTO:
-            if (!(taskRule.argments && (taskRule.argments.length === 1 || taskRule.argments.length === 2)
-                && typeof taskRule.argments[0] === 'string')) {
+            if (!(taskRule.arguments && (taskRule.arguments.length === 1 || taskRule.arguments.length === 2)
+                && typeof taskRule.arguments[0] === 'string')) {
                 return new Error('SUB_TYPE_GOTO must have url & url must be array');
             }
-            if (taskRule.argments.length === 2 && !(typeof taskRule.argments[1] === 'object')) {
+            if (taskRule.arguments.length === 2 && !(typeof taskRule.arguments[1] === 'object')) {
                 return new Error('if SUB_TYPE_GOTO have option, option must be object');
             }
             break;
         case TaskTypePageSubType.SUB_TYPE_SCREENSHOT:
-            if (taskRule.argments) {
-                if (!(typeof taskRule.argments[0] === 'object')) {
+            if (taskRule.arguments) {
+                if (!(typeof taskRule.arguments[0] === 'object')) {
                     return new Error('SUB_TYPE_SCREENSHOT\'s option must be object');
                 }
             } else {
-                taskRule.argments = [{}];
+                taskRule.arguments = [{}];
             }
             break;
     }
@@ -205,7 +205,7 @@ function pageTypeCheckAndRebuild(taskRule: ITaskPageRuleItem): Error {
 function timeTypeCheckAndRebuild(taskRule: ITaskTimeRuleItem): Error {
     switch (taskRule.subType) {
         case TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP:
-            if (!(taskRule.argments && typeof taskRule.argments[0] === 'number')) {
+            if (!(taskRule.arguments && typeof taskRule.arguments[0] === 'number')) {
                 return new Error('SUB_TYPE_SET_SLEEP must have sleepTime & sleepTime must be millisecond number.');
             }
             break;

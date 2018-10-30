@@ -108,28 +108,28 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     // Mysql
     /// Create Table
     {
-        argments: [MYSQL_CREATE_TABLE],
+        arguments: [MYSQL_CREATE_TABLE],
         assertion: ['data'],
         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: TaskType.TYPE_DATA
     },
     /// Inset Table
     {
-        argments: [MYSQL_INSERT_DATA],
+        arguments: [MYSQL_INSERT_DATA],
         assertion: ['data'],
         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: TaskType.TYPE_DATA
     },
     /// Select Table
     {
-        argments: [MYSQL_SELECT_DATA],
+        arguments: [MYSQL_SELECT_DATA],
         assertion: ['data.length === 1', 'data[0].id === 1', `data[0].${MYSQL_FIELD_NAME} === "${MYSQL_FIELD_VALUE}"`],
         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: TaskType.TYPE_DATA
     },
     /// Drop Table
     {
-        argments: [MYSQL_DROP_TABLE],
+        arguments: [MYSQL_DROP_TABLE],
         assertion: ['data'],
         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
         type: TaskType.TYPE_DATA
@@ -137,28 +137,28 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     // Redis
     /// set
     {
-        argments: [[['set', REDIS_KEY_NAME, REDIS_KEY_VALUE]]],
+        arguments: [[['set', REDIS_KEY_NAME, REDIS_KEY_VALUE]]],
         assertion: ['data'],
         subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
         type: TaskType.TYPE_DATA
     },
     /// get
     {
-        argments: [[['get', REDIS_KEY_NAME]]],
+        arguments: [[['get', REDIS_KEY_NAME]]],
         assertion: ['data.length === 1', `data[0][1] === "${REDIS_KEY_VALUE}"`],
         subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
         type: TaskType.TYPE_DATA
     },
     /// del
     {
-        argments: [[['del', REDIS_KEY_NAME]]],
+        arguments: [[['del', REDIS_KEY_NAME]]],
         assertion: ['data'],
         subType: TaskTypeDataSubType.SUB_TYPE_REDIS,
         type: TaskType.TYPE_DATA
     },
     // goto
     {
-        argments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        arguments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
         subType: TaskTypePageSubType.SUB_TYPE_GOTO,
         type: TaskType.TYPE_PAGE
     },
@@ -167,52 +167,52 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
      */
     // click
     {
-        argments: [NORMAL_PAGE_SEARCH_SELECTOR],
+        arguments: [NORMAL_PAGE_SEARCH_SELECTOR],
         subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
         type: TaskType.TYPE_DOM
     },
     // keyboard
     {
-        argments: [NORMAL_PAGE_SEARCH_SELECTOR, SEARCH_SELECTOR_VALUE],
+        arguments: [NORMAL_PAGE_SEARCH_SELECTOR, SEARCH_SELECTOR_VALUE],
         subType: TaskTypeDomSubType.SUB_TYPE_KEYBOARD,
         type: TaskType.TYPE_DOM
     },
     // getAttr
     {
-        argments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
+        arguments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD],
         assertion: [`data === "${SEARCH_SELECTOR_VALUE}"`],
         subType: TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
         type: TaskType.TYPE_DOM
     },
     // setAttr
     {
-        argments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD, SEARCH_SELECTOR_VALUE],
+        arguments: [NORMAL_PAGE_SEARCH_SELECTOR, NORMAL_PAGE_SEARCH_SELECTOR_FIELD, SEARCH_SELECTOR_VALUE],
         subType: TaskTypeDomSubType.SUB_TYPE_SET_ATTR,
         type: TaskType.TYPE_DOM
     },
     // getHtml
     {
-        argments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        arguments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === '${NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML}'`],
         subType: TaskTypeDomSubType.SUB_TYPE_GET_HTML,
         type: TaskType.TYPE_DOM
     },
     // getText
     {
-        argments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        arguments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
         assertion: [`data === "${NORMAL_PAGE_PARENT_SEARCH_SELECTOR_TEXT}"`],
         subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
         type: TaskType.TYPE_DOM
     },
     // setInputFiles
     {
-        argments: [NORMAL_PAGE_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
+        arguments: [NORMAL_PAGE_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
         subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
         type: TaskType.TYPE_DOM
     },
     // getAttr
     {
-        argments: [NORMAL_PAGE_FILE_SELECTOR, NORMAL_PAGE_FILE_SELECTOR_FIELD],
+        arguments: [NORMAL_PAGE_FILE_SELECTOR, NORMAL_PAGE_FILE_SELECTOR_FIELD],
         assertion: ['typeof data === "object"', 'Object.keys(data).length === 1'],
         subType: TaskTypeDomSubType.SUB_TYPE_GET_ATTR,
         type: TaskType.TYPE_DOM
@@ -222,12 +222,12 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
      */
     // dialog
     {
-        argments: [EVENT_TIMEOUT],
+        arguments: [EVENT_TIMEOUT],
         assertion: [`dialog.message() === "${DIALOG_VALUE}"`, 'dialog.type() === "alert"'],
         assertionVarName: 'dialog',
         children: [
             {
-                argments: [NORMAL_PAGE_DIALOG_SELECTOR],
+                arguments: [NORMAL_PAGE_DIALOG_SELECTOR],
                 subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
                 type: TaskType.TYPE_DOM
             }
@@ -238,12 +238,12 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // console
     {
-        argments: [EVENT_TIMEOUT],
+        arguments: [EVENT_TIMEOUT],
         assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 1', `consoleMessage.text() === "${CONSOLE_VALUE}"`],
         assertionVarName: 'consoleMessage',
         children: [
             {
-                argments: [NORMAL_PAGE_CONSOLE_SELECTOR],
+                arguments: [NORMAL_PAGE_CONSOLE_SELECTOR],
                 subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
                 type: TaskType.TYPE_DOM
             }
@@ -253,21 +253,21 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // request & response
     {
-        argments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
+        arguments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
             return request.url() === 'https://api.github.com/';
         }],
         assertion: [`request.method() === "GET"`],
         assertionVarName: 'request',
         children: [
             {
-                argments: [EVENT_TIMEOUT, (response: puppeteer.Response) => {
+                arguments: [EVENT_TIMEOUT, (response: puppeteer.Response) => {
                     return response.url() === 'https://api.github.com/';
                 }],
                 assertion: ['resData'],
                 assertionVarName: 'resData',
                 children: [
                     {
-                        argments: [NORMAL_PAGE_REQUEST_SELECTOR],
+                        arguments: [NORMAL_PAGE_REQUEST_SELECTOR],
                         subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
                         type: TaskType.TYPE_DOM
                     }
@@ -283,7 +283,7 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
      * Time
      */
     {
-        argments: [SLEEP_TIME],
+        arguments: [SLEEP_TIME],
         subType: TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
         type: TaskType.TYPE_TIME
     },
@@ -292,7 +292,7 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
      */
     // setCookie
     {
-        argments: [[
+        arguments: [[
             {
                 name: COOKIE_NAME,
                 url: COOKIE_URL,
@@ -309,7 +309,7 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // getCookie
     {
-        argments: [[COOKIE_URL]],
+        arguments: [[COOKIE_URL]],
         assertion: ['cookies.length === 1', `cookies[0].domain === "${COOKIE_DOMAIN}"`, `cookies[0].name === "${COOKIE_NAME}"`, `cookies[0].value === "${COOKIE_VALUE}"`],
         assertionVarName: 'cookies',
         subType: TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
@@ -317,7 +317,7 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // deleteCookie
     {
-        argments: [[
+        arguments: [[
             {
                 name: COOKIE_NAME,
                 url: COOKIE_URL
@@ -328,7 +328,7 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // getCookie
     {
-        argments: [[COOKIE_URL]],
+        arguments: [[COOKIE_URL]],
         assertion: ['cookies.length === 0'],
         assertionVarName: 'cookies',
         subType: TaskTypePageSubType.SUB_TYPE_GET_COOKIE,
@@ -336,7 +336,7 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // goto
     {
-        argments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        arguments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
         subType: TaskTypePageSubType.SUB_TYPE_GOTO,
         type: TaskType.TYPE_PAGE
     },
@@ -353,19 +353,19 @@ export const TASK_REACT_NAME = 'React task';
 export const TASK_REACT_LIST: TaskRuleTypeItem[] = [
     // console
     {
-        argments: [EVENT_TIMEOUT, (consoleMessage: puppeteer.ConsoleMessage) => {
+        arguments: [EVENT_TIMEOUT, (consoleMessage: puppeteer.ConsoleMessage) => {
             return consoleMessage.type() === 'log';
         }],
         assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 2', 'consoleMessage.text().indexOf("Upload event:") >= 0'],
         assertionVarName: 'consoleMessage',
         children: [
             {
-                argments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
+                arguments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
                     return request.url().indexOf('upload.do') >= 0;
                 }],
                 children: [
                     {
-                        argments: [REACT_PAGE_FORM_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
+                        arguments: [REACT_PAGE_FORM_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
                         subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
                         type: TaskType.TYPE_DOM
                     }
