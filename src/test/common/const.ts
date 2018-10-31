@@ -366,14 +366,17 @@ export const TASK_REACT_LIST: TaskRuleTypeItem[] = [
                 children: [
                     {
                         arguments: [REACT_PAGE_FORM_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
+                        index: '3',
                         subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
                         type: TaskType.TYPE_DOM
                     }
                 ],
+                index: '2',
                 subType: TaskTypeEventSubType.SUB_TYPE_REQUEST,
                 type: TaskType.TYPE_EVENT
             }
         ],
+        index: '1',
         subType: TaskTypeEventSubType.SUB_TYPE_CONSOLE,
         type: TaskType.TYPE_EVENT
     }

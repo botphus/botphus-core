@@ -31,8 +31,10 @@ function loopRules(taskRules: TaskRuleTypeItem[], parentIndex?: string): Error {
     let err: Error;
     taskRules.every((taskRule: TaskRuleTypeItem, index: number) => {
         err = assignTaskRule(taskRule);
-        // Set rule index
-        taskRule.index = parentIndex ? `${parentIndex}-${index}` : `${index}`;
+        // Set rule index, if not send
+        if (!taskRule.index) {
+            taskRule.index = parentIndex ? `${parentIndex}-${index}` : `${index}`;
+        }
         // if rule's type is event, check children
         if (!err && taskRule.type === TaskType.TYPE_EVENT) {
             err = loopRules(taskRule.children, `${taskRule.index}`);

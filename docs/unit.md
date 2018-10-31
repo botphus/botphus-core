@@ -7,6 +7,7 @@
 
 参数 | 类型 | 默认值 | 描述 
 --- | --- | --- | ---
+index | `string` | null | 索引值,默认不填时会自动生成,否则使用索引值,请勿重复,否则会影响消息通知
 type | `enum` | null | 单元类型,见[单元类型](#task_type)
 subType | `enum` | null | 单元子类型,见[单元类型](#task_type)对应类型的说明
 [arguments]<sup>[注1](#task_params_tip)<sup> | `any[]` | null | 测试参数,根据类型不同传值不同
