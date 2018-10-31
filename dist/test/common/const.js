@@ -353,14 +353,17 @@ exports.TASK_REACT_LIST = [
                 children: [
                     {
                         arguments: [exports.REACT_PAGE_FORM_FILE_SELECTOR, [exports.RESOURCE_IMAGE_PATH]],
+                        index: '3',
                         subType: task_1.TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
                         type: task_1.TaskType.TYPE_DOM
                     }
                 ],
+                index: '2',
                 subType: task_1.TaskTypeEventSubType.SUB_TYPE_REQUEST,
                 type: task_1.TaskType.TYPE_EVENT
             }
         ],
+        index: '1',
         subType: task_1.TaskTypeEventSubType.SUB_TYPE_CONSOLE,
         type: task_1.TaskType.TYPE_EVENT
     }
