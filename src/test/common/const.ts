@@ -27,6 +27,7 @@ export const NORMAL_PAGE_FILE_MULTI_SELECTOR = 'form:nth-child(3) > div:nth-chil
 export const NORMAL_PAGE_DIALOG_SELECTOR = 'div:nth-child(2) > #dialog';
 export const NORMAL_PAGE_CONSOLE_SELECTOR = 'div:nth-child(2) > #console';
 export const NORMAL_PAGE_REQUEST_SELECTOR = 'div:nth-child(2) > #request';
+export const NORMAL_PAGE_REQUEST_JSONP_SELECTOR = 'div:nth-child(2) > #request-jsonp';
 export const NORMAL_PAGE_SEARCH_SELECTOR_FIELD = 'value';
 export const NORMAL_PAGE_FILE_SELECTOR_FIELD = 'files';
 export const NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML = '<label for="search">搜索名称</label><input type="text" name="search" id="search">';
@@ -277,6 +278,23 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
             }
         ],
         subType: TaskTypeEventSubType.SUB_TYPE_REQUEST,
+        type: TaskType.TYPE_EVENT
+    },
+    // jsonp response
+    {
+        arguments: [EVENT_TIMEOUT, (response: puppeteer.Response) => {
+            return response.url().indexOf('https://api.github.com/') >= 0;
+        }],
+        assertion: ['resData'],
+        assertionVarName: 'resData',
+        children: [
+            {
+                arguments: [NORMAL_PAGE_REQUEST_JSONP_SELECTOR],
+                subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+                type: TaskType.TYPE_DOM
+            }
+        ],
+        subType: TaskTypeEventSubType.SUB_TYPE_RESPONSE,
         type: TaskType.TYPE_EVENT
     },
     /**
