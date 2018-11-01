@@ -26,11 +26,18 @@ return eventFunc(page, {{rule.arguments.[0]}}, function() {
         const headers = response.headers();
         const contentType = headers['content-type'] || '';
         // Check json data
-        if (/json/i.test(contentType)) {
-            return response.json();
-        } else {
-            return response.text();
-        }
+        return response.text()
+            .then(function(data) {
+                if(/json/i.test(contentType)) {
+                    // check jsonp type
+                    if (/^[\n\r\s]*{/.test(data)) {
+                        return JSON.parse(data);
+                    } else {
+                        return JSON.parse(data.replace(/^[^\(]*\(([\S\s]+)\)$/, '$1'))
+                    }
+                }
+                return data;
+            });
     })
     {{> data_send rule=this}}
 {{/if}}

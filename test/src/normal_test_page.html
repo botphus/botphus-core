@@ -9,6 +9,7 @@
         <a href="#" id="dialog">test dialog</a>
         <a href="#" id="console">test console</a>
         <a href="#" id="request">test request</a>
+        <a href="#" id="request-jsonp">test request jsonp</a>
     </div>
     <form action="#" method="post" enctype="multipart/form-data">
         <div><label for="search">搜索名称</label><input type="text" name="search" id="search" /></div>
@@ -31,6 +32,16 @@
                 mode: 'cors'
             })
             .then(response => response.json())
+            .then(res => {
+                console.log(res);
+            })
+            .catch(console.error);
+        }
+        document.getElementById('request-jsonp').onclick=function(e) {
+            const ajax = fetch('https://api.github.com/?callback=test', {
+                mode: 'cors'
+            })
+            .then(response => response.text())
             .then(res => {
                 console.log(res);
             })

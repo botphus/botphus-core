@@ -24,6 +24,7 @@ exports.NORMAL_PAGE_FILE_MULTI_SELECTOR = 'form:nth-child(3) > div:nth-child(3) 
 exports.NORMAL_PAGE_DIALOG_SELECTOR = 'div:nth-child(2) > #dialog';
 exports.NORMAL_PAGE_CONSOLE_SELECTOR = 'div:nth-child(2) > #console';
 exports.NORMAL_PAGE_REQUEST_SELECTOR = 'div:nth-child(2) > #request';
+exports.NORMAL_PAGE_REQUEST_JSONP_SELECTOR = 'div:nth-child(2) > #request-jsonp';
 exports.NORMAL_PAGE_SEARCH_SELECTOR_FIELD = 'value';
 exports.NORMAL_PAGE_FILE_SELECTOR_FIELD = 'files';
 exports.NORMAL_PAGE_PARENT_SEARCH_SELECTOR_HTML = '<label for="search">搜索名称</label><input type="text" name="search" id="search">';
@@ -265,6 +266,23 @@ exports.TASK_FULL_LIST = [
             }
         ],
         subType: task_1.TaskTypeEventSubType.SUB_TYPE_REQUEST,
+        type: task_1.TaskType.TYPE_EVENT
+    },
+    // jsonp response
+    {
+        arguments: [exports.EVENT_TIMEOUT, (response) => {
+                return response.url().indexOf('https://api.github.com/') >= 0;
+            }],
+        assertion: ['resData'],
+        assertionVarName: 'resData',
+        children: [
+            {
+                arguments: [exports.NORMAL_PAGE_REQUEST_JSONP_SELECTOR],
+                subType: task_1.TaskTypeDomSubType.SUB_TYPE_CLICK,
+                type: task_1.TaskType.TYPE_DOM
+            }
+        ],
+        subType: task_1.TaskTypeEventSubType.SUB_TYPE_RESPONSE,
         type: task_1.TaskType.TYPE_EVENT
     },
     /**
