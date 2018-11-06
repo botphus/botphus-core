@@ -14,6 +14,9 @@ return new Promise(function(resolve, reject) {
     {{!-- SUB_TYPE_UNION_NON_BLOCK --}}
     {{#if (eq rule.subType 601)}}
         .catch((err) => {
+            if (!err.index) {
+                err.index = '{{rule.index}}';
+            }
             // Send error & don't reject
             sendProcessMessage([commonLib.createErrorMessage(err, MessageType.UNIT_RULE_EXEC_ERROR)]);
             resolve();

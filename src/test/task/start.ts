@@ -152,6 +152,8 @@ export default function() {
                     subprocess.on('message', ([error, messageData]: TaskMessage) => {
                         // If process has error message
                         if (error) {
+                            assert(error.type === MessageType.UNIT_RULE_EXEC_ERROR);
+                            assert(error.index === 'union-error');
                             // kill for cover test
                             subprocess.kill();
                             return done();
@@ -185,7 +187,9 @@ export default function() {
                         // If process has error message
                         if (error) {
                             // Check error message data
-                            return assert(error.type === MessageType.UNIT_RULE_EXEC_ERROR);
+                            assert(error.type === MessageType.UNIT_RULE_EXEC_ERROR);
+                            assert(error.index === 'union-error');
+                            return;
                         }
                         // Task End
                         if (messageData.type === MessageType.TASK_END) {

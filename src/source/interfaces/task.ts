@@ -6,6 +6,7 @@ import {MessageType} from '../types/common';
 import {TaskRuleTypeItem, TaskType,
     TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType, TaskTypeUnionSubType
 } from '../types/task';
+import {IErrorMessage} from './common';
 
 /**
  * Task exclude unit map
@@ -33,6 +34,12 @@ interface ITaskMessage extends ITaskStartOption {
     index: string;
     type: MessageType;
     sendTime: number;
+}
+/**
+ * Task error messsage
+ */
+export interface ITaskErrorMessage extends IErrorMessage {
+    index?: string;
 }
 /**
  * Task start message

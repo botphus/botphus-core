@@ -1,6 +1,5 @@
-import {IErrorMessage} from '../interfaces/common';
 import {
-    ITaskDataRuleItem, ITaskDomRuleItem, ITaskEndMessage, ITaskEventDialogRuleItem, ITaskEventRuleItem, ITaskPageRuleItem,
+    ITaskDataRuleItem, ITaskDomRuleItem, ITaskEndMessage, ITaskErrorMessage, ITaskEventDialogRuleItem, ITaskEventRuleItem, ITaskPageRuleItem,
     ITaskStartMessage, ITaskTimeRuleItem, ITaskUnionRuleItem, ITaskUnitMessage, ItaskUnitReceiveDataMessage
 } from '../interfaces/task';
 
@@ -13,7 +12,7 @@ export type TaskMessageData = ITaskUnitMessage | ITaskStartMessage | ITaskEndMes
  * Task Message
  * @type {Array}
  */
-export type TaskMessage = [IErrorMessage, TaskMessageData];
+export type TaskMessage = [ITaskErrorMessage, TaskMessageData];
 
 /**
  * Combine different rule item to one

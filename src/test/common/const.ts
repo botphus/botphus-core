@@ -405,6 +405,7 @@ export const TASK_REACT_LIST: TaskRuleTypeItem[] = [
 export const TASK_UNION_BLOCK_LIST_CHILDREN: TaskRuleTypeItem[] = TASK_REACT_LIST.concat({ // getText error
     arguments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
     assertion: [`data === "Wrong text"`],
+    index: 'union-error',
     subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
     type: TaskType.TYPE_DOM
 });

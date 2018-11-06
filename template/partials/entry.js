@@ -68,5 +68,12 @@
             order: curOrder,
             sendTime: new Date().getTime()
         }]);
+    })
+    // Set err index
+    .catch(function(err) {
+        if (!err.index) {
+            err.index = '{{rule.index}}';
+        }
+        return Promise.reject(err);
     });
 })
