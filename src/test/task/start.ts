@@ -141,6 +141,71 @@ export default function() {
                 })
                 .catch(done);
         });
+        it('startTask with union block rules', (done) => {
+            botphusCore.startTask(getTaskNoByTaskName(CONST.TASK_UNION_BLOCK_NAME), CONST.REACT_PAGE_PATH, {
+                puppeteerLaunchOption: CONST.PUPPETEER_REACT_LAUNCH_OPTION,
+                startPageOption: {
+                    waitUntil: 'networkidle0'
+                }
+            })
+                .then((subprocess) => {
+                    subprocess.on('message', ([error, messageData]: TaskMessage) => {
+                        // If process has error message
+                        if (error) {
+                            // kill for cover test
+                            subprocess.kill();
+                            return done();
+                        }
+                        // Task End
+                        if (messageData.type === MessageType.TASK_END) {
+                            // kill for cover test
+                            subprocess.kill();
+                            return done(new Error('Invalid expectation'));
+                        }
+                    });
+                    // Listen close event
+                    subprocess.on('close', (code) => {
+                        if (code === 0 || !code) {
+                            return;
+                        }
+                        return done(new Error('Error exit'));
+                    });
+                })
+                .catch(done);
+        });
+        it('startTask with union non-block rules', (done) => {
+            botphusCore.startTask(getTaskNoByTaskName(CONST.TASK_UNION_NON_BLOCK_NAME), CONST.REACT_PAGE_PATH, {
+                puppeteerLaunchOption: CONST.PUPPETEER_REACT_LAUNCH_OPTION,
+                startPageOption: {
+                    waitUntil: 'networkidle0'
+                }
+            })
+                .then((subprocess) => {
+                    subprocess.on('message', ([error, messageData]: TaskMessage) => {
+                        // If process has error message
+                        if (error) {
+                            // Check error message data
+                            return assert(error.type === MessageType.UNIT_RULE_EXEC_ERROR);
+                        }
+                        // Task End
+                        if (messageData.type === MessageType.TASK_END) {
+                            assert(messageData.index === 'end');
+                            assert(messageData.totalCase === (CONST.TASK_UNION_NON_BLOCK_CASE_COUNT));
+                            // kill for cover test
+                            subprocess.kill();
+                            return done();
+                        }
+                    });
+                    // Listen close event
+                    subprocess.on('close', (code) => {
+                        if (code === 0 || !code) {
+                            return;
+                        }
+                        return done(new Error('Error exit'));
+                    });
+                })
+                .catch(done);
+        });
         it('startTask with wrong number', (done) => {
             botphusCore.startTask(getTaskNoByTaskName(CONST.TASK_FULL_NAME) + '1', '')
                 .then(() => {

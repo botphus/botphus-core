@@ -36,6 +36,10 @@
     {{#if (eq rule.type 5)}}
     {{> entry_page rule=this}}
     {{/if}}
+    {{!-- TYPE_UNION --}}
+    {{#if (eq rule.type 6)}}
+    {{> entry_union rule=this}}
+    {{/if}}
     {{#if rule.assertion}}
     // Set assertion
     .then(function({{#if rule.assertionVarName}}{{rule.assertionVarName}}{{else}}data{{/if}}) {

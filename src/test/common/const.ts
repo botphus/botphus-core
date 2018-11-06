@@ -2,7 +2,9 @@ import {tmpdir} from 'os';
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 
-import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../../source/types/task';
+import {TaskRuleTypeItem, TaskType,
+    TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType, TaskTypeUnionSubType
+} from '../../source/types/task';
 
 // value
 export const SEARCH_SELECTOR_VALUE = 'Botphus value';
@@ -400,11 +402,34 @@ export const TASK_REACT_LIST: TaskRuleTypeItem[] = [
     }
 ];
 
+export const TASK_UNION_BLOCK_LIST_CHILDREN: TaskRuleTypeItem[] = TASK_REACT_LIST.concat({ // getText error
+    arguments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+    assertion: [`data === "Wrong text"`],
+    subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+    type: TaskType.TYPE_DOM
+});
+export const TASK_UNION_BLOCK_NAME = 'Union block task';
+export const TASK_UNION_BLOCK_LIST: TaskRuleTypeItem[] = [
+    {
+        children: TASK_UNION_BLOCK_LIST_CHILDREN,
+        subType: TaskTypeUnionSubType.SUB_TYPE_BLOCK,
+        type: TaskType.TYPE_UNION
+    }
+];
+export const TASK_UNION_NON_BLOCK_NAME = 'Union non-block task';
+export const TASK_UNION_NON_BLOCK_LIST: TaskRuleTypeItem[] = [
+    {
+        children: TASK_UNION_BLOCK_LIST_CHILDREN,
+        subType: TaskTypeUnionSubType.SUB_TYPE_NON_BLOCK,
+        type: TaskType.TYPE_UNION
+    }
+];
+
 function countListCase(list: TaskRuleTypeItem[]): number {
     let totalCount = 0;
     list.forEach((rule: TaskRuleTypeItem) => {
         totalCount++;
-        if (rule.type === TaskType.TYPE_EVENT) {
+        if (rule.type === TaskType.TYPE_EVENT || rule.type === TaskType.TYPE_UNION) {
             totalCount = totalCount + countListCase(rule.children);
         }
     });
@@ -412,3 +437,4 @@ function countListCase(list: TaskRuleTypeItem[]): number {
 }
 export const TASK_FULL_LIST_CASE_COUNT = countListCase(TASK_FULL_LIST);
 export const TASK_REACT_LIST_CASE_COUNT = countListCase(TASK_REACT_LIST);
+export const TASK_UNION_NON_BLOCK_CASE_COUNT = countListCase(TASK_UNION_NON_BLOCK_LIST);

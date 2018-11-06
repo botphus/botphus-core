@@ -1,14 +1,14 @@
 import {MessageType} from '../../types/common';
 import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../../types/task';
 
-import {ITaskDataRuleItem, ITaskDomRuleItem, ITaskEventRuleItem, ITaskPageRuleItem, ITaskTimeRuleItem} from '../../interfaces/task';
+import {ITaskDataRuleItem, ITaskDomRuleItem, ITaskEventRuleItem, ITaskPageRuleItem, ITaskTimeRuleItem, ITaskUnionRuleItem} from '../../interfaces/task';
 
 import {createErrorMessage, ErrorMessage} from '../common';
 
 /**
  * Valid task rules
  * @param  {TaskRuleTypeItem[]} taskRules Task Rule List
- * @return {Promise<void>}            Promise with nothing
+ * @return {Promise<void>}                Promise with nothing
  */
 export function validTaskRules(taskRules: TaskRuleTypeItem[]): Promise<void> {
     // Check if task rule is right
@@ -25,7 +25,7 @@ export function validTaskRules(taskRules: TaskRuleTypeItem[]): Promise<void> {
 /**
  * Loop through rules & check every rule & rebuild rule
  * @param  {TaskRuleTypeItem[]} taskRules Task Rule List
- * @return {Error}                    Error message
+ * @return {Error}                        Error message
  */
 function loopRules(taskRules: TaskRuleTypeItem[], parentIndex?: string): Error {
     let err: Error;
@@ -50,7 +50,7 @@ function loopRules(taskRules: TaskRuleTypeItem[], parentIndex?: string): Error {
 /**
  * Assign task rule to type check function
  * @param  {TaskRuleTypeItem} taskRule Task Rule
- * @return {Error}                 Error message
+ * @return {Error}                     Error message
  */
 function assignTaskRule(taskRule: TaskRuleTypeItem): Error {
     // Check common fields
@@ -70,13 +70,15 @@ function assignTaskRule(taskRule: TaskRuleTypeItem): Error {
             return pageTypeCheckAndRebuild(taskRule);
         case TaskType.TYPE_TIME:
             return timeTypeCheckAndRebuild(taskRule);
+        case TaskType.TYPE_UNION:
+            return unionTypeCheckAndRebuild(taskRule);
     }
 }
 
 /**
  * Data type check & rebuild
  * @param  {ITaskDataRuleItem} taskRule Data Rule
- * @return {Error}                  Error message
+ * @return {Error}                      Error message
  */
 function dataTypeCheckAndRebuild(taskRule: ITaskDataRuleItem): Error {
     // Valid common fields
@@ -100,7 +102,7 @@ function dataTypeCheckAndRebuild(taskRule: ITaskDataRuleItem): Error {
 /**
  * Dom type check & rebuild
  * @param  {ITaskDomRuleItem} taskRule Dom Rule
- * @return {Error}                 Error message
+ * @return {Error}                     Error message
  */
 function domTypeCheckAndRebuild(taskRule: ITaskDomRuleItem): Error {
     switch (taskRule.subType) {
@@ -139,7 +141,7 @@ function domTypeCheckAndRebuild(taskRule: ITaskDomRuleItem): Error {
 /**
  * Event type check & rebuild
  * @param  {ITaskEventRuleItem} taskRule Event Rule
- * @return {Error}                   Error message
+ * @return {Error}                       Error message
  */
 function eventTypeCheckAndRebuild(taskRule: ITaskEventRuleItem): Error {
     // Valid common fields
@@ -164,7 +166,7 @@ function eventTypeCheckAndRebuild(taskRule: ITaskEventRuleItem): Error {
 /**
  * Page type check & rebuild
  * @param  {ITaskPageRuleItem} taskRule Page Rule
- * @return {Error}                  Error message
+ * @return {Error}                      Error message
  */
 function pageTypeCheckAndRebuild(taskRule: ITaskPageRuleItem): Error {
     switch (taskRule.subType) {
@@ -202,7 +204,7 @@ function pageTypeCheckAndRebuild(taskRule: ITaskPageRuleItem): Error {
 /**
  * Time type check & rebuild
  * @param  {ITaskTimeRuleItem} taskRule Time Rule
- * @return {Error}                  Error message
+ * @return {Error}                      Error message
  */
 function timeTypeCheckAndRebuild(taskRule: ITaskTimeRuleItem): Error {
     switch (taskRule.subType) {
@@ -211,5 +213,16 @@ function timeTypeCheckAndRebuild(taskRule: ITaskTimeRuleItem): Error {
                 return new Error('SUB_TYPE_SET_SLEEP must have sleepTime & sleepTime must be millisecond number.');
             }
             break;
+    }
+}
+
+/**
+ * Union type check & rebuild
+ * @param  {ITaskUnionRuleItem} taskRule Union Rule
+ * @return {Error}                       Error message
+ */
+function unionTypeCheckAndRebuild(taskRule: ITaskUnionRuleItem): Error {
+    if (!(taskRule.children && Array.isArray(taskRule.children) && taskRule.children.length > 0)) {
+        return new Error('Union type rule must have children field');
     }
 }

@@ -5,7 +5,7 @@ import * as assert from 'power-assert';
 import * as CONST from '../common/const';
 
 import {getTaskNoByTaskName} from '../../source/lib/common';
-import {TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../../source/types/task';
+import {TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType, TaskTypeUnionSubType} from '../../source/types/task';
 
 import BotphusCore from '../../source/';
 const botphusCore = new BotphusCore({
@@ -112,6 +112,20 @@ export default function() {
                 })
                 .catch(done);
         });
+        it('createTask with union block rules', (done) => {
+            botphusCore.createTask(CONST.TASK_UNION_BLOCK_NAME, new Date().getTime(), CONST.TASK_UNION_BLOCK_LIST)
+                .then(() => {
+                    done();
+                })
+                .catch(done);
+        });
+        it('createTask with union non-block rules', (done) => {
+            botphusCore.createTask(CONST.TASK_UNION_NON_BLOCK_NAME, new Date().getTime(), CONST.TASK_UNION_NON_BLOCK_LIST)
+                .then(() => {
+                    done();
+                })
+                .catch(done);
+        });
         describe('Error', () => {
             it('createTask with empty rules', (done) => {
                 const taskName = 'test task';
@@ -142,6 +156,7 @@ export default function() {
                 botphusCore.createTask(taskName, new Date().getTime(), [
                     {
                         arguments: [],
+                        // @ts-ignore
                         assertion: [{}],
                         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
                         type: TaskType.TYPE_DATA,
@@ -156,6 +171,7 @@ export default function() {
                 const taskName = 'test task';
                 // @ts-ignore
                 botphusCore.createTask(taskName, new Date().getTime(), [
+                    // @ts-ignore
                     {
                         arguments: [],
                         subType: TaskTypeDataSubType.SUB_TYPE_MYSQL,
@@ -402,6 +418,20 @@ export default function() {
                         arguments: [],
                         subType: TaskTypeTimeSubType.SUB_TYPE_SET_SLEEP,
                         type: TaskType.TYPE_TIME,
+                    }
+                ])
+                    .then(() => {
+                        done(new Error('Invalid expectation'));
+                    })
+                    .catch(() => done());
+            });
+            it('createTask with wrong union rule', (done) => {
+                const taskName = 'test task';
+                botphusCore.createTask(taskName, new Date().getTime(), [
+                    {
+                        children: [],
+                        subType: TaskTypeUnionSubType.SUB_TYPE_BLOCK,
+                        type: TaskType.TYPE_UNION,
                     }
                 ])
                     .then(() => {
