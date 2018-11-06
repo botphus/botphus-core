@@ -3,7 +3,10 @@ import {ConnectionConfig} from 'mysql';
 import {LaunchOptions, NavigationOptions} from 'puppeteer';
 
 import {MessageType} from '../types/common';
-import {TaskRuleTypeItem, TaskType, TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType} from '../types/task';
+import {TaskRuleTypeItem, TaskType,
+    TaskTypeDataSubType, TaskTypeDomSubType, TaskTypeEventSubType, TaskTypePageSubType, TaskTypeTimeSubType, TaskTypeUnionSubType
+} from '../types/task';
+import {IErrorMessage} from './common';
 
 /**
  * Task exclude unit map
@@ -31,6 +34,12 @@ interface ITaskMessage extends ITaskStartOption {
     index: string;
     type: MessageType;
     sendTime: number;
+}
+/**
+ * Task error messsage
+ */
+export interface ITaskErrorMessage extends IErrorMessage {
+    index?: string;
 }
 /**
  * Task start message
@@ -107,6 +116,15 @@ export interface ITaskEventRuleItem extends ITaskRuleItem {
 export interface ITaskEventDialogRuleItem extends ITaskEventRuleItem {
     subType: TaskTypeEventSubType.SUB_TYPE_DIALOG;
     promptText?: string; // A text to enter in prompt. Does not cause any effects if the dialog's type is not prompt. default is "confirm"
+}
+
+/**
+ * Union Rule
+ */
+export interface ITaskUnionRuleItem extends ITaskRuleItem {
+    type: TaskType.TYPE_UNION;
+    subType: TaskTypeUnionSubType;
+    children: TaskRuleTypeItem[];
 }
 
 /**

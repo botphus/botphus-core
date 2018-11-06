@@ -31,6 +31,7 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
     - [TYPE_EVENT](#type_event): 事件类,页面请求/控制台等测试单元.([代码](../src/source/lib/unit/event.ts)|[测试用例](../src/test/unit/event.ts))
     - [TYPE_TIME](#type_time): 时间类,休眠等测试单元.([代码](../src/source/lib/unit/time.ts)|[测试用例](../src/test/unit/time.ts))
     - [TYPE_PAGE](#type_page): 页面类,加载/跳转/cookie等测试单元.([代码](../src/source/lib/unit/page.ts)|[测试用例](../src/test/unit/page.ts))
+    - [TYPE_UNION](#type_union): 联合类,处理多任务集合相关的类型.(该类型没有单独测试用例,请查看[创建任务](../src/test/task/create.ts)及[执行任务](../src/test/task/start.ts))
 
 <a name="type_data"></a>
 ### TYPE_DATA
@@ -543,5 +544,48 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
     assertionVarName: 'value',
     subType: TaskTypePageSubType.SUB_TYPE_SCREENSHOT,
     type: TaskType.TYPE_PAGE
+}
+```
+
+<a name="type_union"></a>
+### TYPE_UNION
+
+- TaskTypeUnionSubType
+    - [SUB_TYPE_BLOCK](#sub_type_block): 阻塞式集合,在下级任务执行错误时.跟常规一致,会直接停止整个任务
+    - [SUB_TYPE_NON_BLOCK](#sub_type_nonBlock): 非阻塞式集合,在下级任务执行错误时,不会阻塞,但会发送一个错误信息到上级
+
+<a name="sub_type_block"></a>
+#### SUB_TYPE_BLOCK
+
+**配置示例**
+```
+{
+    children: [
+        {
+            arguments: ['div:nth-child(2) > #dialog'],
+            subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+            type: TaskType.TYPE_DOM
+        }
+    ],
+    subType: TaskTypeUnionSubType.SUB_TYPE_BLOCK,
+    type: TaskType.TYPE_UNION
+}
+```
+
+<a name="sub_type_nonBlock"></a>
+#### SUB_TYPE_NON_BLOCK
+
+**配置示例**
+```
+{
+    children: [
+        {
+            arguments: ['div:nth-child(2) > #dialog'],
+            subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+            type: TaskType.TYPE_DOM
+        }
+    ],
+    subType: TaskTypeUnionSubType.SUB_TYPE_NON_BLOCK,
+    type: TaskType.TYPE_UNION
 }
 ```

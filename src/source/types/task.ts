@@ -1,7 +1,6 @@
-import {IErrorMessage} from '../interfaces/common';
 import {
-    ITaskDataRuleItem, ITaskDomRuleItem, ITaskEndMessage, ITaskEventDialogRuleItem, ITaskEventRuleItem, ITaskPageRuleItem,
-    ITaskStartMessage, ITaskTimeRuleItem, ITaskUnitMessage, ItaskUnitReceiveDataMessage
+    ITaskDataRuleItem, ITaskDomRuleItem, ITaskEndMessage, ITaskErrorMessage, ITaskEventDialogRuleItem, ITaskEventRuleItem, ITaskPageRuleItem,
+    ITaskStartMessage, ITaskTimeRuleItem, ITaskUnionRuleItem, ITaskUnitMessage, ItaskUnitReceiveDataMessage
 } from '../interfaces/task';
 
 /**
@@ -13,13 +12,13 @@ export type TaskMessageData = ITaskUnitMessage | ITaskStartMessage | ITaskEndMes
  * Task Message
  * @type {Array}
  */
-export type TaskMessage = [IErrorMessage, TaskMessageData];
+export type TaskMessage = [ITaskErrorMessage, TaskMessageData];
 
 /**
  * Combine different rule item to one
  * @type {Object}
  */
-export type TaskRuleTypeItem = ITaskDataRuleItem | ITaskDomRuleItem | ITaskEventDialogRuleItem | ITaskEventRuleItem | ITaskTimeRuleItem | ITaskPageRuleItem;
+export type TaskRuleTypeItem = ITaskDataRuleItem | ITaskDomRuleItem | ITaskEventDialogRuleItem | ITaskEventRuleItem | ITaskTimeRuleItem | ITaskPageRuleItem | ITaskUnionRuleItem;
 
 /**
  * Task Type
@@ -30,6 +29,7 @@ export enum TaskType {
     TYPE_EVENT = 3, // EVENT listener
     TYPE_TIME = 4, // Time action
     TYPE_PAGE = 5, // Page action
+    TYPE_UNION = 6, // Union type
 }
 
 // Task sub type
@@ -81,4 +81,12 @@ export enum TaskTypePageSubType {
     SUB_TYPE_DELETE_COOKIE = 503, // Delete cookies
     SUB_TYPE_GOTO = 504, // Redirect to target url
     SUB_TYPE_SCREENSHOT = 505, // Take a screenshot
+}
+
+/**
+ * Sub type: union
+ */
+export enum TaskTypeUnionSubType {
+    SUB_TYPE_BLOCK = 600, // Block union rule when execute process was error
+    SUB_TYPE_NON_BLOCK = 601, // Non-block union rule when execute process was error
 }

@@ -42,10 +42,11 @@ function sendProcessMessage(message) {
         // Rebuild error message for parent process
         if(err) {
             message[0] = {
-                type: err.type,
-                name: err.name,
-                message: err.message,
-                stack: err.stack
+                type: err.type, // error type
+                name: err.name, // error name
+                index: err.index, // Task unit index
+                message: err.message, // error message
+                stack: err.stack // error stack info
             }
         }
         return process.send(message);
