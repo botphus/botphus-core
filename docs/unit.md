@@ -206,9 +206,10 @@ children<sup>[注3](#task_params_tip)</sup> | `string` | null | 子测试单元
 
 **入参**
 
-- 参数类型: [selector: string]
+- 参数类型: [selector: string, humanClick: boolean = true]
 - 参数说明:
     - selector: [querySelector#selectors]
+    - humanClick: 指示是否模拟自然人点击,如果是`true`时,有可能会触发绝对定位上层DOM元素的点击而不能正确点击的预期元素.
 - 返回数据
     - 无
 

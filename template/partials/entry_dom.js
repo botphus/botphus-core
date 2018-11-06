@@ -23,7 +23,7 @@ return unitLib.dom.getText(page, '{{{replace rule.arguments.[0] "'" "\'"}}}')
 {{/if}}
 {{!-- SUB_TYPE_CLICK --}}
 {{#if (eq rule.subType 205)}}
-return unitLib.dom.click(page, '{{{replace rule.arguments.[0] "'" "\'"}}}')
+return unitLib.dom.click(page, '{{{replace rule.arguments.[0] "'" "\'"}}}', {{rule.arguments.[1]}})
 {{/if}}
 {{!-- SUB_TYPE_SET_INPUT_FILES --}}
 {{#if (eq rule.subType 206)}}

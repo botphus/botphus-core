@@ -107,10 +107,20 @@ function dataTypeCheckAndRebuild(taskRule: ITaskDataRuleItem): Error {
 function domTypeCheckAndRebuild(taskRule: ITaskDomRuleItem): Error {
     switch (taskRule.subType) {
         case TaskTypeDomSubType.SUB_TYPE_CLICK:
+            if (!(taskRule.arguments && (taskRule.arguments.length === 1 || taskRule.arguments.length === 2) && typeof taskRule.arguments[0] === 'string')) {
+                return new Error('SUB_TYPE_CLICK must have selector & selector must be string');
+            }
+            if (taskRule.arguments.length === 2 && !(typeof taskRule.arguments[1] === 'boolean')) {
+                return new Error('if SUB_TYPE_CLICK have humanClick, humanClick must be boolean');
+            }
+            if (typeof taskRule.arguments[1] !== 'boolean') {
+                taskRule.arguments[1] = true;
+            }
+            break;
         case TaskTypeDomSubType.SUB_TYPE_GET_HTML:
         case TaskTypeDomSubType.SUB_TYPE_GET_TEXT:
             if (!(taskRule.arguments && taskRule.arguments.length === 1 && typeof taskRule.arguments[0] === 'string')) {
-                return new Error('SUB_TYPE_CLICK/SUB_TYPE_GET_HTML/SUB_TYPE_GET_TEXT must have selector & selector must be string');
+                return new Error('SUB_TYPE_GET_HTML/SUB_TYPE_GET_TEXT must have selector & selector must be string');
             }
             break;
         case TaskTypeDomSubType.SUB_TYPE_KEYBOARD:
