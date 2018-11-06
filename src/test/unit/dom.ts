@@ -28,6 +28,33 @@ export default function() {
                 })
                 .catch(done);
         });
+        it('Dom#click with cover dom', (done) => {
+            puppeteer.launch(CONST.PUPPETEER_LAUNCH_OPTION)
+                .then((browser) => {
+                    return browser.newPage()
+                        .then((page) => {
+                            return page.goto(CONST.NORMAL_PAGE_PATH)
+                                .then(() => {
+                                    return botphusUnit.event.console(page, CONST.EVENT_TIMEOUT, () => {
+                                        return botphusUnit.dom.click(page, CONST.NORMAL_PAGE_CONSOLE_COVER_SELECTOR, false);
+                                    })
+                                        .then((consoleMessage) => {
+                                            assert(consoleMessage.type() === 'log');
+                                            assert(consoleMessage.args().length === 1);
+                                            assert(consoleMessage.text() === CONST.CONSOLE_VALUE);
+                                        });
+                                })
+                                .then(() => {
+                                    browser.close();
+                                    done();
+                                })
+                                .catch((err) => {
+                                    browser.close();
+                                    done(err);
+                                });
+                        });
+                });
+        });
         it('Dom#keyboard', (done) => {
             puppeteer.launch(CONST.PUPPETEER_LAUNCH_OPTION)
                 .then((browser) => {

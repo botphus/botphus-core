@@ -227,6 +227,20 @@ export default function() {
                     })
                     .catch(() => done());
             });
+            it('createTask with wrong dom click rule humanClick', (done) => {
+                const taskName = 'test task';
+                botphusCore.createTask(taskName, new Date().getTime(), [
+                    {
+                        arguments: ['div', '123'],
+                        subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+                        type: TaskType.TYPE_DOM,
+                    }
+                ])
+                    .then(() => {
+                        done(new Error('Invalid expectation'));
+                    })
+                    .catch(() => done());
+            });
             it('createTask with wrong dom keyboard rule arguments', (done) => {
                 const taskName = 'test task';
                 botphusCore.createTask(taskName, new Date().getTime(), [

@@ -19,6 +19,11 @@
         <div><label>多选</label><input type="checkbox" name="checkbox" value="1"><input type="checkbox" name="checkbox" value="2"></div>
         <button type="submit">提交</button>
     </form>
+    <div style="position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1;">
+        </div>
+        <a href="#" id="console-cover">test console cover</a>
+    </div>
     <script type="text/javascript">
         document.getElementById('dialog').onclick=function(e) {
             e.preventDefault();
@@ -46,6 +51,9 @@
                 console.log(res);
             })
             .catch(console.error);
+        }
+        document.getElementById('console-cover').onclick=function(e) {
+            console.log('botphus console');
         }
     </script>
 </body>

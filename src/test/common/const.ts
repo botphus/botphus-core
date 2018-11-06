@@ -28,6 +28,7 @@ export const NORMAL_PAGE_FILE_SELECTOR = 'form:nth-child(3) > div:nth-child(2) >
 export const NORMAL_PAGE_FILE_MULTI_SELECTOR = 'form:nth-child(3) > div:nth-child(3) > #file-multi';
 export const NORMAL_PAGE_DIALOG_SELECTOR = 'div:nth-child(2) > #dialog';
 export const NORMAL_PAGE_CONSOLE_SELECTOR = 'div:nth-child(2) > #console';
+export const NORMAL_PAGE_CONSOLE_COVER_SELECTOR = '#console-cover';
 export const NORMAL_PAGE_REQUEST_SELECTOR = 'div:nth-child(2) > #request';
 export const NORMAL_PAGE_REQUEST_JSONP_SELECTOR = 'div:nth-child(2) > #request-jsonp';
 export const NORMAL_PAGE_SEARCH_SELECTOR_FIELD = 'value';
@@ -247,6 +248,21 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
         children: [
             {
                 arguments: [NORMAL_PAGE_CONSOLE_SELECTOR],
+                subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
+                type: TaskType.TYPE_DOM
+            }
+        ],
+        subType: TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+        type: TaskType.TYPE_EVENT
+    },
+    // console cover log
+    {
+        arguments: [EVENT_TIMEOUT],
+        assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 1', `consoleMessage.text() === "${CONSOLE_VALUE}"`],
+        assertionVarName: 'consoleMessage',
+        children: [
+            {
+                arguments: [NORMAL_PAGE_CONSOLE_COVER_SELECTOR, false],
                 subType: TaskTypeDomSubType.SUB_TYPE_CLICK,
                 type: TaskType.TYPE_DOM
             }
