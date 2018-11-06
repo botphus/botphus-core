@@ -11,6 +11,3 @@ coverage/
 cache/
 *.log
 npm-debug.log.*
-
-# dist
-dist/

@@ -32,6 +32,11 @@
 npm install botphus-core --save
 ```
 
+### 构建
+```shell
+npm run build
+```
+
 ### 使用
 ```javascript
 import BotphusCore, {TaskMessage, TaskType, TaskTypeDomSubType} from 'botphus-core';
