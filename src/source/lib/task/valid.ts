@@ -36,7 +36,7 @@ function loopRules(taskRules: TaskRuleTypeItem[], parentIndex?: string): Error {
             taskRule.index = parentIndex ? `${parentIndex}-${index}` : `${index}`;
         }
         // if rule's type is event, check children
-        if (!err && taskRule.type === TaskType.TYPE_EVENT) {
+        if (!err && (taskRule.type === TaskType.TYPE_EVENT || taskRule.type === TaskType.TYPE_UNION)) {
             err = loopRules(taskRule.children, `${taskRule.index}`);
         }
         if (err) {
