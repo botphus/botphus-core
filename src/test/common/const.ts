@@ -418,13 +418,82 @@ export const TASK_REACT_LIST: TaskRuleTypeItem[] = [
     }
 ];
 
-export const TASK_UNION_BLOCK_LIST_CHILDREN: TaskRuleTypeItem[] = TASK_REACT_LIST.concat({ // getText error
-    arguments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
-    assertion: [`data === "Wrong text"`],
-    index: 'union-error',
-    subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
-    type: TaskType.TYPE_DOM
-});
+export const TASK_UNION_BLOCK_LIST_CHILDREN: TaskRuleTypeItem[] = [
+    // console
+    {
+        arguments: [EVENT_TIMEOUT, (consoleMessage: puppeteer.ConsoleMessage) => {
+            return consoleMessage.type() === 'log';
+        }],
+        assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 2', 'consoleMessage.text().indexOf("Upload event:") >= 0'],
+        assertionVarName: 'consoleMessage',
+        children: [
+            {
+                arguments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
+                    return request.url().indexOf('upload.do') >= 0;
+                }],
+                children: [
+                    {
+                        arguments: [REACT_PAGE_FORM_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
+                        index: '3',
+                        subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+                        type: TaskType.TYPE_DOM
+                    }
+                ],
+                index: '2',
+                subType: TaskTypeEventSubType.SUB_TYPE_REQUEST,
+                type: TaskType.TYPE_EVENT
+            }
+        ],
+        index: '1',
+        subType: TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+        type: TaskType.TYPE_EVENT
+    },
+    { // getText error
+        arguments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        assertion: [`data === "Wrong text"`],
+        index: 'union-error',
+        subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+        type: TaskType.TYPE_DOM
+    }
+];
+export const TASK_UNION_NON_BLOCK_LIST_CHILDREN: TaskRuleTypeItem[] = [
+    // console
+    {
+        arguments: [EVENT_TIMEOUT, (consoleMessage: puppeteer.ConsoleMessage) => {
+            return consoleMessage.type() === 'log';
+        }],
+        assertion: [`consoleMessage.type() === "log"`, 'consoleMessage.args().length === 2', 'consoleMessage.text().indexOf("Upload event:") >= 0'],
+        assertionVarName: 'consoleMessage',
+        children: [
+            {
+                arguments: [EVENT_TIMEOUT, (request: puppeteer.Request) => {
+                    return request.url().indexOf('upload.do') >= 0;
+                }],
+                children: [
+                    {
+                        arguments: [REACT_PAGE_FORM_FILE_SELECTOR, [RESOURCE_IMAGE_PATH]],
+                        index: '3',
+                        subType: TaskTypeDomSubType.SUB_TYPE_SET_INPUT_FILES,
+                        type: TaskType.TYPE_DOM
+                    }
+                ],
+                index: '2',
+                subType: TaskTypeEventSubType.SUB_TYPE_REQUEST,
+                type: TaskType.TYPE_EVENT
+            }
+        ],
+        index: '1',
+        subType: TaskTypeEventSubType.SUB_TYPE_CONSOLE,
+        type: TaskType.TYPE_EVENT
+    },
+    { // getText error
+        arguments: [NORMAL_PAGE_PARENT_SEARCH_SELECTOR],
+        assertion: [`data === "Wrong text"`],
+        index: 'union-error',
+        subType: TaskTypeDomSubType.SUB_TYPE_GET_TEXT,
+        type: TaskType.TYPE_DOM
+    }
+];
 export const TASK_UNION_BLOCK_NAME = 'Union block task';
 export const TASK_UNION_BLOCK_LIST: TaskRuleTypeItem[] = [
     {
@@ -436,7 +505,7 @@ export const TASK_UNION_BLOCK_LIST: TaskRuleTypeItem[] = [
 export const TASK_UNION_NON_BLOCK_NAME = 'Union non-block task';
 export const TASK_UNION_NON_BLOCK_LIST: TaskRuleTypeItem[] = [
     {
-        children: TASK_UNION_BLOCK_LIST_CHILDREN,
+        children: TASK_UNION_NON_BLOCK_LIST_CHILDREN,
         subType: TaskTypeUnionSubType.SUB_TYPE_NON_BLOCK,
         type: TaskType.TYPE_UNION
     }
