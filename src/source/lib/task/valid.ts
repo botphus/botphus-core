@@ -193,10 +193,16 @@ function pageTypeCheckAndRebuild(taskRule: ITaskPageRuleItem): Error {
         case TaskTypePageSubType.SUB_TYPE_GOTO:
             if (!(taskRule.arguments && (taskRule.arguments.length === 1 || taskRule.arguments.length === 2)
                 && typeof taskRule.arguments[0] === 'string')) {
-                return new Error('SUB_TYPE_GOTO must have url & url must be array');
+                return new Error('SUB_TYPE_GOTO must have url & url must be string');
             }
             if (taskRule.arguments.length === 2 && !(typeof taskRule.arguments[1] === 'object')) {
                 return new Error('if SUB_TYPE_GOTO have option, option must be object');
+            }
+            break;
+        case TaskTypePageSubType.SUB_TYPE_RELOAD:
+            if (taskRule.arguments && !(taskRule.arguments.length === 1
+                && typeof taskRule.arguments[0] === 'object')) {
+                return new Error('SUB_TYPE_GOTO have option, option must be object');
             }
             break;
         case TaskTypePageSubType.SUB_TYPE_SCREENSHOT:

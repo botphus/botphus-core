@@ -1,6 +1,6 @@
 {{!-- SUB_TYPE_RELOAD --}}
 {{#if (eq rule.subType 500)}}
-return unitLib.page.reload(page)
+return unitLib.page.reload(page, {{#if rule.arguments.[0]}}{{{JSONstringify rule.arguments.[0]}}}{{else}}{}{{/if}})
 {{/if}}
 {{!-- SUB_TYPE_SET_COOKIE --}}
 {{#if (eq rule.subType 501)}}
@@ -17,7 +17,7 @@ return unitLib.page.deleteCookie(page, {{{JSONstringify rule.arguments.[0]}}})
 {{/if}}
 {{!-- SUB_TYPE_GOTO --}}
 {{#if (eq rule.subType 504)}}
-return unitLib.page.goto(page, '{{{replace rule.arguments.[0] "'" "\'"}}}')
+return unitLib.page.goto(page, '{{{replace rule.arguments.[0] "'" "\'"}}}', {{#if rule.arguments.[1]}}{{{JSONstringify rule.arguments.[1]}}}{{else}}{}{{/if}})
 {{/if}}
 {{!-- SUB_TYPE_SCREENSHOT --}}
 {{#if (eq rule.subType 505)}}
