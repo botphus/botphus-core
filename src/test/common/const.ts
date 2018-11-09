@@ -340,6 +340,13 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // reload
     {
+        arguments: [{
+            waitUntil: 'networkidle2'
+        }],
+        subType: TaskTypePageSubType.SUB_TYPE_RELOAD,
+        type: TaskType.TYPE_PAGE
+    },
+    {
         subType: TaskTypePageSubType.SUB_TYPE_RELOAD,
         type: TaskType.TYPE_PAGE
     },
@@ -372,7 +379,9 @@ export const TASK_FULL_LIST: TaskRuleTypeItem[] = [
     },
     // goto
     {
-        arguments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\')],
+        arguments: [NORMAL_PAGE_PATH.replace(/\\/g, '\\\\'), {
+            waitUntil: 'networkidle2'
+        }],
         subType: TaskTypePageSubType.SUB_TYPE_GOTO,
         type: TaskType.TYPE_PAGE
     },
